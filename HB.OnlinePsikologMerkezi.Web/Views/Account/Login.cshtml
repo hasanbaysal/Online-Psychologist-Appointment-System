@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewData["Title"] = "Giriş";
+}
+
+@model UserSigInDto
+
+@*~/assets/img/layout-logo-large.png*@
+@*~/assets/img/loginimage.webp*@
+<section class="">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+@*
+                <img src="~/assets/img/layout-logo-large.png"
+                     class="img-fluid" alt="Sample image">
+*@
+                <img src="~/assets/img/singup-image.jpg"
+                     class="img-fluid" alt="Sample image">
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+               
+               
+
+                <form asp-route-returnUrl="@Context.Request.Query["returnUrl"]" asp-controller="Account" asp-action="Login">
+
+                       <div class="mb-3">
+                        <div class="alert alert-danger" asp-validation-summary="ModelOnly"></div>
+
+                       </div>
+                        
+                    <div class="mb-3">
+                        <a  asp-action="LoginWithGoogle" asp-controller="Account" class="btn btn-primary w-100 mx-auto">
+                            Google ile giriş
+                            <i class="fab fa-google"></i>
+                        </a>
+
+                    </div>
+            
+                        
+             
+                  
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input type="email"  asp-for="Email" class="form-control form-control-lg"
+                               placeholder="e-posta adresiniz" />
+                        <span asp-validation-for="Email"></span>
+
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-3">
+                        <input asp-for="Password" class="form-control form-control-lg"
+                               placeholder="şifreniz" />
+                        <span asp-validation-for="Password"></span>
+
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Checkbox -->
+                        <div class="form-check mb-0">
+                            <input asp-for="RememberMe" class="form-check-input me-2" type="checkbox" />
+                            <label asp-for="RememberMe" class="form-check-label" >
+                               Beni Hatırla
+                            </label>
+                        </div>
+                        <a asp-controller="Account" asp-action="ForgotPassword" class="text-body text-decoration-underline">Şifremi Unuttum</a>
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button type="submit" class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;">
+                            Giriş Yap
+                        </button>
+                        <p class="small fw-bold mt-2 pt-1 mb-0">
+                            hesabın yok mu ? <a asp-controller="Account" asp-action="SignUp"
+                                                      class="link-danger">ÜYE OL</a>
+                        </p>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@*
+<a href="#!" class="text-white me-4">
+    <i class="fab fa-google"></i>
+</a>*@
+
+@section Scripts
+{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+}

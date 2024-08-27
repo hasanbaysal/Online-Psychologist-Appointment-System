@@ -1,0 +1,386 @@
+﻿@{
+    ViewData["Title"] = "Psikolog Paneli";
+}
+@using System.Linq
+@model PsychologistListDto;
+<h3 class="text-center">Psikolog Randevu Paneli</h3>
+<hr class="mb-2" style="height:4px; background-color:black;" />
+
+@{
+
+    int? toplamkazanc = 0;
+    int? toplamgTamamlanGorusme = 0;
+    int? son30gunGorusme = 0;
+    int? ucretBekleme = 0;
+    if (@Model.Appointments != null)
+    {
+        if (Model.Appointments.Count>0)
+        {
+        toplamkazanc = @Model.Appointments.Where(x => x.Status == (int)AppointmentEnum.sold || x.Status == (int)AppointmentEnum.Completed).ToList().Sum(x => x.Price);
+        toplamgTamamlanGorusme = @Model.Appointments?.Where(x => x.Status == (int)AppointmentEnum.Completed).ToList().Count;
+        son30gunGorusme = @Model.Appointments?.Where(x => x.Status == (int)AppointmentEnum.Completed && x.AppointmentDate > DateTime.Now.AddDays(-30)).ToList().Count;
+        ucretBekleme = @Model.Appointments?.Where(x => x.Status == (int)AppointmentEnum.Completed && x.Order.IsItPaid == false).ToList().Count;
+        }
+            
+
+
+    }
+
+
+}
+
+<div class="row mb-2">
+
+
+    <div class="col-md-6 ">
+        <div class="card bg-c-yellow order-card">
+            <div class="card-block">
+                <h6 class="m-b-20">Toplam Kazanç Miktar (Tamamlanan Randevular için geçerli ve kesintiler hariç)</h6>
+                <p class="m-b-0"> <span class="f-right">@(toplamkazanc?.ToString()+" ₺")</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 ">
+        <div class="card bg-c-yellow order-card">
+            <div class="card-block">
+                <h6 class="m-b-20">Toplam Tamamlanan  Görüşme</h6>
+                <p class="m-b-0"> <span class="f-right">@toplamgTamamlanGorusme?.ToString()</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 ">
+        <div class="card bg-c-yellow order-card">
+            <div class="card-block">
+                <h6 class="m-b-20">Son 30 gündeki görüşme sayısı</h6>
+                <p class="m-b-0"> <span class="f-right">@son30gunGorusme?.ToString()</span></p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-6 ">
+        <div class="card bg-c-yellow order-card">
+            <div class="card-block">
+                <h6 class="m-b-20">Tamamlanan ve ödemesi beklenen görüşme sayısı</h6>
+                <p class="m-b-0"> <span class="f-right">@ucretBekleme?.ToString()</span></p>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<hr class="mb-4" style="height:4px; background-color:black;" />
+
+<div class="row">
+
+    <h1 class="display-6"> Bekleyen Görüşmeler </h1>
+
+    
+  
+
+    @{
+        List<AppointmentListDto> myList = new();
+
+        if (Model.Appointments != null)
+        {
+             myList = Model.Appointments.Where(x => x.Status == (int)AppointmentEnum.sold).ToList();
+        }
+
+    }
+
+    @*mevcut satın alınmış görüşülecek (tamamllandı alanı ekle) randevular tarih sırasına göre artan şekilde card içidne*@
+  
+    @if (myList.Count > 0 && myList != null)
+    {
+        <p class="text-lead text-center">Toplantı günü ve saati geldiğinde toplantıyı başlat buttonuna tıklamanız yeterli toplantı alanına yönlendirileceksiniz</p>
+        <p class="text-center">
+            <strong>
+                Görüşme tamamlandıktan sonra tamamlandı olarak işaretlemeyi unutmayınız
+            </strong>
+        </p>
+
+
+
+        @foreach (var item in myList)
+        {
+            <div class="col-lg-4 mb-4">
+                <div class="card bg-light text-black shadow">
+                    <div class="card-body">
+
+                        <p class="randevuid text-center"> <strong> Randevu id :  @item.Id </strong> </p>
+                        <p class="text-center"> <strong>Tarih</strong> </p>
+
+                        <p class="text-center">   @item.AppointmentDate.ToString("MM/dd/yyyy H:mm")</p>
+
+                        <p class="text-center">  <strong>Danışan Ad-Soyad </strong> </p>
+                        <p class="text-center">   @(item.Order.AppUser.Name ?? "belirtilmedi")  </p>
+                        <p class="text-center">   @(item.Order.AppUser.LastName ?? "belirtilmedi")  </p>
+                        <p class="text-center"> <strong>Kullanıcı Adı</strong>  </p>
+                        <p class="text-center"> @(item.Order.AppUser.UserName ?? "belirtilmedi") </p>
+
+
+                        <div class="mb-1  p-1">
+                            <h6 class="text-center text-lead">görüşme zamanından 5 dakika önce toplantı oluşturma aktifleşecektir</h6>
+                            <h6 class="text-center text-lead">Toplantı aktifleştirme butonu görünmüyorsa sayfayı yenileyiniz</h6>
+                        </div>
+
+                        @*toplantıdan 5 dakika önce görüksün istiyorum*@
+                        @if (DateTime.Now > item.AppointmentDate.AddMinutes(-5))
+                        {
+
+                            if (item.MeetingLink == null)
+                            {
+
+
+
+
+                                <button  id="@("b"+item.Id)" class="senderbtn btn btn-warning">Toplantı Oluştur</button>
+                                @*Meeting/CrateMeeting*@
+
+                                <div class="mb-1  p-1">
+                                    <hr class="mb-2" style="height:2px; background-color:black;" />
+                                    <div id="@("spinner"+item.Id)" style="display:none;" class="spinner-border text-secondary" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p id="@("appInfo"+item.Id)" style="display:none;" class="text-center"></p>
+                                    <a asp-route-id="@item.Id" asp-action="JoingMeeting" asp-controller="Meeting" id="@("Join"+item.Id)" style="display:none;" class="btn btn-success">Toplantıya Katıl</a>
+
+                                </div>
+
+                            }
+                            else
+                            {
+                                <a class="btn btn-warning" onclick="confirmDialog(event)" asp-route-id="@item.Id" asp-action="CompletedMeeting" asp-controller="Meeting"> Tamamlandı olarak işaretle </a>
+                                <a asp-route-id="@item.Id" asp-action="JoingMeeting" asp-controller="Meeting" id="@("Join"+item.Id)" class="btn btn-success">Toplantıya Katıl</a>
+                            }
+
+                            @*toplanıyı oluşturacak*@
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+    else
+    {
+        <p class="text-center text-lead"> Bekleyen Görüşme Yok</p>
+    }
+
+
+
+</div>
+
+<hr class="mb-3" style="height:4px; background-color:black;" />
+
+@*iptal süreci ile akalıda buraya bir şeyler ekle*@
+<div class="row">
+    <h1 class="display-6 mb-1"> Tamamlanmış Görüşmeler </h1>
+
+
+    @{
+
+        List<AppointmentListDto> tamamlanmısEksiGorusmeler= new();
+
+        tamamlanmısEksiGorusmeler = Model.Appointments.Where(x=>x.Status == (int)AppointmentEnum.Completed).OrderByDescending(x => x.AppointmentDate).ToList();
+
+        var iptalEdilen = Model.Appointments.Where(x => x.Status == (int)AppointmentEnum.cancel).OrderByDescending(x => x.AppointmentDate).ToList();
+
+
+        if (iptalEdilen != null)
+        {
+            tamamlanmısEksiGorusmeler.AddRange(iptalEdilen);
+        }
+
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Tarih</th>
+                <th>Ücret</th>
+                <th>Danışan Kullanıcı Adı </th>
+                <th>ücret alındı mı</th>
+                <th>durum</th>
+            </tr>
+        </thead>
+
+        <tbody>
+           
+            @foreach (var item in tamamlanmısEksiGorusmeler)
+            {
+                <tr>
+                    <td class="text-success" >@item.AppointmentDate</td>
+                    <td >@item.Price</td>
+                    <td >@item.Order.AppUser.UserName</td>
+                    <td>
+                        @if (item.Order.IsItPaid)
+                        {
+                            <text>ücret yatırıldı</text>
+                        }
+                        else
+                        {
+                            <text>ücret bekleme</text>
+                        }
+                    </td>
+                    <td>
+                        @if (item.Status == (int)AppointmentEnum.Completed)
+                        {
+                            <text>tamamlandı</text>
+                        }
+                        @if (item.Status == (int)AppointmentEnum.cancel)
+                        {
+                            <text>iptal edildi</text>
+                        }
+
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+@section CustomCss{
+
+    <style>
+
+        .order-card {
+            color: #fff;
+        }
+
+        .bg-c-blue {
+            background: linear-gradient(45deg,#4099ff,#73b4ff);
+        }
+
+        .bg-c-green {
+            background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+        }
+
+        .bg-c-yellow {
+            background: linear-gradient(45deg,#FFB64D,#ffcb80);
+        }
+
+        .bg-c-pink {
+            background: linear-gradient(45deg,#FF5370,#ff869a);
+        }
+
+
+        .card {
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+            box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+            border: none;
+            margin-bottom: 30px;
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+            .card .card-block {
+                padding: 25px;
+            }
+
+        .order-card i {
+            font-size: 26px;
+        }
+
+        .f-left {
+            float: left;
+        }
+
+        .f-right {
+            float: right;
+        }
+
+    </style>
+
+}     
+
+@section Scripts{
+
+
+<script>
+
+
+
+
+
+
+
+
+
+
+
+        $(document).ready(function ()
+        {
+            $('.senderbtn').click(function () {
+                console.log("asdas");
+                var buttonId = $(this).attr('id');
+                var getdata = buttonId.replace("b", "");
+                console.log(getdata);
+                var snipperId = '#' + 'spinner' + getdata;
+                var infoPıd = '#' + 'appInfo' + getdata;
+                var joinBtnId = '#' + 'Join' + getdata;
+                console.log(buttonId);
+                console.log(snipperId);
+                console.log(infoPıd);
+                console.log(joinBtnId);
+           
+                $(snipperId).show();
+                $.ajax({
+                    url: '/Meeting/CrateMeeting/',
+                    type: 'GET',
+                    data: { id: getdata },
+                    success: function (response) {
+
+                        $('#' + buttonId).hide();
+                        $(joinBtnId).show();
+
+                        $(infoPıd).text('toplantı  başarıyla oluşturuldu katılabilirsiniz');
+                        $(infoPıd).show();
+                        $(snipperId).hide();
+                        $(buttonId).hide();
+                    },
+                    error: function (xhr, status, error) {
+
+
+                        $(infoPıd).text('işlem başarısız');
+                        $(snipperId).hide();
+                    }
+                });
+
+
+
+
+            }
+            );
+        }
+        );
+
+
+
+
+        function confirmDialog(event) {
+    event.preventDefault(); // Sayfanın yeniden yüklenmesini engellemek için varsayılan olayı durduruyoruz
+
+    if (confirm("Tamanlandı Olarak İşaretlenecek Bu işlem geri alınamaz")) {
+        // Evet seçeneği seçildiyse, linkin hedefine gitmek için window.location.href'i kullanın
+        window.location.href = event.target.href;
+    } 
+}
+
+
+
+
+</script>
+
+}

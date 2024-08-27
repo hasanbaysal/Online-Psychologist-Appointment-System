@@ -1,0 +1,42 @@
+/*--------------------------------------------------------------
+12. Scroll Up
+----------------------------------------------------------------*/
+#cs-scrollup {
+  position: fixed;
+  bottom: -60px;
+  right: 25px;
+  height: 36px;
+  width: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  z-index: 10;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px 0px rgba(17, 17, 18, 0.1);
+  border-radius: 5px;
+  border: 1px solid $border;
+  color: $primary;
+}
+
+#cs-scrollup:hover {
+  color: #fff;
+  border-color: $accent;
+  background-color: $accent;
+}
+
+#cs-scrollup.scrollup-show {
+  bottom: 25px;
+}
+
+@media screen and (max-width: 575px) {
+  #cs-scrollup.scrollup-show {
+    bottom: 15px;
+  }
+
+  #cs-scrollup {
+    right: 15px;
+  }
+}

@@ -1,0 +1,289 @@
+﻿@{
+    ViewData["Title"] = "Randevu Ekle";
+}
+
+<h3 class="text-center">Randevu Ekle</h3>
+
+
+
+
+<div class="row mb-3">
+
+
+    <div class="col-md-12 mb-2">
+        <p class="text-danger text-center">Eklediğiniz Randevular Arasındaki Süre Farkına Lütfen Dikkat Edin</p>
+        <p class="text-danger text-center mb-1">Birbiri ardına seri şekilde oluşturulan randevuların diğer randevu saatleri ile çakışması halinde problemler yaşanabilir </p>
+
+        <hr class="mb-2" style="height:2px; background-color:black; border:none;" />
+
+    </div>
+    <div class="text-center col-md-4">
+        Saat : <input class="mb-1" id="randevuTime" onchange="printTime(this)" type="time"> 
+    </div>
+    <div class="text-center col-md-4">
+        Tarih: <input id="randevuDate" class="mb-1" onchange="printDate(this)" type="date"> 
+       
+    </div>
+    <div class="col-md-4 mb-2 mt-2 d-flex justify-content-center">
+        <button id="add" class="btn btn-primary mb-1 "> yeni randevu ekle</button>
+    </div>
+
+</div>
+
+
+<br>
+<div class="row mt-2">
+
+
+    <div class="col-md-7">
+
+        <button id="btnSearch" class="btn-warning">Aktif Randevularımı Listele</button>
+        @*mevcut randevu listesi*@
+        <div id="queryResult">
+            <div id="snipper" style="display:none;" class="spinner-border" role="status">
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-5">
+
+
+        <div id="spin" class="spinner-border text-primary" role="status"></div>
+        <form id="myform">
+
+            <input type="hidden" name="PskId" value="@ViewBag.userid">
+
+
+            <button type="submit" class="btn btn-success mb-3" id="gonder">kaydet</button>
+        </form>
+
+    </div>
+
+
+
+</div>
+
+
+
+@{
+    string userIDdata = ViewBag.userid;
+}
+
+@section Scripts
+    {
+
+
+    <script>
+
+
+
+        window.addEventListener('load', function () {
+            var button = document.getElementById('btnSearch');
+            button.click();
+        });
+
+        $(document).ready(function () {
+
+
+           
+
+        
+
+            $('#btnSearch').on('click', function () {
+                var queryData = $('#searchData').val();
+
+
+                var userIDdata = '@userIDdata';
+                $('#snipper').show();
+                $.ajax({
+                    url: '/Psychologist/GetAppointmentsTable',
+                    type: 'GET',
+                    data: { id: userIDdata },
+                    success: function (response) {
+                        $('#queryResult').html(response);
+                        $('#snipper').hide();
+                    },
+                    error: function (request, message, error) {
+                        handleException(request, message, error);
+                        $('#queryResult').html('<h2>bir hata meydana geldi</h2>');
+                        $('#snipper').hide();
+                    }
+                });
+            });
+        });
+
+
+
+
+
+        var reseter;
+        var saat = "";
+        var tarih = "";
+        var arr = {
+            "PskId": '@userIDdata',
+            "Dates": []
+        };
+
+        function printTime(a) {
+
+
+            saat = a.value;
+            //  console.log(a.value);
+
+        }
+
+        function printDate(a) {
+
+            tarih = a.value;
+            //    console.log(a.value);
+
+        }
+
+
+        $(function () {
+
+            $('#spin').hide();
+            // $('#uyari').hide();
+            $('#add').click(function () {
+
+                if (tarih == "" || saat == "") {
+                    alert("tarih ve saat alanı boş olamaz");
+                    return false;
+                }
+
+
+
+                var randevu = tarih + "T" + saat + ":00";
+                var randevuTarih = new Date(randevu);
+
+                if (new Date() > randevuTarih) {
+                    alert("geçmişe ait bir randevu oluşturalamaz");
+                    return false;
+                }
+
+
+                var localTime = randevuTarih.toLocaleDateString() + " " + randevuTarih.toLocaleTimeString();
+
+                console.log(localTime);
+
+                var dublicateControl = false;
+                arr.Dates.forEach((x) => {
+
+                    if (x == localTime) {
+                        dublicateControl = true;
+                        alert("aynı gün ve saate eklenmiş bir başka randevu var");
+
+                    }
+
+
+                });
+
+
+                if (!dublicateControl) {
+                    //console.log(localTime);
+                    arr.Dates.push(localTime);
+
+                }
+                else {
+                    return false;
+                }
+
+
+                var inputDiv = $("<div class='myitem mb-3' ></div>");
+                var formDateInput = $("<input>").attr({
+
+                    type: 'text',
+                    name: 'Dates',
+                    readonly: 'readonly',
+                    value: localTime
+                });
+                var deleteButton = $("<button type='button' class='btn btn-danger text-white'  onclick='removeInput(this)'>X</button>")
+                var Custominput = inputDiv
+                    .append(formDateInput);
+                Custominput = Custominput.append(deleteButton);
+                $('#myform').append(Custominput);
+
+
+            });
+
+
+
+
+
+            $('#myform').submit(function (event) {
+
+
+
+                if (arr.Dates.length == 0) {
+                    alert("randevu ekleyiniz");
+                    return false;
+                }
+
+
+                event.preventDefault();
+                var formData = $('#myform').serializeArray();
+
+
+                console.log(formData);
+
+                $('#myform').hide();
+
+                $.ajax({
+
+                    type: 'POST',
+                    url: '/Psychologist/SaveAppointment',
+                    data: formData,
+                    success: function (response) {
+
+
+
+                        $('#btnSearch').click();
+                        $('.myitem').remove();
+                        arr.Dates = [];
+                        alert('işlem başarılı');
+
+                    },
+                    beforeSend: function () {
+
+                      
+                        $('#spin').show();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+
+
+                        alert('işlem başarız eklemek istediğiniz randevuları kontrol ediniz');
+                        // console.log(textStatus, errorThrown, 'başarısız');
+
+
+                    },
+                    complete: function () {
+
+                        $('#myform').show();
+                        $('#spin').hide();
+                    }
+                });
+
+            });
+
+        });
+
+        function removeInput(x) {
+
+            let removeVal = $(x).siblings("input").val();
+
+            arr.Dates = arr.Dates.filter((x) => {
+                return x !== removeVal;
+            });
+
+            $(x).parent().remove();
+        }
+
+
+
+    </script>
+    }

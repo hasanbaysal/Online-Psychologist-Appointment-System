@@ -1,0 +1,145 @@
+/*--------------------------------------------------------------
+23. Horizontal Scroll
+----------------------------------------------------------------*/
+.cs-horizontal__scroll__wrap *::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+}
+
+.cs-horizontal__scroll__wrap *::-webkit-scrollbar-button {
+  width: 1px;
+  height: 1px;
+}
+
+.cs-horizontal__scroll__wrap {
+  overflow: hidden;
+  height: calc(100vh - 160px);
+  padding: 0 30px;
+  position: relative;
+}
+
+.cs-horizontal__scroll__wrap:before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 30px;
+  right: 0;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+}
+
+.cs-horizontal__scroll {
+  width: 100vh;
+  height: 100vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transform-origin: right top;
+  transform: rotate(-90deg) translate3d(0, -100vh, 0);
+}
+
+.cs-horizontal__scroll>div {
+  transform-origin: left top;
+  transform: rotate(90deg) translate3d(0, -100vh, 0);
+}
+
+.cs-horizontal__scroll__in {
+  height: calc(100vh - 160px);
+  position: relative;
+}
+
+.cs-horizontal__scroll__in .cs-horizontal__scroll-bar {
+  height: 100%;
+  display: flex;
+  width: calc(100vw - 60px);
+}
+
+.cs-horizontal__scroll-item {
+  float: initial;
+  margin-bottom: 0;
+  width: 32.2%;
+  flex: none;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.cs-horizontal__scroll-right-padd {
+  width: 60px !important;
+  flex: none;
+}
+
+.cs-horizontal__scroll-item .cs-bg {
+  display: block;
+  position: relative;
+  height: 100%;
+}
+
+.cs-horizontal__scroll-item .cs-bg:before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background-color: #000;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.cs-horizontal__scroll-item .cs-bg:hover:before {
+  opacity: 0.5;
+}
+
+.cs-horizontal__scroll-bar .cs-horizontal__scroll-item:not(:nth-last-child(2)),
+.cs-horizontal__scroll-bar .cs-horizontal__scroll-item:not(:nth-last-child(2)) {
+  margin-right: 30px;
+}
+
+.lg-img-wrap {
+  padding: 50px 30px !important;
+}
+
+.cs-horizontal__scroll-item .cs-bg img {
+  width: 0;
+}
+
+@media screen and (max-width: 1600px) {
+
+  .cs-horizontal__scroll__in .cs-horizontal__scroll-bar {
+    width: calc(100vw - 60px);
+  }
+
+}
+
+@media screen and (max-width: 1199px) {
+
+  .cs-horizontal__scroll-item {
+    width: 50% !important;
+  }
+
+}
+
+@media screen and (max-width: 575px) {
+
+  .cs-horizontal__scroll-item {
+    width: 80% !important;
+  }
+
+  .cs-horizontal__scroll__wrap {
+    padding: 0 15px;
+  }
+
+  .cs-horizontal__scroll__wrap:before {
+    width: 15px;
+  }
+
+  .cs-horizontal__scroll-right-padd {
+    width: 30px !important;
+  }
+
+  .cs-horizontal__scroll-bar .cs-horizontal__scroll-item:not(:nth-last-child(2)),
+  .cs-horizontal__scroll-bar .cs-horizontal__scroll-item:not(:nth-last-child(2)) {
+    margin-right: 15px;
+  }
+}

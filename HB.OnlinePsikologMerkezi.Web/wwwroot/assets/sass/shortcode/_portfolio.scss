@@ -1,0 +1,256 @@
+/*--------------------------------------------------------------
+28. Portfolio
+----------------------------------------------------------------*/
+.cs-portfolio.cs-style1 {
+  display: block;
+  height: 370px;
+  border-radius: 5px;
+  position: relative;
+
+  +.cs-portfolio.cs-style1 {
+    margin-top: 30px;
+  }
+
+  .cs-portfolio__thumb {
+    height: 100%;
+    width: 100%;
+    border-radius: inherit;
+  }
+
+  .cs-portfolio__info {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+    padding: 35px 30px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    opacity: 0;
+    transition: all 0.4s ease;
+    border-radius: inherit;
+  }
+
+  .cs-portfolio__info__bg {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    border-radius: inherit;
+    background-color: $accent;
+    opacity: 0.9;
+  }
+
+  .cs-portfolio__title {
+    font-size: 24px;
+    font-weight: 800;
+    color: $white;
+    margin-bottom: 18px;
+  }
+
+  .cs-portfolio__subtitle {
+    color: rgba($white, 0.8);
+  }
+
+  .cs-portfolio__info__up,
+  .cs-portfolio__info__down {
+    position: relative;
+    opacity: 0;
+    transition: all 0.4s ease;
+    z-index: 1;
+  }
+
+  .cs-portfolio__info__up {
+    top: 20px;
+  }
+
+  .cs-portfolio__info__down {
+    left: 15px;
+  }
+
+  &:hover {
+
+    .cs-portfolio__info,
+    .cs-portfolio__info__up,
+    .cs-portfolio__info__down {
+      opacity: 1;
+    }
+
+    .cs-portfolio__info__up {
+      top: 0;
+      transition-delay: 0.1s;
+    }
+
+    .cs-portfolio__info__down {
+      left: 0;
+      transition-delay: 0.2s;
+    }
+  }
+
+  &.cs-type1 {
+    .cs-portfolio__info {
+      max-width: 350px;
+    }
+
+    .cs-portfolio__info__bg {
+      background: linear-gradient(90deg, rgb(94, 44, 237) 0%, rgb(92, 190, 45) 99%);
+    }
+  }
+
+  &.cs-color1 {
+    .cs-portfolio__info__bg {
+      background: linear-gradient(90deg, rgb(58, 18, 90) 0%, rgb(236, 191, 36) 99%);
+    }
+  }
+}
+
+.cs-portfolio.cs-style2 {
+  position: relative;
+  display: block;
+  overflow: hidden;
+
+  .cs-add {
+    cursor: pointer;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    border: 2px solid #fff;
+    height: 50px;
+    width: 50px;
+    background: transparent;
+    border-radius: 50%;
+    font-size: 30px;
+    color: #fff;
+    transition: all 0.4s ease;
+    z-index: 6;
+    opacity: 0;
+    transform: rotate(90deg) scale(0.6);
+
+    &:focus {
+      outline: none;
+    }
+
+    &:after,
+    &:before {
+      content: '';
+      position: absolute;
+      height: 2px;
+      width: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+    }
+
+    &:after {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    &:before {
+      transform: translate(-50%, -50%) rotate(-90deg);
+    }
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+
+  .cs-portfolio__thumb {
+    height: 400px;
+
+    &.cs-height__700 {
+      height: 700px;
+    }
+
+    &.cs-height__500 {
+      height: 500px;
+    }
+
+    &.cs-height__600 {
+      height: 600px;
+    }
+
+    &.cs-height__300 {
+      height: 300px;
+    }
+
+    &.cs-height__350 {
+      height: 350px;
+    }
+  }
+
+  .cs-portfolio__info__bg {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background: rgba($accent, 0.9);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+  }
+
+  .cs-portfolio__info {
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    width: 100%;
+    padding: 30px 30px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease-in-out;
+  }
+
+  .cs-portfolio__title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 7px;
+
+    a {
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .cs-portfolio__catagories a {
+    color: #fff;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &:hover {
+    .cs-portfolio__info {
+      bottom: 0;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cs-portfolio__info__bg {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .cs-add {
+      transition-duration: 0.4s;
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+    }
+  }
+}
+
+.cs-horizontal__scroll-item .cs-portfolio.cs-style2 {
+  height: 100%;
+
+  .cs-portfolio__thumb {
+    height: 100%;
+  }
+}

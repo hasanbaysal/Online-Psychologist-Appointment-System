@@ -1,0 +1,141 @@
+﻿
+
+@model List<Blog>
+@using Microsoft.EntityFrameworkCore;
+@inject IUow uow;
+@{
+
+
+    string GetMonthName(int id)
+    {
+
+        string monthName = id switch
+        {
+            1 => "Ocak",
+            2 => "Şubat",
+            3 => "Mart",
+            4 => "Nisan",
+            5 => "Mayıs",
+            6 => "Haziran",
+            7 => "Temmuz",
+            8 => "Ağustos",
+            9 => "Eylül",
+            10 => "Ekim",
+            11 => "Kasım",
+            12 => "Aralık",
+            _ => "Geçersiz ay numarası"
+        };
+        return monthName;
+    }
+
+
+   
+    ViewData["Title"] = "Blog";
+}
+
+
+@section CustomCss {
+
+    <meta name="author" content="Hasan Baysal">
+    <meta name="description" content="Online psikolog merkezi yıllardır edindiği tercübe ile kullanıcılarına kesintisiz online danışma danışma hizmetleri veren biri kuruluş">
+    <meta name="keywords" content="online terapi,terapi,kaygı bozukluğu, anksiyete,online psikoloji, psikolojik danışmanlık, terapi, depresyon, psikoloji">
+    <meta property="og:description" content="Online psikolog merkezi, psikolojik danışmanlık hizmetleri, terapiler ve kişisel gelişim kaynakları sunan güvenilir bir platform.">
+
+
+}
+
+<div>
+    <h5 class="text-center mb-4">BLOG</h5>
+    <div class="container mt-2">
+        <div class="row">
+        
+            @foreach (var item in Model)
+            {
+
+                <div class="col-lg-6">
+                    <div class="cs-post cs-style1">
+                        <a asp-route-myarticlekey="@item.ArticleUrl" asp-action="Article" asp-controller="Blog" class="cs-post__thumb">
+                            <div class="cs-post__thumb__in cs-bg" data-src="/assets/blogimage/@item.BlogImagePath"></div>
+                        </a>
+                        <div class="cs-post__date">@item.PostWriteTime.Value.Day  <span>@GetMonthName(item.PostWriteTime.Value.Month)</span></div>
+                        <div class="cs-post__info">
+                            <div class="cs-post__meta cs-style1">
+                                <a asp-route-myarticlekey="@item.ArticleUrl" asp-action="Article" asp-controller="Blog" class="cs-post__author"><i class="fas fa-user-alt"></i>@item.Author</a>
+                            </div>
+                            <h2 class="cs-post__title mb0"><a asp-route-myarticlekey="@item.ArticleUrl" asp-action="Article" asp-controller="Blog">@item.Header</a></h2>
+                        </div>
+                    </div>
+                    <div class="cs-height__40 cs-height__lg__40"></div>
+                </div>
+
+                <!-- .col -->
+            }
+
+
+        </div>
+        <div class="cs-height__20 cs-height__lg__0"></div>
+        <div class="cs-post__pagination cs-style1 cs-center">
+            <ul class="page-numbers">
+
+
+                @{
+                    var count = await uow.GetRepository<Blog>().GetQueryable().CountAsync();
+
+                    int currentPageNumber = ViewBag.currentPage;
+
+                    int pageSize = count / 6;
+                    int otherBlog = count & 6;
+
+
+                }
+
+
+                @if (count == 6 || count <6)
+                {
+                    <li><a class="page-numbers current" asp-controller="Blog" asp-action="Index" asp-route-page="1">1</a></li>
+                }
+                else
+                {
+
+                    @if (currentPageNumber - 1 > 0 || currentPageNumber - 1 != 0)
+                    {
+                        <li>
+                            <a class="next page-numbers" asp-controller="Blog" asp-action="Index" asp-route-page="@(currentPageNumber-1)">
+
+                                <i class="fas fa-long-arrow-alt-left"></i> Geri
+                               
+                            </a>
+                        </li>
+
+                    }
+
+
+                 
+                 
+                    @for (int j=1, i = 0; i <= count; i+=6, j++)
+                    {
+                        if (j == currentPageNumber)
+                        {
+                            <li><span class="page-numbers current">@j</span></li>
+                        }
+                        else
+                        {
+                            <li><a class="page-numbers" asp-controller="Blog" asp-action="Index" asp-route-page="@j">@j</a></li>
+                        }
+                        
+                    }
+
+                    @if(currentPageNumber+1 < pageSize){
+                        <li><a class="next page-numbers" asp-controller="Blog" asp-action="Index" asp-route-page="@(currentPageNumber+1)">İleri<i class="fas fa-long-arrow-alt-right"></i></a></li>
+
+                    }
+                    
+
+                }
+               
+
+            </ul>
+        </div>
+    </div>
+    <div class="cs-height__130 cs-height__lg__80"></div>
+</div>

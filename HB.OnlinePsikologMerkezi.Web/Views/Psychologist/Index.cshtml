@@ -1,0 +1,267 @@
+﻿
+@{
+    ViewData["Title"] = "Psikologlarımız";
+}
+@model List<PsychologistListDto>
+@using System.Text;
+
+@*değişecek*@
+@*database'den kategorlari çek*@
+<div class="row">
+
+    <div style="border-left:none;" class="text-center filter-buttons col-lg-12 col-sm-12 my-auto mx-auto  mb-2 p-0 ">
+        <button class="btn btn-outline-primary" data-filter="*">Tümü</button>
+
+        @foreach (var item in (ViewBag.categories as List<CategoryListDto>)!)
+        {
+            <button class="btn btn-outline-primary"
+                @{
+                string cate ="";
+                if(item.Name.Contains(" "))
+                {
+                cate = item.Name.Replace(" ","-");
+                }
+                else{
+                cate = item.Name;
+                }
+                var last = "."+cate;
+                }
+                data-filter="@last">
+                @item.Name
+            </button>
+        }
+    </div>
+
+</div>
+@*psikolgoları çek kategorilerine göre classları doldur bilgilerini yazdır sonra kendi sayfalarına yöneldir*@
+<div class="row mgrid">
+
+    @{
+        string tempCategoryList = "";
+
+
+    }
+    @{
+        string EditClassName(string name)
+        {
+
+            if (name.Contains(" "))
+            {
+                return name.Replace(" ", "-");
+            }
+
+            return name;
+
+
+        }
+
+        string ConvertTurkishToEnglish(string turkishText)
+        {
+            StringBuilder englishText = new StringBuilder();
+
+            turkishText = turkishText.Replace(" ", "-").ToLower();
+
+            foreach (char c in turkishText)
+            {
+                switch (c)
+                {
+                    case 'ı':
+                        englishText.Append('i');
+                        break;
+
+                    case 'ş':
+                        englishText.Append('s');
+                        break;
+                    case 'ğ':
+                        englishText.Append('g');
+                        break;
+                    case 'ç':
+                        englishText.Append('c');
+                        break;
+                    case 'ö':
+                        englishText.Append('o');
+                        break;
+                    case 'ü':
+                        englishText.Append('u');
+                        break;
+                    default:
+                        englishText.Append(c);
+                        break;
+                }
+            }
+
+            return englishText.ToString();
+        }
+
+
+
+
+    }
+    @foreach (var item in Model)
+    {
+        @(tempCategoryList = " ")
+        item.PsychologistCategories.ForEach(x => tempCategoryList += EditClassName(x.Category.Name) + " ");
+
+
+        <div class=" col-lg-12 col-sm-12 my-auto mx-auto custombox mb-3 p-0 xitem @(" "+tempCategoryList+" ")">
+
+            <div class="  hover-border card custom-card rounded-3 p-1">
+                <div class="row g-0 mt-1">
+                    <div class="col-md-3 text-center">
+                        <img src="~/assets/pksimage/@item.ProfilePhotoPath" alt="Image" style="width:200px; height:200px;  object-fit: cover;" class="rounded-circle img-fluid">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card-body">
+                            <h5 class="card-title"><strong class="fw-bolder text-dark"> @(item.Title + " ")  @(item.AppUser.Name + " " + item.AppUser.LastName)</strong></h5>
+                            <p class="card-text" style="color:black;">@item.ShortDescription</p>
+                            <div class="tags">
+
+                                @foreach (var cate in item.PsychologistCategories)
+                                {
+                                    <span class="badge rounded-pill custom-tag ">@cate.Category.Name</span>
+                                }
+
+
+                            </div>
+                            <div class="d-flex justify-content-end">
+
+
+                                <a href="#" class="pricebtn btn-sm text-white me-2">@(item.ConsulationPrice + " ₺")</a>
+
+                                @{
+                                    string pskName = item.AppUser.Name.Trim() + " " + item.AppUser.LastName.Trim();
+                                }
+
+                                <a asp-route-name="@ConvertTurkishToEnglish(pskName)" asp-route-id="@item.SecondKey" asp-action="PsychologistInfo" asp-controller="Psychologist" class="mx-1 btn-sm cv-btn">Özgeçmiş</a>
+                                <a asp-route-id="@item.SecondKey" asp-action="PsychologistProfile" asp-controller="Psychologist" class="mx-1 btn-sm randevu-btn">Randevu Al</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    }
+
+
+
+</div>
+
+
+
+
+@section Scripts{
+
+<script>
+
+    $(document).ready(function () {
+        var $grid = $(".mgrid").isotope({
+            itemSelector: ".xitem",
+            layoutMode: "fitRows"
+        });
+
+        $("button").click(function () {
+            var filterValue = $(this).attr("data-filter");
+            $grid.isotope({ filter: filterValue });
+        });
+    });
+
+</script>
+}
+
+@section CustomCss{
+
+    <style>
+
+
+
+        .pricebtn {
+            background-color: #5ABB4A;
+            color: #FFFFFF;
+        }
+
+        .custom-btn {
+            border: 1px solid rgb(121,82,179);
+            background-color: #FFFFFF;
+            color: rgb(121,82,179);
+        }
+
+            .custom-btn:hover {
+                background-color: rgb(121,82,179);
+                color: #FFFFFF;
+            }
+
+
+        .randevu-btn {
+            background-color: #1688D2;
+            color: white;
+        }
+
+        .cv-btn {
+            background-color: #DE187F;
+            color: white;
+        }
+
+        .custom-tag {
+            background-color: #E6F3FC;
+            color: #1688D2;
+        }
+
+
+
+        .custom-card {
+            border: 1px solid #bdbdbb;
+        }
+
+        .custombox {
+            transition: box-shadow .3s;
+            /* border-left: 2px solid #7952B3;*/
+        }
+
+            .custombox:hover {
+                box-shadow: 0 0 18px rgba(20,20,20,.2);
+            }
+
+        .blog-item {
+            transition: box-shadow .3s;
+        }
+
+            .blog-item:hover {
+                box-shadow: 0 0 20px rgba(20,20,20,.4);
+            }
+
+                .blog-item:hover img {
+                    filter: opacity(85%);
+                    transition: filter 0.3s ease;
+                }
+
+        .mgrid {
+            /* display: flex;
+                                    flex-wrap: wrap;*/
+        }
+
+
+        .hover-border::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background-color: #7952B3;
+            transition: width 0.5s ease-in-out; /* Uzama animasyonu için geçiş süresi ve geçiş tipi */
+        }
+
+        .hover-border:hover::after {
+            width: 100%; /* Uzama animasyonunda genişlik 100% olacak şekilde ayarlandı */
+        }
+
+        .owl-item {
+            width: 128.906px;
+            margin-right: 10px;
+        }
+    </style>
+
+
+}

@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewData["Title"] = "İletişim";
+}
+
+@model MessageViewModel
+
+<div class="cs-parallax cs-style9 overflow-hidden">
+   
+    <div class="container">
+        <div class="cs-section__heading cs-style1 text-center">
+            <h2 class="cs-section__title">Bize Ulaşın</h2>
+            <div class="cs-height__25 cs-height__lg__15"></div>
+            <div class="cs-section__subtitle">Online Psikolog Merkezi olarak kullanıcılarımızn geri bildirimlerini önemsiyoruz. <br>İş birliği, öneri ve şikayetleriniz için bize mesaj yollayabilirsiniz.</div>
+        </div>
+        <div class="cs-height__70 cs-height__lg__50"></div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="cs-vertical__middle">
+                    <div class="cs-vertical__middle__in">
+                        <div class="cs-icon__box cs-style7">
+                            <div class="cs-icon__box__icon cs-center cs-accent__bg"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="cs-icon__box__right">
+                                <h2 class="cs-icon__box__title">Ankara Ofisimiz </h2>
+                                <div class="cs-icon__box__subtitle">Cumhuriyet, 26, Mithatpaşa Cd., no:16 Çankaya/Ankara</div>
+                            </div>
+                        </div><!-- .cs-icon__box -->
+                        <div class="cs-height__40 cs-height__lg__30"></div>
+                        <div class="cs-icon__box cs-style7">
+                            <div class="cs-icon__box__icon cs-center cs-green__bg"><i class="fas fa-envelope"></i></div>
+                            <div class="cs-icon__box__right">
+                                <h2 class="cs-icon__box__title">E-Posta Adresimiz </h2>
+                                <div class="cs-icon__box__subtitle"> <a title="mail gönder" href="mailto:info@onlinepsikologmerkezi.com">info@onlinepsikologmerkezi.com</a> </div>
+                            </div>
+                        </div><!-- .cs-icon__box -->
+                        <div class="cs-height__40 cs-height__lg__30"></div>
+                        <div class="cs-icon__box cs-style7">
+                            <div class="cs-icon__box__icon cs-center cs-yellow__bg"><i class="fas fa-mobile-alt"></i></div>
+                            <div class="cs-icon__box__right">
+                                <h2 class="cs-icon__box__title">Bizi Arayın </h2>
+                                <div class="cs-icon__box__subtitle">+90 555 148 71 16</div>
+                                <div class="cs-icon__box__subtitle">
+                                  
+                                    <a href="https://wa.me/905551487116" target="_blank">
+                                        <img src="~/assets/img/wp.png" />
+                                        Canlı Desktek
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                        </div><!-- .cs-icon__box -->
+                        <div class="cs-height__0 cs-height__lg__60"></div>
+                    </div>
+                </div>
+            </div><!-- .col -->
+            <div class="col-lg-6">
+                <form  asp-action="Contact" asp-controller="Home" method="POST" class="cs-form cs-style2">
+                
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" asp-for="Name" class="cs-form__field" placeholder="Ad" required>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                            <div class="cs-height__25 cs-height__lg__25"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" asp-for="LastName" class="cs-form__field"  placeholder="Soyad" required>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                            <div class="cs-height__25 cs-height__lg__25"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="email" asp-for="Email" class="cs-form__field"  placeholder="Email Adresi" required>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <div class="cs-height__25 cs-height__lg__25"></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <input class="cs-form__field" asp-for="PhoneNumber" placeholder="05555555555" required>
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            <div class="cs-height__25 cs-height__lg__25"></div>
+                        </div>
+                        <div class="col-sm-12">
+                            <textarea class="cs-form__field" asp-for="UserMessage" placeholder="Mesajınız" required></textarea>
+                            <span asp-validation-for="UserMessage" class="text-danger"></span>
+                            <div class="cs-height__25 cs-height__lg__25"></div>
+                        </div>
+                        <div class="col-lg-12">
+                            <button class="cs-btn cs-style1 cs-color1 cs-primary__font w-100" type="submit">Gönder</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+       
+
+
+        <div class="mt-4 cs-google__map">
+            <iframe src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Cumhuriyet,%2026,%20Mithatpa%C5%9Fa%20Cd.,%20no:16%20%C3%87ankaya/Ankara+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" allowfullscreen></iframe>
+        </div>
+    </div>
+    <div class="cs-height__130 cs-height__lg__80"></div>
+    <div class="cs-parallax__shape cs-position1">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="485px" height="485px">
+            <path fill-rule="evenodd" fill="rgb(242, 248, 255)" d="M242.500,-0.000 C376.429,-0.000 485.000,108.571 485.000,242.500 C485.000,376.429 376.429,485.000 242.500,485.000 C108.571,485.000 0.000,376.429 0.000,242.500 C0.000,108.571 108.571,-0.000 242.500,-0.000 Z" />
+        </svg>
+    </div>
+    <div class="cs-parallax__shape cs-position2">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="485px" height="485px">
+            <path fill-rule="evenodd" fill="rgb(242, 248, 255)" d="M242.500,-0.000 C376.429,-0.000 485.000,108.571 485.000,242.500 C485.000,376.429 376.429,485.000 242.500,485.000 C108.571,485.000 -0.000,376.429 -0.000,242.500 C-0.000,108.571 108.571,-0.000 242.500,-0.000 Z" />
+        </svg>
+    </div>
+</div>
+
+
+@section Scripts
+    {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    }
+

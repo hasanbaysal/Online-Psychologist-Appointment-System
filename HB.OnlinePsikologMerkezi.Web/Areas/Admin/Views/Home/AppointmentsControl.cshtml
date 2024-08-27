@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewData["Title"] = "AppointmentsControl";
+    Layout = "_Layout";
+}
+
+@model List<Appointment>
+
+<div class="row">
+
+    <div class="col-md-10 mx-auto">
+
+        <p>Randevuları temizle süresi geçmiş ve satılmamış randevuları veritabanından sil</p>
+
+        <a asp-action="CleanAppointment" asp-controller="Home" asp-area="Admin" class="btn btn-primary">Randevu Temizle</a>
+
+    </div>
+    <div class="col-md-10 mx-auto">
+
+        <h5 class="text-center">Randevu Arama</h5>
+
+
+        <form asp-action="AppointmentSearch" asp-controller="Home" asp-area="Admin" method="post">
+
+            <label class="form-label">Randevu Id'ye göre arama yap</label>
+            <input class="form-control" placeholder="Randevu id" name="id" type="number"/>
+
+            <button class="btn btn-primary" type="submit">Ara</button>
+            
+
+        </form>
+
+
+    </div>
+    <div class="col-md-12 mx-auto">
+
+        <h5 class="text-center">Son 30 gündeki satılan  randevular ve Aktif olarak satışta olanlar</h5>
+
+
+        @if (Model != null)
+        {
+            @if (Model.Count>0)
+            {
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>ıd</th>
+                            <th>randevu tarih</th>
+                            <th>psikolog</th>
+                            <th>satın alma tarih</th>
+                            
+                            <th>müşteri</th>
+                            <th>müşteri mail</th>
+                            <th>müşteri telefon</th>
+                            <th>fiyat</th>
+                            <th>durum</th>
+                            <th>iyzicoid</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.AppointmentDate.ToString("MM/dd/yyyy HH:mm")</td>
+                                <td>@(item.Psychologist.AppUser.Name ?? " ") @(" " + item.Psychologist.AppUser.LastName ?? " ")</td>
+                              
+                                @if (item.Order != null)
+                                {
+
+                                    <td>@item.Order.DurchaseDate.ToString("MM/dd/yyyy HH:mm")</td>
+                                    <td>@(item.Order.AppUser.Name ?? " ") @(" " + item.Order.AppUser.LastName ?? " ")</td>
+                                    <td>@(item.Order.AppUser.Email) </td>
+                                    <td>@(item.Order.AppUser.PhoneNumber ?? "yok") </td>
+                                    <td>@item.Price</td>
+                                    <td>@(item.Status == 2 ? "satıldı" : "tamamlandı")</td>
+                                    <td>@item.ThirdPartyPaymentId</td>
+                                }
+                                else
+                                {
+
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>- </td>
+                                    <td>- </td>
+                                    <td>@item.Price</td>
+                                    <td>Satışta Bekliyor</td>
+                                    <td>-</td>
+                                }
+                            </tr>
+
+                        }
+
+
+                    </tbody>
+
+                </table>
+            }
+            else
+            {
+                <h5>veri yok</h5>
+            }
+
+        }
+
+
+    </div>
+</div>

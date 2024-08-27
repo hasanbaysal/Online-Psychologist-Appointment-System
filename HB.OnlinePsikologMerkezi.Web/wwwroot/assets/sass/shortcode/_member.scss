@@ -1,0 +1,70 @@
+/*--------------------------------------------------------------
+26. Team Member
+----------------------------------------------------------------*/
+.cs-member.cs-style1 {
+  .cs-member__img {
+    width: 240px;
+    margin: auto;
+    height: 240px;
+    position: relative;
+    border-radius: 50%;
+    margin-bottom: 35px;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+  }
+
+  .cs-member__social {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: rgba(40, 28, 107, 0.5);
+    color: #fff;
+    border-radius: inherit;
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+
+    a {
+      padding: 10px;
+      display: flex;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .cs-member__name {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  &:hover {
+    .cs-member__social {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cs-member.cs-style1 .cs-member__img {
+    margin-bottom: 15px;
+  }
+
+  .cs-member.cs-style1 .cs-member__name {
+    font-size: 22px;
+  }
+}

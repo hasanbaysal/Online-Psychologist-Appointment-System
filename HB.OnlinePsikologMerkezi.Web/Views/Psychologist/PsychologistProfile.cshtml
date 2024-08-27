@@ -1,0 +1,749 @@
+﻿
+
+
+
+@model PsychologistListDto
+@using Microsoft.EntityFrameworkCore;
+@using System.Text;
+@inject IUow uow;
+
+
+@{
+    ViewData["Title"] = Model.AppUser.Name + " " + Model.AppUser.LastName;
+}
+
+
+@{
+
+    List<string> dateArray = new List<string>();
+
+    if (Model.Appointments != null)
+    {
+        if (Model.Appointments.Count > 0)
+        {
+
+            Model.Appointments = Model.Appointments.OrderBy(x => x.AppointmentDate).ToList();
+
+            foreach (var item in Model.Appointments)
+            {
+
+                var arr = item.AppointmentDate.ToString("MM/dd/yyyy").Split('.');
+
+                var temp = arr[2] + "-" + arr[0] + "-" + arr[1];
+                dateArray.Add(temp);
+
+            }
+        }
+    }
+
+
+
+    string[] mydateArry = dateArray.Distinct().ToArray();
+
+
+
+      string ConvertTurkishToEnglish(string turkishText)
+                    {
+                        StringBuilder englishText = new StringBuilder();
+
+                        turkishText = turkishText.Replace(" ", "-").ToLower();
+
+                        foreach (char c in turkishText)
+                        {
+                            switch (c)
+                            {
+                                case 'ı':
+                                    englishText.Append('i');
+                                    break;
+                                
+                                case 'ş':
+                                    englishText.Append('s');
+                                    break;
+                                case 'ğ':
+                                    englishText.Append('g');
+                                    break;
+                                case 'ç':
+                                    englishText.Append('c');
+                                    break;
+                                case 'ö':
+                                    englishText.Append('o');
+                                    break;
+                                case 'ü':
+                                    englishText.Append('u');
+                                    break;
+                                default:
+                                    englishText.Append(c);
+                                    break;
+                            }
+                        }
+
+                        return englishText.ToString();
+                    }
+
+                     string pskName = Model.AppUser.Name.Trim() + " " + Model.AppUser.LastName.Trim();
+}
+
+
+<div class="row mb-3">
+    <div class="col-md-12 text-center">
+        @*psk resim gelecek*@
+        <img src="~/assets/pksimage/@Model.ProfilePhotoPath" alt="Image" style="width:200px; height:200px;  object-fit: cover;" class="rounded-circle img-fluid">
+
+        <h5 class="text-center mt-3"><span class="border-bottom text-dark fw-bolder"> @(Model.Title + " " + Model.AppUser.Name + " " + Model.AppUser.LastName) </span></h5>
+         <a asp-route-name="@ConvertTurkishToEnglish(pskName)" asp-route-id="@Model.SecondKey" asp-action="PsychologistInfo" asp-controller="Psychologist" class="btn btn-outline-primary">Özgeçmiş</a>
+
+        <hr style="height:3px; color:black !important;" class="mb-1" />
+
+    </div>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-12">
+
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+  @*          <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class=" accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        <span class="fw-bold">  Psikolog Biyografisi</span>
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+
+
+*@
+
+
+
+                    @*özgeçmiş buraya*@
+
+
+       @*             <div class="accordion-body">
+
+
+                        <div class="row customstyle border shadow rounded-3">
+
+                            <div class="col-md-12 p-5 overflow-hidden">
+
+
+                                @Html.Raw( @Model.Cv)
+
+                            </div>
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+*@
+
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        <span class="fw-bold">  Randevu Tarihleri</span>
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+
+
+                    <div class="accordion-body">
+
+                        <div class="row mt-2   border shadow  p-5 rounded-3">
+
+
+                            <div class="col-mb-12 mb-2">
+                                <p class="text-center  fw-bold text-dark">Psikologun aktif randevu günlerini görebilmek için takvime bakın</p>
+                            </div>
+                            <div class="col-md-4 p-2 mb-2">
+                                <h5 class="text-center">Randevu Günü Seçin</h5>
+                                <hr style="height:3px; color:black;" class="mb-1" />
+
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="mb-1" style="display: flex; height:100%; justify-content: center; align-items: center;">
+                                            <p style="display:inline-block;" class="takvim my-auto"> </p>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-5">
+                                        <p class="text-center">
+                                            <input style="border-color:#2B78FD;" class=" p-0 rounded-3 text-center " onchange="myfunc(this)" type="text" id="datepicker" size="10">
+                                        </p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="fw-bolder text-center" id="tıklanaTarih"></p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div id="datelist" class="col-md-6 p-2 mb-2">
+
+
+                                <h5 class="text-center">Randevu Saati Seçin</h5>
+                                <hr style="height:3px; color:black;" class="mb-2" />
+
+                                <div class="mx-4 my-4">
+
+                                    <h6 id="zort" class="text-center" style="display:none"> <strong>Seçilen Gün İçin Bir Randevu Bulunamadı</strong> </h6>
+
+                                    @{
+                                        var boxClss = " btn btn-outline-primary mt-1 me-1";
+                                        var itemClassName = "";
+                                        string dateformat = "";
+
+                                    }
+
+                                    @if (Model.Appointments != null)
+                                    {
+                                        @for (int i = 0; i < Model.Appointments.Count; i++)
+                                        {
+
+                                            if (int.Parse(Model.Appointments[i].AppointmentDate.Day.ToString()) <= 9)
+                                            {
+                                                itemClassName = "0" + Model.Appointments[i].AppointmentDate.ToShortDateString().Replace('.', '-') + " appclass";
+
+                                                <span id="@(Model.Appointments[i].Id+"mm")" style="display:none;"> @Model.Appointments[i].Price </span>
+
+                                                <button id="@Model.Appointments[i].Id" onclick="AppointmentSelect(this)" type="button" style="display:none;" class="@("d"+itemClassName+boxClss)">
+
+                                                    @{
+
+                                                        if (Model.Appointments[i].AppointmentDate.Hour <= 9)
+                                                        {
+                                                            dateformat = "0" + @Model.Appointments[i].AppointmentDate.Hour.ToString();
+
+
+                                                        }
+                                                        else
+                                                        {
+                                                            dateformat = @Model.Appointments[i].AppointmentDate.Hour.ToString();
+                                                        }
+
+                                                        if (Model.Appointments[i].AppointmentDate.Minute <= 9)
+                                                        {
+                                                            dateformat += " : 0" + @Model.Appointments[i].AppointmentDate.Minute.ToString();
+
+                                                        }
+                                                        else
+                                                        {
+                                                            dateformat += " : " + @Model.Appointments[i].AppointmentDate.Minute.ToString();
+                                                        }
+
+                                                    }
+                                                    @dateformat
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                itemClassName = Model.Appointments[i].AppointmentDate.ToShortDateString().Replace('.', '-') + " appclass";
+
+                                                <span id="@(Model.Appointments[i].Id+"mm")" style="display:none;"> @Model.Appointments[i].Price </span>
+
+                                                <button id="@Model.Appointments[i].Id" onclick="AppointmentSelect(this)" type="button" style="display:none;" class="@("d"+itemClassName+boxClss)">
+
+
+
+
+
+                                                    @{
+
+                                                        if (Model.Appointments[i].AppointmentDate.Hour <= 9)
+                                                        {
+                                                            dateformat = "0" + @Model.Appointments[i].AppointmentDate.Hour.ToString();
+
+
+                                                        }
+                                                        else
+                                                        {
+                                                            dateformat = @Model.Appointments[i].AppointmentDate.Hour.ToString();
+                                                        }
+
+                                                        if (Model.Appointments[i].AppointmentDate.Minute <= 9)
+                                                        {
+                                                            dateformat += " : 0" + @Model.Appointments[i].AppointmentDate.Minute.ToString();
+
+                                                        }
+                                                        else
+                                                        {
+                                                            dateformat += " : " + @Model.Appointments[i].AppointmentDate.Minute.ToString();
+                                                        }
+
+                                                    }
+                                                    @dateformat
+
+
+
+
+                                                </button>
+
+                                            }
+
+
+                                        }
+                                    }
+
+
+
+                                </div>
+
+
+
+
+                            </div>
+
+                            <div class="col-md-2  p-2 mb-2">
+
+                                <h5 class="text-center">Seçilen Randevu</h5>
+                                <hr style="height:3px; color:black;" class="mb-1" />
+
+                                <p class="text-center">
+
+                                    <a href="#" id="buybtn" style="display:none;" class="btn btn-success">satın al</a>
+                                </p>
+                                <div id="selectedAppointmentDetails">
+                                </div>
+
+                            </div>
+
+                            <hr style="height:3px; color:black;" class="mb-2" />
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        <span class="fw-bold">   Danışan Yorumları</span>
+                    </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+
+                    @{
+                        var seccondId = Model.SecondKey;
+                        var yorumlar = await uow.GetRepository<Appointment>()
+                        .GetQueryable()
+
+                        .Include(x => x.Psychologist)
+                        .Where(x => x.Status == (int)AppointmentEnum.Completed && x.UserAppointmentComment != null && x.Psychologist.SecondKey == seccondId)
+                        .Include(x => x.Order)
+                        .ThenInclude(x => x.AppUser)
+                        .ToListAsync();
+                        //var yorumlar2 = Model.Appointments.Where(x => x.Status == (int)AppointmentEnum.Completed && x.UserAppointmentComment != null).ToList();
+                    }
+
+
+
+
+                    @*yorumları listele*@
+
+
+                    <div class="accordion-body">
+
+
+
+
+
+                        <div class="row d-flex justify-content-center">
+
+
+
+
+                            <div class="row d-flex justify-content-center mt-2   border shadow  p-5 rounded-3">
+                                <div class="col-md-12">
+                                    <div class="card shadow-0" style="border:none;">
+
+
+
+                                        @{
+
+                                            if (yorumlar.Count > 0)
+                                            {
+
+                                                foreach (var item in yorumlar)
+                                                {
+
+
+
+
+
+
+
+
+                                                    <div class="card-body p-2">
+
+
+
+                                                        <div class="card mb-2">
+                                                            <div class="card-body">
+                                                                <p>@item.UserAppointmentComment </p>
+
+                                                                <div class="d-flex justify-content-between">
+                                                                    <div class="d-flex flex-row align-items-center">
+                                                                        <img src="~/assets/img/default-user.jpg" alt="avatar" width="30"
+                                                                 height="25" />
+                                                                        <p class="text-info small mb-0 ms-2">@(item.Order.AppUser.UserName + " - ")  <span style="color:black;">@(item.AppointmentDate.ToString("dd/MM/yyyy"))</span>  </p>
+
+                                                                    </div>
+
+
+                                                                    @*admine çek*@
+                                                                    @if (User.IsInRole("admin"))
+                                                                    {
+
+                                                                        <div class="d-flex flex-row align-items-center">
+
+                                                                            @* comment delete action yaz *@
+                                                                            <button type="button" id="@("c"+item.Id)" class="commentdelete btn btn-danger  mb-0">Sil</button>
+                                                                        </div>
+
+                                                                    }
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                    </div>
+
+
+
+
+
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <p class="text-center">Danışan Yorumu Yok</p>
+                                            }
+
+                                        }
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+@{
+    string iconPath = Url.Content("~/assets/img/Takvim.svg");
+    string ConsulationPrice = Model.ConsulationPrice.ToString();
+
+}
+
+@section CustomCss{
+
+
+
+    <style>
+
+
+
+
+        @* carousel new code *@
+        .customstyle {
+            line-height: 1.5 !important;
+            font-family: var(--bs-font-sans-serif) !important;
+            color: #212529 !important;
+        }
+
+        .takvim {
+            width: 30px;
+            height: 30px;
+            background-image: url('@iconPath');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .highlight a {
+            background-color: #68a89e !important;
+            color: black !important;
+        }
+    </style>
+}
+
+
+@section Scripts
+    {
+
+
+    <script src="~/assets/js/owlcaro.js"></script>
+
+    <script>
+
+
+        var jsArray = @Html.Raw(Json.Serialize(mydateArry));
+
+        $(function () {
+
+
+
+
+
+            //$(".owl-carousel").owlCarousel({
+	           // items: 1,
+	           // nav: true,
+	           // dots: false,
+	           // autoplay: true,
+            //    autoplayTimeout:2000,
+            //    autoplayHoverPause:true,
+
+	           // loop: true,
+	           // mouseDrag: true,
+	           // touchDrag: true,
+	           // navText: ["<span>next &lt;</span>", "<span>before &gt;</span>"],
+            //});
+
+
+
+
+
+
+
+
+            $("#datepicker").datepicker({
+                open: true,
+                buttonText: "Takvimi Aç",
+                timepicker: false,
+                showOn: "both",
+                monthNames: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+                dayNamesMin: ["Pa", "Pt", "Sl", "Ça", "Pe", "Cu", "Ct"],
+                firstDay: 1,
+
+                beforeShowDay: function (date) {
+
+
+                    var stringDate = jQuery.datepicker.formatDate("yy-mm-dd", date);
+
+                    if (jsArray.indexOf(stringDate) > -1) {
+                        return [true, "highlight", "Bu gün renklendirildi"];
+                    }
+                    return [true, "", ""];
+
+                }
+
+
+            });
+
+            $('.ui-datepicker-trigger').addClass('d-block btn btn-outline-primary mx-auto mt-2');
+
+            $("#flush-headingTwo").click();
+
+
+            $('.commentdelete').click(function () {
+
+
+                var buttonId = $(this).attr('id');
+                var getdata = buttonId.replace("c", "");
+
+                console.log(getdata);
+                console.log(buttonId);
+
+                $.ajax({
+
+
+                    url: '/Home/DeleteComment/',
+                    type: 'GET',
+                    data: { id: getdata },
+
+                    success: function (response) {
+
+                        alert("işlem başarılı sayfayı yenileyince yorum silinecek");
+
+                    },
+                    error: function (xhr, status, error) {
+                        alert("işlem başarısız bir hata meydana geldi");
+
+                    }
+
+                })
+
+
+            })
+
+
+        });
+
+        var appelements = "";
+        var parts = "";
+
+
+        function dateConvert(y) {
+            var yerelZaman = new Date(y);
+
+
+
+            var tarihSecenekleri = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
+            var turkceZamanString = yerelZaman.toLocaleString('tr-TR', tarihSecenekleri);
+            //  console.log("Türkçe Zaman: " + turkceZamanString);
+            return turkceZamanString.replace("00:00:00", " ");
+        }
+
+
+        function AppointmentSelect(ap) {
+
+            $('#buybtn').show();
+
+            var currentDate = $("#datepicker").datepicker("getDate");
+
+            var converyResult = dateConvert(currentDate);
+
+            //console.log("takvimdeki tarih " + converyResult);
+
+            var buttonText = $(ap).text().trim();
+
+            //console.log("button yazı " + buttonText);
+
+            var clickedId = $(ap).attr("id");
+
+
+            //console.log("button id " + clickedId);
+
+            var constPrc = '@ConsulationPrice';
+
+            var customPriceSpan = $(ap).attr('id') + 'mm';
+
+            var priceregen = $('#' + customPriceSpan).text();
+
+
+
+            var informationHtml = `<p style="font-size: 12px;" class="shadow border text-center">
+                                                        <strong>
+                                                            Tarih : ${converyResult}
+                                                            <br>
+                                                          Saat  : ${buttonText}
+                                                            <br>
+                                                       Ücret : ${priceregen} ₺
+                                                         </strong>
+                                                         </p>`;
+
+            $('#selectedAppointmentDetails').html(informationHtml);
+
+
+            var mainUrl = window.location.origin + '/Payment/BuyAppointment/' + clickedId;
+
+            $("#buybtn").attr("href", mainUrl);
+
+
+        }
+
+
+        function myfunc(x) {
+
+            $('#zort').hide();
+            var selectedDate = $(x).val();
+
+
+            //console.log( $("#datepicker").datepicker("getDate"));
+
+
+            var currentDate = $("#datepicker").datepicker("getDate");
+
+            var converyResult = dateConvert(currentDate);
+
+            $("#tıklanaTarih").text(converyResult);
+
+            //  console.log(converyResult);
+
+
+
+            parts = selectedDate.split("/");
+
+            selectedDate = "d" + parts[1] + "-" + parts[0] + "-" + parts[2];
+
+
+            // console.log(selectedDate);
+
+            $(".appclass").show();
+
+            appelements = $(".appclass");
+
+            var counter = 0;
+
+            for (let i = 0; i < appelements.length; i++) {
+
+
+                //  console.log($(appelements[i]).hasClass(selectedDate));
+
+
+                if ($(appelements[i]).hasClass(selectedDate)) {
+                    $(appelements[i]).show();
+                    counter++;
+                }
+                else {
+                    $(appelements[i]).hide();
+                }
+
+            }
+            if (counter == 0) {
+                $('#zort').show();
+            }
+
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var accordionItem = document.querySelector('#accordionFlushExample .accordion-item:nth-child(1)');
+            var accordionButton = accordionItem.querySelector('.accordion-button');
+            var accordionCollapse = accordionItem.querySelector('.accordion-collapse');
+
+            accordionButton.setAttribute('aria-expanded', 'true');
+            accordionCollapse.classList.add('show');
+            accordionButton.classList.remove('collapsed');
+
+
+
+        });
+
+
+
+
+
+    </script>
+
+
+
+
+
+}
+
+

@@ -1,0 +1,40 @@
+/*--------------------------------------------------------------
+27. News Letter
+----------------------------------------------------------------*/
+.cs-newsletter.cs-style1 {
+  display: flex;
+
+  .cs-newsletter__input {
+    flex: 1;
+    margin-right: 30px;
+    padding: 5px 20px;
+    height: 50px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid transparent;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cs-newsletter.cs-style1 {
+    display: block;
+  }
+
+  .cs-newsletter.cs-style1 {
+    .cs-newsletter__input {
+      padding: 4px 15px;
+      margin-right: 0;
+      width: 100%;
+      height: 41px;
+      margin-bottom: 15px;
+    }
+
+    .cs-btn.cs-style1 {
+      width: 100%;
+    }
+  }
+}

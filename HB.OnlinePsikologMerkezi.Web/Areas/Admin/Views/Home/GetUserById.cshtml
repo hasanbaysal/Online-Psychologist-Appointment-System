@@ -1,0 +1,137 @@
+﻿@{
+    ViewData["Title"] = "GetUserById";
+    Layout = "_Layout";
+}
+@model AppUserListDto
+
+
+@*
+
+    engelle / engel kaldır
+    psikolog olarak ekle
+
+    user bilgiler
+
+
+    randevular => aktif olanlar - bitenler
+
+*@
+
+<div class="row mb-3 border">
+
+    <h3 class="text-center display-5">Üye Bilgileri</h3>
+
+    <div class="col-md-9">
+
+        <ul class="list-group">
+            <li class="list-group-item "> Adı : @Model.Name</li>
+            <li class="list-group-item "> soyadı : @Model.LastName</li>
+            <li class="list-group-item "> kullanıcı adı : @Model.UserName</li>
+            <li class="list-group-item "> email : @Model.Email</li>
+            <li class="list-group-item "> Telefon : @Model.PhoneNumber</li>
+            <li class="list-group-item "> Son Girş IP : @Model.LastLoginIpAddress</li>
+            <li class="list-group-item ">
+                Engelleldi mi : @if (Model.isBlock)
+                {
+                    <text>engellendi</text>
+                }
+                else
+                {
+                    <text>engellenmedi</text>
+                }
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="col-md-3">
+
+        <ul class="list-group ">
+
+            <li class="list-group-item "> <a asp-action="BlockUser" asp-controller="home" asp-area="admin" asp-route-id="@Model.Id" class="btn btn-danger">Engelle</a>      </li>
+            <li class="list-group-item "> <a asp-action="UnBlockUser" asp-controller="home" asp-area="admin" asp-route-id="@Model.Id" class="btn btn-success">Engel Kaldır</a>      </li>
+            <li class="list-group-item "> <a asp-action="PsychologistAdd" asp-route-id="@Model.Id" class="btn btn-primary">Psikolog olarak kayıt</a>  </li>
+
+        </ul>
+
+    </div>
+
+</div>
+<div class="row mb-3">
+
+    <h3 class="text-center display-5">Mevcut Randevuları</h3>
+
+    @foreach (var item in Model.Orders)
+    {
+        if (item.Appointment.Status == (int)AppointmentEnum.sold)
+        {
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Appointment.Id  numaralı randevu</h5>
+                        <ul>
+
+                            <li> psikolog ismi : @($"{item.Appointment.Psychologist.AppUser.Name}   {item.Appointment.Psychologist.AppUser.LastName}")</li>
+                            <li> tarih : @item.Appointment.AppointmentDate</li>
+                            <li> ücret  :  @item.Appointment.Price</li>
+                            <li> randevu  ıd  :  @item.Appointment.Id</li>
+                            <li> satın alma tarihi  : @item.DurchaseDate</li>
+                            <li> iyzico paymentid  : @(item.Appointment.ThirdPartyPaymentId ?? "yok")</li>
+                            <li>durum : satın alındı görüşme yapılacak</li>
+                        </ul>
+                      
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+   
+
+</div>
+
+
+
+<div class="row mb-3">
+
+    <h3 class="text-center display-5">Tamamlanan ve İptal Edilen Randevular</h3>
+
+    @*burada kaldım  ordersların appointmentları completed olanları getir*@
+
+
+    @foreach (var item in Model.Orders)
+    {
+        if (item.Appointment.Status == (int)AppointmentEnum.Completed || item.Appointment.Status == (int)AppointmentEnum.cancel)
+        {
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Appointment.Id  numaralı randevu</h5>
+                        <ul>
+
+                            <li> psikolog ismi : @($"{item.Appointment.Psychologist.AppUser.Name}   {item.Appointment.Psychologist.AppUser.LastName}")</li>
+                            <li> tarih : @item.Appointment.AppointmentDate</li>
+                            <li> ücret  :  @item.Appointment.Price</li>
+                            <li> randevu  ıd  :  @item.Appointment.Id</li>
+                            <li> iyzico paymentid  : @(item.Appointment.ThirdPartyPaymentId ?? "yok")</li>
+                            <li> satın alma tarihi  : @item.DurchaseDate</li>
+                            <li>
+                                @if (item.Appointment.Status == (int)AppointmentEnum.cancel)
+                                {
+                                    <text>iptal edilen randeuv</text>
+                                }
+                                else
+                                {
+                                    <text>Tamamlanan Randevu</text>
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    
+
+
+</div>

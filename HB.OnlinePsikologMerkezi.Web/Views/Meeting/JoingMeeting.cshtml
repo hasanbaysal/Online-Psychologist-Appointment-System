@@ -1,0 +1,199 @@
+﻿@{
+    ViewData["Title"] = "Görüşme Alanı";
+  
+}
+
+
+
+
+
+        <div class="row mt-1">
+            <div class="col-md-2 mb-1">
+                <button class="btn btn-outline-primary" onclick="mtgJoin()">Görüşmeye Katıl</button>
+
+            </div>
+            <div class="col-md-3 mb-1">
+              
+                    <a class="btn btn-danger" asp-action="index" asp-controller="home" >Görüşmeden Ayrıl</a>
+                    @*puanlama alanını da burada yapabiliriz*@
+            </div>
+            <div class="col-md-6">
+
+                @if (User.IsInRole("psk"))
+                {
+                    <p class="text-center">Görüşmesi süresi aşılması durumunda görüşme otomatik olarak sonlandırılır</p>
+                }
+
+            </div>
+        </div>
+
+        <div class="row p-0 mb-1 mt-2">
+            <div class="p-0" id="mtg-frame" height="400" style="height:90vh;border:0;background-color:lightgrey;" />
+        </div>
+
+        <hr class="mb-1" style="height:4px; background-color:black;" />
+
+        <div class="row">
+
+            <div class="col-md-12 mt-1">
+
+
+                @if (User.IsInRole("psk"))
+                {
+
+                    <div class="row">
+
+                        <div class="col-md-12 mb-1 mt-1">
+                            <a asp-action="PsychologistDashBoard" asp-controller="Psychologist" class="btn btn-primary"> Psikolog Panele  Dön</a>
+                            <button id="sil" type="button" asp-action="PsychologistDashBoard" asp-controller="Psychologist" class="btn btn-danger"> Randevuyu SİL</button>
+                        </div>
+
+                        <div class="col-md-12 mb-1 mt-1">
+
+                            <p class="text-lead mt-2">
+                                Görüşme beklenen süreden erken bitmiş ise  randevuyu sil butonuna tıklayınız.
+
+                                <span class=" text-danger">Randevu Bitmeden Tıklarsanız toplantı iptal olur tekrar giriş yapılamaz </span>
+                                <span class=" text-danger">  dikkat ediniz</span>
+                                @*randevu sil kısmı*@
+
+                            </p>
+
+                        </div>
+                        <div class="col-md-12">
+                            <p class="text-center" id="deleteresult">
+                                ..
+                            </p>
+                        </div>
+
+
+
+                    </div>
+
+
+                }
+
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+       
+   <script src="~/assets/js/daily.js"></script>
+
+@section Scripts{
+        <script>
+
+            var customlink = '@ViewBag.meetingUrl';
+            //pskonline.daily.co
+            const mtgJoin = () => {
+            let callUrl = "https://onlinepsikologmerkezi.daily.co/" + customlink;
+                if (!window.frame) {
+                    window.inp = document.getElementById("mtg-link");
+                    window.frame = window.DailyIframe.createFrame(document.getElementById("mtg-frame")
+                        , {
+
+                            showLeaveButton: true,
+                            showFullscreenButton: true
+                        });
+                }
+                window.frame.join({
+                    url: callUrl,
+                    theme: {
+                        colors: {
+                            accent: '#1AA1FB',
+                        },
+                    },
+                });
+            };
+
+
+
+            const mtgLeave = () => {
+                window.frame.leave();
+
+                RedirectToHome();
+
+            };
+
+            function RedirectToHome() {
+
+                setTimeout(function () {
+
+
+                    var baseurl = window.location.origin + '/Home';
+
+                    window.location.href = baseurl;
+
+                }, 300);
+
+
+            }
+
+
+
+
+
+
+
+
+        </script>
+
+        @if (User.IsInRole("psk"))
+        {
+
+            <text>
+
+                <script>
+
+                    var mmeetinId = '@ViewBag.meetingUrl';
+                    $(document).ready(function () {
+                        $('#sil').click(function () {
+                            var cevap = confirm("Bu işlemden emin misiniz");
+                            if (cevap) {
+
+
+                                $.ajax({
+                                    url: '/Meeting/RoomDelete/',
+                                    type: 'GET',
+                                    data: { id: mmeetinId },
+                                    success: function (response) {
+
+                                        $('#deleteresult').text("işlem başarılı psikolog paneline dönebilirsiniz");
+
+                                    },
+                                    error: function (xhr, status, error) {
+
+                                        $('#deleteresult').text("psikolog paneline dönebilirsiniz");
+
+
+                                    }
+                                });
+
+
+
+
+                            } else {
+
+
+
+
+                            }
+                        });
+                    });
+
+
+
+
+                </script>
+            </text>
+
+        }
+
+
+}

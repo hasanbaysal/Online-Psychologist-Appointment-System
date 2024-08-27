@@ -1,0 +1,359 @@
+﻿@*yeni layout*@
+
+
+<!DOCTYPE html>
+<html class="no-js" lang="tr">
+
+<head>
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="@ViewData["Title"] - Online Psikolog Merkezi">
+    <title>@ViewData["Title"] - Online Psikolog Merkezi</title>
+    <link rel="canonical" href="@Url.PageLink()">
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
+
+
+    @if (Url.PageLink() != null)
+    {
+        @if ( !(@Url.PageLink().Contains("Blog") || @Url.PageLink().Contains("blog"))  )
+        {
+             <meta name="author" content="Hasan Baysal">
+            <meta name="description" content="Online Psikolog Merkezi, alanında uzman psikolog kadrosuyla online terapi hizmetleri veren ve danışanların sorunlarına çözüm odaklı yaklaşan bir platformdur.">
+            @*<meta name="keywords" content="online terapi,terapi,kaygı bozukluğu, anksiyete,online psikoloji, psikolojik danışmanlık, terapi, depresyon, psikoloji">*@
+            <meta property="og:description" content="Online psikolog merkezi, psikolojik danışmanlık hizmetleri, terapiler ve kişisel gelişim kaynakları sunan güvenilir bir platform.">
+
+        }
+    }      
+
+  
+
+
+    
+       @*GA4 Bağlantısı*@
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DGCHDRDQ5N"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-DGCHDRDQ5N');
+    </script>
+
+
+    <!-- Site Title -->
+
+  
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="~/assets/css/fontawesome.min.css">
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/lightgallery.min.css">
+    <link rel="stylesheet" href="~/assets/css/select2.min.css">
+    <link rel="stylesheet" href="~/assets/css/slick.css">
+    <link rel="stylesheet" href="~/assets/css/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/assets/css/animate.min.css">
+    <link rel="stylesheet" href="~/assets/css/animated-headline.css">
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="~/assets/css/mxx.css">
+    @await RenderSectionAsync("CustomCss",false)
+    @await RenderSectionAsync("CustomTag",false)
+
+</head>
+
+<body>
+
+    @*preloader kısmı bunu değiştir*@
+    <div class="cs-preloader">
+        <div class="cs-preloader__in">
+            <img src="~/assets/img/layout-logo-large.png" alt="">
+        </div>
+    </div>
+    @*menü kısmı*@
+    @*oturum ve role göre değiştirilecek*@
+    <header class="cs-site__header cs-style1 cs-color1">
+    
+       
+
+        <div class="cs-main__header">
+            <div class="container">
+                <div class="cs-main__header__in">
+                    <div class="cs-main__header__left">
+                        <a class="cs-site__branding" asp-controller="Home" asp-action="Index"><img style="max-height: 150px;" src="~/assets/img/layout-logo-large.png" alt="log"></a>
+                    </div>
+                    <div class="cs-main__header__right">
+                        <div class="cs-nav">
+                            <ul class="cs-nav__list">
+
+
+
+
+                                <li title="whatsapp ile mesaj gönder">
+
+                                    <a href="https://wa.me/905551487116" target="_blank">
+                                        <img width="30px" height="30px" src="~/assets/img/wp.png" />
+                                        <span class="small"><sub style="font-size:8px;">Canlı Destek  </sub> </span>
+                                    </a>
+
+
+
+                                </li>
+
+
+                                <li>
+                                    <a asp-action="Index"  asp-controller="Home">Ana Sayfa</a>
+                                </li>
+                                <li>
+                                    <a asp-action="Index" asp-controller="Psychologist">Psikologlarımız</a>
+
+                                </li>
+
+                                <li>
+                                    <a asp-action="OurServices" asp-controller="Home">Hizmetlerimiz</a>
+
+                                </li>
+
+                                <li>
+                                    <a asp-action="Index" asp-controller="Blog"> Blog </a>
+
+                                </li>
+                                <li>
+                                    <a asp-action="FAQ" asp-controller="Home"> S.S.S </a>
+                                </li>
+                
+                                <li>
+                                    <a asp-controller="Home" asp-action="Contact">İletişim</a>
+                                 </li>
+
+                                @if (!User!.Identity!.IsAuthenticated)
+                                {
+                                    <li><a asp-action="login" asp-controller="account"> <strong class="text-decoration-underline">Giriş Yap</strong> </a></li>
+                                }
+                            
+                                @if (User.Identity.IsAuthenticated)
+                                {
+
+                                    <li class="menu-item-has-children">
+                                        <a href="#">@User.Identity.Name</a>
+                                        <ul>
+
+                                            @if (User.IsInRole("admin"))
+                                            {
+                                                <li><a  asp-action="Index" asp-controller="Home" asp-area="Admin" >Admin Panel</a></li>
+                                            }
+                                            @if (User.IsInRole("psk"))
+                                            {
+                                                <li><a asp-controller="Psychologist" asp-action="AddAppointment">Randevu Oluştur</a></li>
+                                                <li><a asp-controller="Psychologist" asp-action="PsychologistDashBoard">Psikolog Paneli</a></li>
+                                            }
+
+                                            <li><a asp-controller="Profile" asp-action="MyProfile">Bilgilerim</a></li>
+                                            <li><a asp-controller="Profile" asp-action="myappointments">Randevularım</a></li>
+                                            <li><a asp-action="Logout" asp-controller="Account">Çıkış</a></li>
+
+
+                                        </ul>
+                                    </li>
+                                }
+                               
+
+                            </ul>
+                        </div><!-- .cs-nav -->
+                    </div><!-- .cs-main__header__right -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    @*sayfa başlığı burada verilecek*@
+    <section style="height:150px;" class="cs-page__head cs-style1 cs-center text-center">
+        <div class="container">
+            <div class="cs-page__head__in">
+                <h1 style="font-size:40px;" class="cs-page__head__title">@ViewData["sayfa_baslik"]</h1>
+
+                @*kayan noktalar*@
+                <div class="cs-partical__shape_wrap">
+
+
+                    <div class="cs-partical__shape_wrap">
+                        <div class="cs-partical__shape cs-shape__position1">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px">
+                                <path fill-rule="evenodd" fill="rgb(189, 210, 249)" d="M15.000,-0.000 C23.284,-0.000 30.000,6.715 30.000,15.000 C30.000,23.284 23.284,30.000 15.000,30.000 C6.716,30.000 -0.000,23.284 -0.000,15.000 C-0.000,6.715 6.716,-0.000 15.000,-0.000 Z" />
+                            </svg>
+                        </div>
+                        <div style="top:10%" class="cs-partical__shape cs-shape__position2">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                                <path fill-rule="evenodd" fill="rgb(238, 118, 115)" d="M7.500,-0.000 C11.642,-0.000 15.000,3.358 15.000,7.500 C15.000,11.642 11.642,15.000 7.500,15.000 C3.358,15.000 -0.000,11.642 -0.000,7.500 C-0.000,3.358 3.358,-0.000 7.500,-0.000 Z" />
+                            </svg>
+                        </div>
+                     @*   <div style="top:10%" class="cs-partical__shape cs-shape__position3">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                                <path fill-rule="evenodd" fill="rgb(54, 97, 193)" d="M7.500,-0.000 C11.642,-0.000 15.000,3.358 15.000,7.500 C15.000,11.642 11.642,15.000 7.500,15.000 C3.358,15.000 -0.000,11.642 -0.000,7.500 C-0.000,3.358 3.358,-0.000 7.500,-0.000 Z" />
+                            </svg>
+                        </div>*@
+                        <div style="top:10%" class="cs-partical__shape cs-shape__position4">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px">
+                                <path fill-rule="evenodd" fill="rgb(146, 179, 244)" d="M5.000,-0.000 C7.761,-0.000 10.000,2.238 10.000,5.000 C10.000,7.761 7.761,10.000 5.000,10.000 C2.239,10.000 -0.000,7.761 -0.000,5.000 C-0.000,2.238 2.239,-0.000 5.000,-0.000 Z" />
+                            </svg>
+                        </div>
+                        <div style="top:10%" class="cs-partical__shape cs-shape__position5">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="20px">
+                                <path fill-rule="evenodd" fill="rgb(108, 136, 207)" d="M10.000,-0.000 C15.523,-0.000 20.000,4.477 20.000,10.000 C20.000,15.523 15.523,20.000 10.000,20.000 C4.477,20.000 -0.000,15.523 -0.000,10.000 C-0.000,4.477 4.477,-0.000 10.000,-0.000 Z" />
+                            </svg>
+                        </div>
+                        <div style="top:10%" class="cs-partical__shape cs-shape__position6">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                                <path fill-rule="evenodd" fill="rgb(221, 232, 252)" d="M7.500,-0.000 C11.642,-0.000 15.000,3.357 15.000,7.500 C15.000,11.642 11.642,15.000 7.500,15.000 C3.358,15.000 -0.000,11.642 -0.000,7.500 C-0.000,3.357 3.358,-0.000 7.500,-0.000 Z" />
+                            </svg>
+                        </div>
+                        <div style="top:12%" class="cs-partical__shape cs-shape__position7">
+                            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width="20"><path fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='60' d='M368 368L144 144M368 144L144 368' /></svg>
+                        </div>
+                    @*    <div class="cs-partical__shape cs-shape__position8">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200px" height="200px">
+                                <path fill-rule="evenodd" fill="rgb(221, 232, 252)" d="M121.500,0.000 C188.603,0.000 243.000,54.397 243.000,121.500 C243.000,188.602 188.603,243.000 121.500,243.000 C54.397,243.000 -0.000,188.602 -0.000,121.500 C-0.000,54.397 54.397,0.000 121.500,0.000 Z" />
+                            </svg>
+                        </div>*@
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div style="height:50px;" class="cs-height__130 cs-height__lg__80"></div>
+    <div class="container">
+        @RenderBody()
+    </div>
+    <div style="height:50px;" class="cs-height__130 cs-height__lg__80"></div>
+
+    @*footer kısmı burayı sadeleştir*@
+
+
+
+
+    <footer class="cs-footer cs-style1 cs-color1">
+        <div style="height:50px;" class="cs-height__110 cs-height__lg__70"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="cs-footer__item">
+                        <h2 class="cs-widget__title">Hakkımızda</h2>
+                        <div class="cs-footer__widget__text">
+                        
+                            Dünyanın her yerinden online psikolojik desteğe ulaşabilirsin.
+                            Adımları takip et ve anında terapiye başla!
+
+                       
+                        <img class="mt-2" src="~/assets/img/iyzico1.png" />
+                        </div>
+                        <div class="cs-height__15 cs-height__lg__15"></div>
+                        <div class="mt-2 cs-social__btns cs-style1">
+                            <a  style="font-size:30px;" href="https://www.instagram.com/onlinepsikologmerkezi/" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a  style="font-size:30px;" href="#"><i class="fab fa-facebook-f"></i></a>
+                        </div>
+                    </div>
+                </div><!-- .col -->
+                
+                <div class="col-lg-4 col-sm-6">
+                    <div class="cs-footer__item widget_nav_menu">
+                        <h2 class="cs-widget__title">Destek ve Bilgilendirme</h2>
+                        <ul class="menu">
+                            <li><a asp-action="KVKK" asp-controller="Home" >KVKK</a></li>
+                            <li><a asp-action="OnamFormu" asp-controller="Home">Onam Formu</a></li>
+                            <li><a asp-action="Gizlilik" asp-controller="Home">Gizlilik Sözleşmesi</a></li>
+                            <li><a asp-action="aboutus" asp-controller="Home">Hakkımızda</a></li>
+                            <li><a asp-action="Backorder" asp-controller="Home">İade Politikası</a></li>
+                           
+                        </ul>
+                    </div>
+                </div><!-- .col -->
+                <div class="col-lg-4 col-sm-6">
+                    <div class="cs-footer__item widget_nav_menu">
+                        <h2 class="cs-widget__title">Hızlı Erişim</h2>
+                        <ul class="menu">
+                            <li><a asp-action="Index" asp-controller="Home">Ana sayfa</a></li>
+                            <li>  <a asp-action="Index" asp-controller="Psychologist">Psikologlarımız</a></li>
+                            <li>  <a asp-action="Index" asp-controller="Blog"> Blog </a></li>
+                            <li>   <a asp-controller="Home" asp-action="Contact">İletişim</a></li>
+                            <li>
+                                <a href="https://wa.me/905551487116" target="_blank">
+                                    <img width="35px" height="35px" src="~/assets/img/wp.png" />
+                                    <span class="small text-muted"><sub>Canlı Destek  </sub> </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div><!-- .col -->
+            </div>
+          
+        </div>
+        <div class="cs-copyright text-center">
+            <div class="container">© 2023 - Online Psikolog Merkezi. Tüm Hakları Saklıdır.</div>
+                 <div class="container">
+
+        <p style="line-height:1em; font-size:12px" class="mt-2">
+                        UYARI: Online Terapi Hizmetleri, karşılaşılan tüm sorunlara yanıt veren bir hizmet değildir.
+Kendinize zarar verme, şiddet, intihar ve benzeri duygu ve düşünceleriniz söz konusu ise uygulamamızdaki online terapi hizmetleri sizin için doğru çözüm olmayabilir.
+Bu tür durumlarda size en yakın sağlık kuruluşuna başvurmanızı veya Sağlık Bakanlığı 112 Acil Servis birimine başvurmanızı öneririz.
+<br />
+Acil Yardım Hattı: 112 - Polis İmdat Hattı: 155 - Aile İçi Yardım Hattı: 183 - Uyuşturucu İle Mücadele Yardım Hattı: 191
+
+
+        </p>
+
+        </div>
+
+        </div>
+        <div class="cs-parallax__shape cs-position1">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13px" height="13px">
+                <path fill-rule="evenodd" fill="rgb(97, 192, 49)" d="M6.500,-0.000 C10.090,-0.000 13.000,2.910 13.000,6.500 C13.000,10.090 10.090,13.000 6.500,13.000 C2.910,13.000 -0.000,10.090 -0.000,6.500 C-0.000,2.910 2.910,-0.000 6.500,-0.000 Z" />
+            </svg>
+        </div>
+        <div class="cs-parallax__shape cs-position4">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px">
+                <path fill-rule="evenodd" fill="rgb(62, 80, 110)" d="M5.000,-0.000 C7.761,-0.000 10.000,2.238 10.000,5.000 C10.000,7.761 7.761,10.000 5.000,10.000 C2.238,10.000 -0.000,7.761 -0.000,5.000 C-0.000,2.238 2.238,-0.000 5.000,-0.000 Z" />
+            </svg>
+        </div>
+        <div class="cs-parallax__shape cs-position5">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                <path fill-rule="evenodd" fill="rgb(112, 87, 248)" d="M7.500,-0.000 C11.642,-0.000 15.000,3.358 15.000,7.500 C15.000,11.642 11.642,15.000 7.500,15.000 C3.358,15.000 -0.000,11.642 -0.000,7.500 C-0.000,3.358 3.358,-0.000 7.500,-0.000 Z" />
+            </svg>
+        </div>
+    </footer>
+
+
+
+    @*yukarı çık butonum*@
+    <div id="cs-scrollup"><i class="fas fa-chevron-up"></i></div>
+
+    <!-- Script -->
+    <script src="~/assets/js/jquery-1.12.4.min.js"></script>
+    <script src="~/assets/js/isotope.pkg.min.js"></script>
+    <script src="~/assets/js/wow.min.js"></script>
+    <script src="~/assets/js/jquery.slick.min.js"></script>
+    <script src="~/assets/js/lightgallery.min.js"></script>
+    <script src="~/assets/js/jquery.counter.min.js"></script>
+    <script src="~/assets/js/select2.min.js"></script>
+    <script src="~/assets/js/ripples.min.js"></script>
+    <script src="~/assets/js/jquery-ui.min.js"></script>
+    <script src="~/assets/js/animated-headline.js"></script>
+    <script src="~/assets/js/main.js"></script>
+   
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/assets/js/bootstrapmin.js"></script>
+
+   
+    @await Component.InvokeAsync("Notyf")
+
+    @await RenderSectionAsync("Scripts", required: false)
+   
+</body>
+</html>

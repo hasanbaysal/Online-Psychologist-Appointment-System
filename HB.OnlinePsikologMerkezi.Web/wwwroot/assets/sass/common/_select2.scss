@@ -1,0 +1,112 @@
+/*--------------------------------------------------------------
+8. Select2
+----------------------------------------------------------------*/
+.select2-container {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0;
+  position: relative;
+  vertical-align: middle;
+  flex: 1;
+  width: 100% !important;
+}
+
+.select2-container .select2-selection--single {
+  height: 50px;
+}
+
+.select2-container--default .select2-selection--single {
+  border-color: $border;
+  border-radius: 7px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  padding-left: 15px;
+  padding-right: 30px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: $primary;
+  line-height: 1.6em;
+  font-size: 16px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  outline: none;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+  border-color: $ternary transparent transparent transparent;
+  border-width: 6px 5px 0 5px;
+  margin-left: -4px;
+  margin-top: -4px;
+}
+.select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+    border-color: transparent transparent $ternary transparent;
+    border-width: 0 5px 6px 5px;
+}
+.select2-search--dropdown .select2-search__field {
+  border-radius: 7px;
+  height: 36px;
+  padding: 5px 15px;
+}
+
+.select2-dropdown {
+  border-color: $border;
+  border-radius: 7px;
+}
+
+.select2-search--dropdown {
+  padding: 8px;
+  padding-bottom: 0;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 50px;
+  width: 40px;
+  background: transparent;
+}
+
+.st_pos_invoice_topbar .select2-container--default .select2-selection--single {
+  margin-right: -1px;
+  outline: none;
+}
+
+.select2-results__options {
+  padding: 8px;
+}
+
+.select2-results__option {
+  font-size: 15px;
+  line-height: 1.2em;
+  padding: 10px 12px;
+  border-radius: 7px;
+  margin-bottom: 1px;
+  color: $secondary;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true],
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+  background-color: rgba($accent, 0.1);
+  color: $accent;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  outline: none;
+  border-color: $ternary;
+  font-size: 15px;
+  line-height: 1.6em;
+}
+
+@media screen and (max-width: 767px) {
+.select2-container .select2-selection--single {
+    height: 42px;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 42px;
+}
+}

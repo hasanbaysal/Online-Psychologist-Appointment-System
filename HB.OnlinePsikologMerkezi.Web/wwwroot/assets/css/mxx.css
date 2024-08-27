@@ -1,0 +1,7 @@
+﻿
+@media screen and (max-width: 575px) {
+
+    .cs-partical__shape_wrap {
+        display: none;
+    }
+}

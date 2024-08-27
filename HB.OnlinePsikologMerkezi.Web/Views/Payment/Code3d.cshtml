@@ -1,0 +1,31 @@
+﻿yere 
+@{
+    Layout = null;
+}
+
+
+@if (TempData["htmlcontent"] != null)
+{
+
+    @Html.Raw(TempData["htmlcontent"]!.ToString())
+
+}
+else{
+
+    <html>
+       
+        <head>
+
+        </head>
+        
+        <body>
+
+        <script>
+            window.location.href = "/Home/Index";
+        </script>
+
+
+        </body>
+       
+    </html>
+}

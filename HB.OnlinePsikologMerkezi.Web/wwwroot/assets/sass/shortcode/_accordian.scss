@@ -1,0 +1,76 @@
+/*--------------------------------------------------------------
+15. Accordian
+----------------------------------------------------------------*/
+.cs-accordians.cs-style1 {
+  margin-top: -25px;
+  margin-bottom: -25px;
+
+  .cs-accordian {
+    transition: all 0.3s ease;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #29abe1;
+    }
+
+    &.active {
+
+      .cs-accordian__toggle {
+        i {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  .cs-accordian__head {
+    position: relative;
+    padding: 25px 0;
+    cursor: pointer;
+  }
+
+  .cs-accordian__title {
+    font-size: 20px;
+    margin: 0;
+    font-weight: 800;
+    padding-right: 15px;
+  }
+
+  .cs-accordian__toggle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 20px;
+    color: $secondary;
+    position: absolute;
+    right: 0;
+    top: 27px;
+
+    i {
+      transition: all 0.3s ease;
+    }
+  }
+
+  .cs-accordian-body {
+    padding: 0px 0px 20px;
+
+    p {
+      margin: 0
+    }
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .cs-accordians.cs-style1 .cs-accordian__head {
+    padding: 15px 0;
+  }
+
+  .cs-accordians.cs-style1 .cs-accordian__toggle {
+    top: 18px;
+  }
+
+  .cs-accordians.cs-style1 {
+    margin-top: -15px;
+    margin-bottom: -15px;
+  }
+}

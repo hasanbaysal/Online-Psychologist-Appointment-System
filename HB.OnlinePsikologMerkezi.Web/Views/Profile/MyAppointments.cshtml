@@ -1,0 +1,452 @@
+﻿
+@{
+    ViewData["Title"] = "Randevularım";
+}
+
+@model AppUserListDto
+<div class="container">
+
+  
+    @{
+        OrderListDto songorusmebilgileri = null;
+
+        if (Model.Orders != null)
+        {
+            if (Model.Orders.Count>0)
+            {
+                  songorusmebilgileri = Model.Orders.OrderByDescending(x => x.Appointment.AppointmentDate).FirstOrDefault();
+           
+            }
+        }
+              
+         
+        
+      
+        var toplamgorusmesayi = Model.Orders.Where(x=>x.Appointment.Status == (int)AppointmentEnum.Completed).ToList().Count;
+    }
+
+
+    <div class="row mb-3">
+
+
+        <div class="col-md-6 ">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Toplam Görüşme Tamamlan Sayısı</h6>
+                    <p class="m-b-0"> <span class="f-right"> toplam görüşme : @toplamgorusmesayi   </span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 ">
+            <div class="card bg-c-yellow order-card">
+                <div class="card-block">
+                    <h6 class="m-b-20">Son Görüşme Bilgileri</h6>
+                    <p class="m-b-0">
+                        @if (songorusmebilgileri != null)
+                        {
+                            <span class="f-right"> 
+                            <strong>
+                                
+                                @("Psikolog : "+ songorusmebilgileri?.Appointment.Psychologist.AppUser.Name ?? "" + " " + songorusmebilgileri?.Appointment.Psychologist.AppUser.Name ?? "")
+                                @(songorusmebilgileri?.Appointment.AppointmentDate.ToString("MM/dd/yyyy HH:mm"))
+
+                                </strong>
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="f-right"> -bilgi yok- </span>
+
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+        <div class="row mb-3">
+
+            <h1 class="mb-2 display-6">Mevcut Randevular</h1>
+        <hr class="mb-2" style="height:4px; background-color:black;" />
+
+
+            @if (Model.Orders.Where(x => x.Appointment.Status == (int)AppointmentEnum.sold).ToList().Count>0)
+            {
+                @foreach (var item in Model.Orders)
+                {
+                    if (item.Appointment.Status == (int)AppointmentEnum.sold)
+                    {
+                       
+
+                    <div class="col-lg-4 mb-4">
+                        <div class="card bg-light text-black shadow">
+                            <div class="card-body">
+
+                                <p class="randevuid text-center"> <strong class="text-decoration-underline"> Randevu ID :  @item.Appointment.Id </strong> </p>
+                                <p class="text-center">
+                                    <strong class="text-decoration-underline">Tarih</strong>
+
+                                </p>
+
+                                <p class="text-center">   @item.Appointment.AppointmentDate.ToString("MM/dd/yyyy HH:mm")</p>
+
+                                <p class="text-center">  <strong class="text-decoration-underline"> Psikolog Adı ve Soyadı </strong> </p>
+                                <p class="text-center">   @(item.Appointment.Psychologist.AppUser.Name ?? "belirtilmedi")  </p>
+                                <p class="text-center">   @(item.Appointment.Psychologist.AppUser.LastName ?? "belirtilmedi")  </p>
+
+
+                               
+
+                                <div class="mb-1  p-1">
+
+                                     <hr class="mb-2 mt-2" style="height:2px; background-color:black;" />
+
+                                    <h6 class="text-center text-lead">görüşme zamanından 5! dakika önce toplantıya katılın butonu aktifleşecektir</h6>
+                                    <h6 class="text-center text-lead">butona tıklayarak toplantıya katılabilirsiniz</h6>
+                                    <h6 class="text-center text-lead">Toplantı katılın butonu görünmüyorsa sayfayı yenileyiniz</h6>
+                                </div>
+
+                                @*toplantıdan 5 dakika önce görüksün istiyorum*@
+                                @if (DateTime.Now > item.Appointment.AppointmentDate.AddMinutes(-5))
+                                {
+
+                                    <div class="mb-1  p-1">
+                                        <hr class="mb-2" style="height:2px; background-color:black;" />
+                                        <div id="@("spinner"+item.Appointment.Id)" style="display:none;" class="spinner-border text-secondary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <p id="@("appInfo"+item.Appointment.Id)" style="display:none;" class="text-center"></p>
+                        @*burada kontrol işlemi*@ <button  id="@("Join"+item.Appointment.Id)"  class="joinbtn btn btn-primary">Toplantı Durumunu Kontrol Et </button>
+                                        <a asp-route-id="@item.Appointment.Id" asp-action="JoingMeeting" asp-controller="Meeting" id="@("rxJoin"+item.Appointment.Id)" style="display:none;" class="btn btn-success">Toplantıya Katıl</a>
+                                    </div>
+
+
+                                   
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                    }
+                }
+            }
+            else
+            {
+                <h6 class="text-center ">Bilgi Yok</h6>
+            }
+      
+
+
+
+        </div>
+
+
+   <hr class="mb-2" />
+
+
+
+    <div class="row mb-3">
+
+        <h1 class="display-6">Geçmiş Randevular</h1>
+        <hr class="mb-2" style="height:4px; background-color:black;" />
+
+
+
+        @if (Model.Orders.Where(x => x.Appointment.Status == (int)AppointmentEnum.Completed || x.Appointment.Status == (int)AppointmentEnum.cancel).ToList().Count  == 0)
+        {
+            <h6 class="text-center ">Bilgi Yok</h6>
+
+        }
+
+        else
+        {
+            @*@foreach (var item in Model.Orders)
+            {
+                if (item.Appointment.Status == (int)AppointmentEnum.Completed || item.Appointment.Status == (int)AppointmentEnum.cancel)
+                {
+                    <div class="col-sm-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Appointment.Id  numaralı randevu</h5>
+                                <ul>
+
+                                    <li> psikolog ismi : @($"{item.Appointment.Psychologist.AppUser.Name}   {item.Appointment.Psychologist.AppUser.LastName}")</li>
+                                    <li> Tarih : @item.Appointment.AppointmentDate.ToString("MM/dd/yyyy HH:mm")</li>
+                                    <li> Ücret  :  @item.Appointment.Price</li>
+                                    <li> Randevu ID  :  @item.Appointment.Id</li>
+                                    <li> Satın Alma Tarihi  : @item.DurchaseDate.ToString("MM/dd/yyyy HH:mm")</li>
+                                 
+                                    @if(@item.Appointment.Status == (int)AppointmentEnum.cancel)
+                                    {
+                                        <li class="text-warning">durum : iptal edildi</li>
+                                    }
+                                    else
+                                    {
+                                        <li class="text-success">durum : görüşme gerçekleşti</li>
+
+
+                                        if (item.Appointment.UserAppointmentComment == null)
+                                        {
+                                            <form asp-action="AddComment" asp-controller="Profile" method="post">
+                                                <input type="hidden" name="appointmentid" value="@item.Appointment.Id">
+                                                <p class="text-center text-danger">bu yorum herkese açık şekilde yayınlanacaktır</p>
+                                                <textarea maxlength="200"  name="comment">
+
+                                                </textarea>
+                                                <button type="submit" class="btn btn-outline-success">Yorum Yap</button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <a asp-action="CommentDelete" asp-controller="Profile" asp-route-id="@item.Appointment.Id" class="btn btn-danger">Yorum Sil</a>
+                                        }
+
+
+                                    }
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            }*@
+
+            <div class="table-responsive">
+            <table class="table"> 
+
+                <thead>
+                    <tr>
+                        <th>Psikolog</th>
+                        <th>Görüşme Tarihi</th>
+                        <th>Fiyat</th>
+                        <th>Görüşme ID</th>
+                        <th>Satın Alma Tarih</th>
+                        <th>Görüşme Durum</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.Orders)
+                    {
+                        if (item.Appointment.Status == (int)AppointmentEnum.Completed || item.Appointment.Status == (int)AppointmentEnum.cancel)
+                        {
+                            <tr>
+                                <td>@($"{item.Appointment.Psychologist.AppUser.Name}   {item.Appointment.Psychologist.AppUser.LastName}")</td>
+                                <td>@item.Appointment.AppointmentDate.ToString("MM/dd/yyyy HH:mm")</td>
+                                <td> @item.Appointment.Price</td>
+                                <td>@item.Appointment.Id</td>
+                                <td>@item.DurchaseDate.ToString("MM/dd/yyyy HH:mm")</td>
+
+                                @if (@item.Appointment.Status == (int)AppointmentEnum.cancel)
+                                {
+                                    <td class="text-warning"> durum : İptal Edildi</td>
+                                }
+                                else
+                                {
+                                    <td>
+                                           
+                                    @if (item.Appointment.UserAppointmentComment == null)
+                                    {
+                                                <h6>Tamamlandı <button id="@item.Id" onclick="getClickedButtonId()" class="btn-sm btn-outline-success">yorum ekle</button> </h6>
+                                        <form  id="@("frm"+item.Id)"  style="display:none;" asp-action="AddComment" asp-controller="Profile" method="post">
+                                            <input type="hidden" name="appointmentid" value="@item.Appointment.Id">
+                                            <p class="text-center text-danger">bu yorum herkese açık şekilde yayınlanacaktır</p>
+                                            <textarea maxlength="200" name="comment">
+
+                                                                    </textarea>
+                                            <button type="submit" class="btn btn-outline-success">yayınla</button>
+                                                    <button type="button" id="@item.Id" onclick="CloseFrm()" class="btn btn-danger">İptal</button>
+
+                                        </form>
+
+                                    }
+                                    else
+                                    {
+                                        <text>Tamamlandı</text>
+                                        <a asp-action="CommentDelete" asp-controller="Profile" asp-route-id="@item.Appointment.Id" class="btn btn-danger">Yorum Sil</a>
+                                    }
+
+                                    </td>
+                                }
+
+
+                            </tr>
+                        }
+                    }            
+
+                </tbody>
+            </table>
+            </div>
+        }
+  
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+@section CustomCss{
+
+    <style>
+
+        .order-card {
+            color: #fff;
+        }
+
+        .bg-c-blue {
+            background: linear-gradient(45deg,#4099ff,#73b4ff);
+        }
+
+        .bg-c-green {
+            background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+        }
+
+        .bg-c-yellow {
+            background: linear-gradient(45deg,#FFB64D,#ffcb80);
+        }
+
+        .bg-c-pink {
+            background: linear-gradient(45deg,#FF5370,#ff869a);
+        }
+
+
+        .card {
+            border-radius: 5px;
+            -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+            box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
+            border: none;
+            margin-bottom: 30px;
+            -webkit-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+            .card .card-block {
+                padding: 25px;
+            }
+
+        .order-card i {
+            font-size: 26px;
+        }
+
+        .f-left {
+            float: left;
+        }
+
+        .f-right {
+            float: right;
+        }
+
+    </style>
+
+}
+
+@*joinbtn*@
+
+@section Scripts{
+
+    <script>
+
+        $(document).ready(function () {
+          
+            $('.joinbtn').click(function () {
+               
+                var buttonId = $(this).attr('id');
+                var getdata = buttonId.replace("Join", "");
+                console.log(getdata);
+                var snipperId = '#' + 'spinner' + getdata;
+                var infoPıd = '#' + 'appInfo' + getdata;
+                var controlJoin = '#'+'Join'+ getdata;
+                var rxJoin = '#' + 'rxJoin' + getdata;
+              
+                console.log(snipperId);
+                console.log(infoPıd);
+             
+
+                $(snipperId).show();
+                $.ajax({
+                    url: '/Meeting/ControlerMeetingStatus/',
+                    type: 'GET',
+                    data: { id: getdata },
+                    success: function (response) {
+
+                      
+                      
+
+                        $(infoPıd).text('görüşme odası hazır katılabilirsiniz');
+                        $(infoPıd).show();
+
+
+                        $(rxJoin).show();
+                        $(snipperId).hide();
+                        $(controlJoin).hide();
+                     
+                    },
+                    error: function (xhr, status, error) {
+
+
+                        $(infoPıd).text('psikolog odayı oluşturuyor biraz sonra tekrar deneyin');
+                        $(infoPıd).show();
+                        $(snipperId).hide();
+                    }
+                });
+
+
+
+
+            }
+            );
+        }
+        );
+
+
+        function getClickedButtonId() {
+            var clickedButtonId = event.target.id;
+          
+
+
+
+            var form = document.getElementById("frm" + clickedButtonId);
+            form.style.display = "block";
+
+
+        }
+        function CloseFrm()
+        {
+             var clickedButtonId = event.target.id;
+            var form = document.getElementById("frm" + clickedButtonId);
+            form.style.display = "none";
+        }
+
+
+
+    </script>
+
+}

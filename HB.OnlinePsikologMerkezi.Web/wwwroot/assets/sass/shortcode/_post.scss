@@ -1,0 +1,203 @@
+/*--------------------------------------------------------------
+29. Post
+----------------------------------------------------------------*/
+ul.page-numbers {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+
+  .page-numbers {
+    display: flex;
+    height: 35px;
+    min-width: 35px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 3px;
+    background-color: $primary;
+
+    &:hover {
+      background-color: $accent;
+    }
+
+    i {
+      margin-left: 8px;
+    }
+
+    &.current {
+      background-color: $accent;
+    }
+
+    &.next {
+      padding: 3px 15px;
+    }
+  }
+
+  li:not(:last-child) {
+    margin-right: 5px;
+  }
+}
+
+.cs-post__meta.cs-style1 {
+  display: flex;
+  flex-wrap: wrap;
+
+  i {
+    margin-right: 10px;
+    color: $primary;
+  }
+
+  [class*=cs-post__] {
+
+    &:not(:last-child) {
+      margin-right: 20px;
+    }
+  }
+
+  a {
+    &:hover {
+      color: $accent;
+    }
+  }
+}
+
+.cs-post__thumb__in {
+  height: 100%;
+  background-color: $gray;
+}
+
+.cs-post.cs-style1 {
+  border-radius: 5px;
+  box-shadow: 0px 0px 50px 0px rgba(247, 210, 211, 0.5);
+  position: relative;
+  overflow: hidden;
+
+  &:after {
+    content: '';
+    height: 100px;
+    width: 100px;
+    background-color: #eff6ff;
+    border-radius: 50%;
+    bottom: -20px;
+    right: -20px;
+    position: absolute;
+  }
+
+  .cs-post__thumb {
+    height: 340px;
+    display: block;
+    position: relative;
+
+    &:after {
+      content: '';
+      height: 100%;
+      width: 100%;
+      left: 0;
+      top: 0;
+      position: absolute;
+      background-color: rgba($black, 0.2);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+  }
+
+  a.cs-post__thumb {
+    &:hover {
+      &:after {
+        opacity: 1;
+      }
+    }
+  }
+
+  .cs-post__title {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 0;
+
+    a {
+      &:hover {
+        color: $accent;
+      }
+    }
+  }
+
+  .cs-post__info {
+    padding: 25px 30px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cs-post__meta.cs-style1 {
+    margin-bottom: 6px;
+  }
+
+  .cs-post__date {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    z-index: 1;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #5e2ced;
+    border-radius: 50%;
+    padding-top: 20px;
+    padding-left: 15px;
+    line-height: 1.0em;
+
+    span {
+      font-size: 14px;
+      line-height: 1.6em;
+      margin-top: -2px;
+    }
+
+    &.cs-green {
+      background-color: $green;
+    }
+
+    &.cs-pink {
+      background-color: $pink;
+    }
+  }
+
+  &.cs-type1 {
+    .cs-post__title {
+      margin-bottom: 15px;
+    }
+
+    .cs-post__subtitle {
+      margin-bottom: 10px;
+    }
+
+    &:after {
+      display: none;
+    }
+
+    .cs-post__thumb {
+      height: 400px;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cs-post.cs-style1 .cs-post__title {
+    font-size: 22px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .cs-post.cs-style1 .cs-post__info {
+    padding: 25px 20px;
+  }
+}

@@ -1,0 +1,400 @@
+/*--------------------------------------------------------------
+4. Button
+----------------------------------------------------------------*/
+.cs-btns.cs-style1 {
+  display: flex;
+  align-items: center;
+
+  .cs-btn {
+    &:not(:last-child) {
+      margin-right: 30px;
+    }
+  }
+}
+
+.cs-btn.cs-style1 {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1.6em;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  padding: 10px 30px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  min-width: 170px;
+
+  span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn__number {
+    height: 35px;
+    width: 35px;
+    background-color: rgba($primary, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    border-radius: 50%;
+    margin: -5px 0 -5px 15px;
+  }
+
+  &.cs-no__border {
+    border: none;
+    padding: 12px 32px;
+  }
+
+  &.cs-rounded__btn {
+    border-radius: 1.6em;
+  }
+
+  &.cs-color1 {
+    background-color: $accent;
+    color: $white;
+
+    &:hover {
+      background-color: rgba($accent, 0.1);
+      border-color: $accent;
+      color: $accent;
+
+    }
+  }
+
+  &.cs-color2 {
+    background-color: transparent;
+    color: $accent;
+    border-color: $accent;
+
+    &:hover {
+      background-color: $accent;
+      color: $white;
+
+    }
+  }
+
+  &.cs-color3 {
+    background-color: transparent;
+    color: $white;
+    border-color: $white;
+
+    &:hover {
+      background-color: $white;
+      color: $accent;
+
+    }
+  }
+
+  &.cs-color4 {
+    background-color: $accent;
+    color: $white;
+
+    &:hover {
+      background-color: rgba($white, 0.1);
+      border-color: $white;
+      color: $white;
+    }
+  }
+
+  &.cs-color5 {
+    background-color: $white;
+    border-color: $white;
+    color: $primary;
+
+    &:hover {
+      background-color: rgba($white, 0.1);
+      border-color: $white;
+      color: $white;
+    }
+  }
+
+  &.cs-color6 {
+    background: linear-gradient(90deg, #5e2ced 0%, #2992fb 100%);
+    color: $white;
+
+    &:hover {
+      background: linear-gradient(90deg, #2992fb 0%, #5e2ced 100%);
+      color: $white;
+    }
+  }
+
+  &.cs-color7 {
+    background: linear-gradient(90deg, #ecbf24 0%, #5cbe2d 100%);
+    color: $white;
+
+    &:hover {
+      background: linear-gradient(90deg, #5cbe2d 0%, #ecbf24 100%);
+      color: $white;
+    }
+  }
+
+  &.cs-color8 {
+    background: linear-gradient(90deg, #263a5d 0%, #fb4c9b 100%);
+    color: $white;
+
+    &:hover {
+      background: linear-gradient(90deg, #fb4c9b 0%, #263a5d 100%);
+      color: $white;
+    }
+  }
+
+  &.cs-color9 {
+    background: linear-gradient(90deg, rgb(69, 59, 111) 0%, rgb(92, 190, 45) 100%);
+    color: $white;
+
+    &:hover {
+      background: linear-gradient(90deg, rgb(92, 190, 45) 0%, rgb(69, 59, 111) 100%);
+      color: $white;
+    }
+  }
+
+  &.cs-color10 {
+    background: linear-gradient(90deg, #544886 0%, #5cbe2d 100%);
+    color: $white;
+
+    &:hover {
+      background: linear-gradient(90deg, #5cbe2d 0%, #544886 100%);
+      color: $white;
+    }
+  }
+
+  &.cs-color11 {
+    background: linear-gradient(90deg, #5cbe2d 0%, #ecbf24 100%);
+    color: $primary;
+
+    &:hover {
+      background: linear-gradient(90deg, #ecbf24 0%, #5cbe2d 100%);
+      color: $primary;
+    }
+  }
+
+  &.cs-color12 {
+    background: linear-gradient(90deg, #263a5d 0%, #0464d1 100%);
+    color: #fff;
+
+    &:hover {
+      background: linear-gradient(90deg, #0464d1 0%, #263a5d 100%);
+      color: #fff;
+    }
+  }
+
+  &.cs-color13 {
+    background: linear-gradient(90deg, #263a5d 0%, #ecbf24 100%);
+    color: #fff;
+
+    &:hover {
+      background: linear-gradient(90deg, #ecbf24 0%, #263a5d 100%);
+      color: #fff;
+    }
+  }
+}
+
+.cs-btn.cs-style2 {
+  font-weight: 600;
+  color: $primary;
+  display: flex;
+  align-items: center;
+
+  i {
+    margin-left: 10px;
+  }
+
+  &:hover {
+    color: $green;
+  }
+
+  &.cs-type1 {
+    font-weight: bold;
+    font-size: 18px;
+    color: $accent;
+
+    i {
+      margin-left: 12px;
+    }
+  }
+
+  &.cs-type2 {
+    font-weight: 600;
+    font-size: 16px;
+    color: $accent;
+  }
+
+  &.cs-color1 {
+    color: #ecbf24;
+  }
+}
+
+.cs-btn.cs-style3 {
+  display: inline-flex;
+  font-size: 24px;
+  line-height: 1.4em;
+  position: relative;
+  padding-bottom: 3px;
+
+  &:after,
+  &:before {
+    content: '';
+    position: absolute;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+  }
+
+  &:after {
+    width: 100%;
+    background-color: #ecb1cc;
+  }
+
+  &:before {
+    z-index: 1;
+    width: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fff;
+    transition: all 0.4s ease;
+  }
+
+  &:hover {
+    &:before {
+      width: 100%;
+    }
+  }
+}
+
+// Player Button
+.cs-player__btn.cs-style1 {
+  font-size: 16px;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  position: relative;
+
+  .cs-player__btn__in {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+  }
+
+  &.cs-size__md {
+    transform: scale(0.834);
+    margin-top: -5px;
+    margin-bottom: -5px;
+  }
+
+  &.cs-color1 {
+    color: $accent;
+    border: 1px solid rgba($accent, 0.2);
+
+    .cs-player__btn__in {
+      background-color: rgba(28, 25, 241, 0.1);
+    }
+  }
+
+  &.cs-color2 {
+    color: $white;
+    border: 1px solid rgba($white, 0.2);
+
+    .cs-player__btn__in {
+      background-color: rgba(238, 238, 255, 0.2);
+    }
+
+    .cs-video__animaiton {
+      span {
+        box-shadow: 0 0 0 1px rgba($white, 0.25);
+      }
+    }
+  }
+
+  &.cs-color3 {
+    background-color: $white;
+    color: $accent;
+
+    .cs-video__animaiton span {
+      box-shadow: 0 0 0 1px #fff;
+    }
+  }
+}
+
+.cs-player__btn.cs-style2 {
+  position: absolute;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  left: 45%;
+  top: 55%;
+  transform: translate(-50%, -50%);
+  color: #fceff0;
+  z-index: 2;
+  border: 2px solid $white;
+  font-size: 60px;
+  box-shadow: 0 0 10px rgba($white, 0.4);
+
+  &:hover {
+    background-color: rgba($white, 0.1);
+    color: $white;
+  }
+}
+
+.cs-video__animaiton {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+
+  span {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    display: block;
+    border-radius: 50%;
+    animation: video_animaion1 2s linear infinite;
+    box-shadow: 0 0 0 1px rgba($accent, 0.2);
+  }
+}
+
+@keyframes video_animaion1 {
+  0% {
+    transform: scale(1);
+    opacity: 0;
+  }
+
+  25% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cs-btn.cs-style1 {
+    padding: 6px 20px;
+    min-width: 140px;
+  }
+
+  .cs-btns.cs-style1 .cs-btn:not(:last-child) {
+    margin-right: 15px;
+  }
+
+  .cs-btn.cs-style1.cs-no__border {
+    padding: 8px 20px;
+  }
+
+  .cs-btn.cs-style2.cs-type1 {
+    font-size: 16px;
+  }
+}

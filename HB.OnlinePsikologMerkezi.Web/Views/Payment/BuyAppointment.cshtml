@@ -1,0 +1,340 @@
+﻿@{
+    ViewData["Title"] = "BuyAppointment";
+}
+
+@using System.Globalization;
+@model PaymentInformationDto
+<div class="row ">
+
+
+    @{
+        var appointmentDetails = ViewBag.productDetails as AppointmentListDto;
+        //style="width:200px; height:200px;  object-fit: cover;" class="rounded-circle img-fluid"
+        CultureInfo turkishCulture = new CultureInfo("tr-TR");
+
+        var tarih = @appointmentDetails.AppointmentDate.ToString("dddd, dd MMMM yyyy HH:mm:ss", turkishCulture);
+    }
+
+
+    @*product detailt*@
+    <div class="col-md-4  mt-1">
+
+
+
+        <div class="card">
+            <img style="width:200px; height:200px;  object-fit: cover;" src="~/assets/pksimage/@appointmentDetails!.Psychologist.ProfilePhotoPath" class="card-img-top rounded-circle img-fluid mx-auto" alt="...">
+            <div class="card-body">
+                <h5 class="card-title text-center">@(appointmentDetails.Psychologist.Title)  <br /> @(appointmentDetails.Psychologist.AppUser.Name + " " + appointmentDetails.Psychologist.AppUser.LastName)</h5>
+                <p class="card-text text-center">Online görüntülü görüşme sitemiz üzerinden gerçekleştirilmektedir.</p>
+            </div>
+
+            <h5 class="text-center text-primary">Randevu Bilgileri</h5>
+            <ul class="list-group list-group-flush">
+
+                <li class="list-group-item"> <p class="text-center">@tarih.Substring(0,tarih.Length-3) </p>   </li>
+                <li class="list-group-item"> <p class="text-center"> Online Görüşme 50-60 dakika </p> </li>
+                <li class="list-group-item">  <p class="text-center text-primary"> @(appointmentDetails.Price + " ₺") </p> </li>
+            </ul>
+            <div class="card-body">
+                <img src="~/assets/img/iyzico2-odeme.png" />
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+    @*BuyAppointment*@
+
+    <div class="col-md-8 p-0 shadow mt-1">
+
+        <form id="paymentform" asp-action="BuyAppointment" method="post">
+
+            <input type="hidden" asp-for="seccondkey" value="@ViewBag.pskid" />
+            <input type="hidden" asp-for="appointmentID" value="@appointmentDetails.Id" />
+
+
+            <div class="card px-4">
+                <p class="h8 py-3">Ödeme Formu</p>
+                <div class="row gx-3">
+                    <div class="col-12">
+                        <div class="d-flex flex-column">
+                            <p class="text mb-1">Kart Üzerindeki İsim</p>
+                            <input class="form-control mb-3" asp-for="NameOnTheCard" placeholder="Hasan Baysal">
+                            <span asp-validation-for="NameOnTheCard" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="d-flex flex-column">
+                            <p class="text mb-1">Kart Numarası</p>
+                            <input class="form-control mb-3" asp-for="CardNumbet" placeholder="12345678435678">
+                            <span asp-validation-for="CardNumbet" class="text-danger"></span>
+
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex flex-column">
+                            <p class="text mb-1">Son Kullanım Tarihi</p>
+                            <input class="form-control mb-3" asp-for="TotalDate" type="text" placeholder="AY/YIL" oninput="formatExpirationDate(event)">
+                            <span asp-validation-for="TotalDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex flex-column">
+                            <p class="text mb-1">CVV/CVC</p>
+                            <input class="form-control mb-3 pt-2 " asp-for="Cvc" placeholder="123">
+                            <span asp-validation-for="Cvc" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button id="myButton" type="submit" class="btn btn-primary mb-3">
+                            <span class="ps-3">ÖDEME YAP</span>
+                            <span class="fas fa-arrow-right"></span>
+                        </button>
+                    </div>
+
+                    <div class="col-12">
+
+
+                        <input class="form-check-input" id="terms" type="checkbox" />
+
+                        <label for="terms" class="form-check-label">
+                            <a href="exampleModal" class="text-lead text-decoration-underline" data-bs-toggle="modal" data-bs-target="#exampleModal">Mesafeli Satış sözleşmesi,</a>
+                            <a style="margin-left:4px;" asp-controller="Home" asp-action="OnamFormu" target="_blank" class="text-lead text-decoration-underline"> Onam Formu</a>
+                            <a style="margin-left:4px;" asp-controller="Home" asp-action="Backorder" target="_blank" class="text-lead text-decoration-underline"> İade Politikası</a>
+                            okudum ve kabul ediyorum.
+                        </label>
+                        <br />
+
+                    </div>
+
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                        <span id="errorText" style="display: none; color: red;">Lütfen kabul edin.</span>
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-12">
+                    <p class="lead text-center">
+                        <img width="300" height="120" src="~/assets/img/3d.png" />
+                        Bu sayfa 256 bit SSL ile Korunmaktadır.
+                    </p>
+                </div>
+            </div>
+
+
+
+        </form>
+
+
+    </div>
+
+
+
+
+
+
+
+</div>
+
+
+@*iyzico hizmet sözlşemsi*@
+@*mesafeli satış sözleşmesi*@
+@*onam formu*@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Mesafeli Satış Sözleşmesi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+
+
+
+                @*
+
+
+                 ViewBag.Name 
+                 ViewBag.LasName 
+                 ViewBag.Email 
+                 ViewBag.PhoneNumber 
+
+                *@
+
+
+                <h4>MESAFELİ SATIŞ S&Ouml;ZLEŞMESİ</h4>
+                <h5>1.TARAFLAR</h5>
+                <p><span>İşbu S&ouml;zleşme aşağıdaki taraflar arasında aşağıda belirtilen h&uuml;k&uuml;m ve şartlar &ccedil;er&ccedil;evesinde imzalanmıştır.</span><br /><span>A.&lsquo;ALICI:&rsquo; ; (s&ouml;zleşmede bundan sonra "ALICI" olarak anılacaktır)</span><br /><span>Hizmeti satın alan kişi:</span><br /><span>Hizmeti satın alan Kişi T.C.K.N:</span><br /><span>Hizmeti satın alan kişi adresi:</span><br /><span>Telefon:@ViewBag.PhoneNumber </span><br /><span>Eposta/Kullanıcı adı: @ViewBag.Email </span><br /><br /><br /><span>B.&lsquo;SATICI:&rsquo; ; (s&ouml;zleşmede bundan sonra "SATICI" olarak anılacaktır)</span><br /><span>&Uuml;nvanı: Online Psikolog Merkezi</span><br /><span>Adresi: Cumhuriyet, 26, Mithatpaşa Cd., no:16 Çankaya/Ankara</span><br /><span>Telefon: +90 555 148 71 16</span><br /><span>Eposta:&nbsp;</span><span>info@onlinepsikologmerkezi.com</span><br /><br /><span>İş bu s&ouml;zleşmeyi kabul etmekle ALICI, s&ouml;zleşme konusu siparişi onayladığı takdirde sipariş konusu bedeli ve varsa kargo &uuml;creti, vergi gibi belirtilen ek &uuml;cretleri &ouml;deme y&uuml;k&uuml;ml&uuml;l&uuml;ğ&uuml; altına gireceğini ve bu konuda bilgilendirildiğini peşinen kabul eder.</span></p>
+                <h5>2.TANIMLAR</h5>
+                <p><span>İşbu s&ouml;zleşmenin uygulanmasında ve yorumlanmasında aşağıda yazılı terimler karşılarındaki yazılı a&ccedil;ıklamaları ifade edeceklerdir.</span><br /><span>BAKAN: G&uuml;mr&uuml;k ve Ticaret Bakanı&rsquo;nı,</span><br /><span>BAKANLIK: G&uuml;mr&uuml;k ve Ticaret Bakanlığı&rsquo;nı,</span><br /><span>KANUN: 6502 sayılı T&uuml;keticinin Korunması Hakkında Kanun&rsquo;u,</span><br /><span>Y&Ouml;NETMELİK: Mesafeli S&ouml;zleşmeler Y&ouml;netmeliği&rsquo;ni (RG:27.11.2014/29188)</span><br /><span>HİZMET: Bir &uuml;cret veya menfaat karşılığında yapılan ya da yapılması taahh&uuml;t edilen mal sağlama dışındaki her t&uuml;rl&uuml; t&uuml;ketici işleminin konusunu ,</span><br /><span>SATICI: Ticari veya mesleki faaliyetleri kapsamında t&uuml;keticiye mal sunan veya mal sunan adına veya hesabına hareket eden şirketi,</span><br /><span>ALICI: Bir mal veya hizmeti ticari veya mesleki olmayan ama&ccedil;larla edinen, kullanan veya yararlanan ger&ccedil;ek ya da t&uuml;zel kişiyi,</span><br /><span>SİTE: SATICI&rsquo;ya ait internet sitesini,</span><br /><span>SİPARİŞ VEREN: Bir mal veya hizmeti SATICI&rsquo;ya ait internet sitesi &uuml;zerinden talep eden ger&ccedil;ek ya da t&uuml;zel kişiyi,</span><br /><span>TARAFLAR: SATICI ve ALICI&rsquo;yı,</span><br /><span>S&Ouml;ZLEŞME: SATICI ve ALICI arasında akdedilen işbu s&ouml;zleşmeyi,</span><br /><span>MAL: Alışverişe konu olan taşınır eşyayı ve elektronik ortamda kullanılmak &uuml;zere hazırlanan yazılım, ses, g&ouml;r&uuml;nt&uuml; ve benzeri gayri maddi malları ifade eder.</span></p>
+                <h5>3.KONU</h5>
+                <p><span>İşbu S&ouml;zleşme, ALICI&rsquo;nın, SATICI&rsquo;ya ait internet sitesi &uuml;zerinden elektronik ortamda siparişini verdiği aşağıda nitelikleri ve satış fiyatı belirtilen &uuml;r&uuml;n&uuml;n satışı ve teslimi ile ilgili olarak 6502 sayılı T&uuml;keticinin Korunması Hakkında Kanun ve Mesafeli S&ouml;zleşmelere Dair Y&ouml;netmelik h&uuml;k&uuml;mleri gereğince tarafların hak ve y&uuml;k&uuml;ml&uuml;l&uuml;klerini d&uuml;zenler.</span><br /><span>Listelenen ve sitede ilan edilen fiyatlar satış fiyatıdır. İlan edilen fiyatlar ve vaatler g&uuml;ncelleme yapılana ve değiştirilene kadar ge&ccedil;erlidir. S&uuml;reli olarak ilan edilen fiyatlar ise belirtilen s&uuml;re sonuna kadar ge&ccedil;erlidir.</span><br /><br /><span>4. SATICI BİLGİLERİ</span><br /><span>&Uuml;nvanı: Online Psikolog Merkezi</span><br /><span>Adresi: Cumhuriyet, 26, Mithatpaşa Cd., no:16 Çankaya/Ankara</span><br /><span>Telefon: +90 555 148 71 16</span><br /><span>Eposta:&nbsp;</span><span>info@onlinepsikologmerkezi.com</span></p>
+                <h5>5. ALICI BİLGİLERİ</h5>
+                <p><span>Hizmeti satın alan kişi: </span>@(ViewBag.Name + " " + ViewBag.LasName)<br /><span>Hizmeti satın alan Kişi T.C.K.N:</span><br /><span>Hizmeti satın alan kişi adresi:</span><br /><span>Telefon:@ViewBag.PhoneNumber </span><br /><span>Eposta/Kullanıcı adı: @ViewBag.Email </span></p>
+                <h5>7. S&Ouml;ZLEŞME KONUSU HİZMET BİLGİLERİ</h5>
+                <p><span>7.1. Hizmetin temel &ouml;zelliklerini (t&uuml;r&uuml;,s&uuml;resi vb&hellip;) SATICI&rsquo;ya ait internet sitesinde yayınlanmaktadır. Satıcı tarafından kampanya d&uuml;zenlenmiş ise ilgili hizmetin temel &ouml;zelliklerini kampanya s&uuml;resince inceleyebilirsiniz. Kampanya tarihine kadar ge&ccedil;erlidir.</span><br /><span>7.2 SATICI, www.onlinepsikologmerkezi web uygulaması &uuml;zerinden kendi b&uuml;nyesinde s&ouml;zleşmeli olarak hizmet veren psikologlar ve/veya psikolojik danışmanlar i&ccedil;in online terapi seansı satışı yapmaktadır. Hizmet ALICI&rsquo;nın se&ccedil;miş olduğu ve hizmetin satın alındığı psikologlar ve/veya psikolojik danışmanlar tarafından verilecektir.</span><br /><span>7.3. Listelenen ve sitede ilan edilen fiyatlar satış fiyatıdır. İlan edilen fiyatlar ve vaatler g&uuml;ncelleme yapılana ve değiştirilene kadar ge&ccedil;erlidir. S&uuml;reli olarak ilan edilen fiyatlar ise belirtilen s&uuml;re sonuna kadar ge&ccedil;erlidir.</span><br /><span>7.4. S&ouml;zleşme konusu hizmetin t&uuml;m vergiler d&acirc;hil satış fiyatı aşağıda g&ouml;sterilmiştir.</span></p>
+             
+                
+                
+                
+                <h5>Hizmet A&ccedil;ıklaması:</h5>
+                <p>
+                    <span>S&uuml;re: 50 Dakika</span><br /><span>
+                        Birim Fiyatı: @(appointmentDetails.Price)+ " ₺" </span ><br /><span > KDV Dahil Toplam : @(appointmentDetails.Price)+ " ₺" </span ><br /><span > &Ouml; deme Şekli ve Planı: Kredi Kartı</span ><br /><span > Hizmeti satın alan kişi:</span ><br /><span > Sipariş Tarihi: @DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss") </span ><br /><span > Teslimat Tarihi: @DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss") </span ><br /><span > Teslim şekli: ONLİNE WEB SEANS </span ><br /><span > Fatura Adresi:</span ></p >
+                <h5>8. FATURA BİLGİLERİ</h5>
+                        <p><span>Ad/Soyad/Unvan: >@(ViewBag.Name + " " + ViewBag.LasName) </span><br /><span>Adres:</span><br /><span>Telefon:@ViewBag.PhoneNumber</span><br /><span>Eposta/kullanıcı adı: ViewBag.Email</span><br /><span>Fatura teslim : Online olarak seans hizmetinin tamamlanmasından hemen sonra faturası teslim edilecektir.</span></p>
+                <h5>9. GENEL H&Uuml;K&Uuml;MLER</h5>
+                <p><span>9.1. ALICI, SATICI&rsquo;ya ait internet sitesinde s&ouml;zleşme konusu hizmetin temel nitelikleri, satış fiyatı ve &ouml;deme şekli ile teslimata ilişkin &ouml;n bilgileri okuyup, bilgi sahibi olduğunu, elektronik ortamda gerekli teyidi verdiğini kabul, beyan ve taahh&uuml;t eder. ALICI&rsquo;nın; &Ouml;n Bilgilendirmeyi elektronik ortamda teyit etmesi, mesafeli satış s&ouml;zleşmesinin kurulmasından evvel, SATICI tarafından ALICI' ya verilmesi gereken adresi, siparişi verilen hizmet veya hizmetlere ait temel &ouml;zellikleri, hizmet veya hizmetlerin vergiler d&acirc;hil fiyatını, &ouml;deme ve teslimat bilgilerini de doğru ve eksiksiz olarak edindiğini kabul, beyan ve taahh&uuml;t eder.</span><br /><span>9.2. S&ouml;zleşme konusu her bir hizmet, hizmetin teslim edilmesi gereken tarih ve saatte ALICI&rsquo;ya sistem &uuml;zerinden online olarak teslim edilmelidir. Bu s&uuml;re i&ccedil;inde hizmetin ALICI&rsquo;ya teslim edilememesi durumunda, ALICI&rsquo;nın s&ouml;zleşmeyi feshetme hakkı saklıdır.</span><br /><span>9.3. SATICI, S&ouml;zleşme konusu hizmeti eksiksiz, satın alındığı anda belirtilen niteliklere uygun ve her t&uuml;rl&uuml; ayıptan ar&icirc; olarak yasal mevzuat gereklerine g&ouml;re sağlam, standartlara uygun bir şekilde işi doğruluk ve d&uuml;r&uuml;stl&uuml;k esasları d&acirc;hilinde ifa etmeyi, hizmet kalitesini koruyup y&uuml;kseltmeyi, işin ifası sırasında gerekli dikkat ve &ouml;zeni g&ouml;stermeyi, ihtiyat ve &ouml;ng&ouml;r&uuml; ile hareket etmeyi kabul, beyan ve taahh&uuml;t eder.</span><br /><span>9.4. SATICI, s&ouml;zleşmeden doğan ifa y&uuml;k&uuml;ml&uuml;l&uuml;ğ&uuml;n&uuml;n s&uuml;resi dolmadan ALICI&rsquo;yı bilgilendirmek ve a&ccedil;ık&ccedil;a onayını almak suretiyle eşit kalite ve fiyatta farklı bir hizmet tedarik edebilir.</span><br /><span>9.5. SATICI, sipariş konusu hizmetin yerine getirilmesinin imk&acirc;nsızlaşması halinde s&ouml;zleşme konusu y&uuml;k&uuml;ml&uuml;l&uuml;klerini yerine getiremezse, bu durumu, &ouml;ğrendiği tarihten itibaren 3 g&uuml;n i&ccedil;inde yazılı olarak t&uuml;keticiye bildireceğini, 14 g&uuml;nl&uuml;k s&uuml;re i&ccedil;inde toplam bedeli ALICI&rsquo;ya iade edeceğini kabul, beyan ve taahh&uuml;t eder.</span><br /><span>9.6. ALICI, S&ouml;zleşme konusu hizmetin teslimatı i&ccedil;in işbu S&ouml;zleşme&rsquo;yi elektronik ortamda teyit edeceğini, herhangi bir nedenle s&ouml;zleşme konusu hizmet bedelinin &ouml;denmemesi ve/veya banka kayıtlarında iptal edilmesi halinde, SATICI&rsquo;nın s&ouml;zleşme konusu hizmeti teslim y&uuml;k&uuml;ml&uuml;l&uuml;ğ&uuml;n&uuml;n sona ereceğini kabul, beyan ve taahh&uuml;t eder.</span><br /><span>9.7. ALICI, S&ouml;zleşme konusu hizmetin ALICI&rsquo;ya tesliminden sonra ALICI'ya ait kredi kartının yetkisiz kişilerce haksız kullanılması sonucunda s&ouml;zleşme konusu hizmet bedelinin ilgili banka veya finans kuruluşu tarafından SATICI'ya &ouml;denmemesi halinde, SATICI&rsquo;nın uğrayacağı t&uuml;m zararları, SATICI&rsquo;nın ilk bildirimi &uuml;zerine derhal, nakden ve defaten tazmin edeceğini beyan ve taahh&uuml;t eder.</span><br /><span>9.8. SATICI, tarafların iradesi dışında gelişen, &ouml;nceden &ouml;ng&ouml;r&uuml;lemeyen ve tarafların bor&ccedil;larını yerine getirmesini engelleyici ve/veya geciktirici hallerin oluşması gibi m&uuml;cbir sebepler halleri nedeni ile s&ouml;zleşme konusu hizmeti s&uuml;resi i&ccedil;inde teslim edemez ise, durumu ALICI'ya bildireceğini kabul, beyan ve taahh&uuml;t eder. ALICI da randevunun iptal edilmesini, s&ouml;zleşme konusu hizmetin varsa emsali ile değiştirilmesini ve/veya teslimat s&uuml;resinin engelleyici durumun ortadan kalkmasına kadar ertelenmesini SATICI&rsquo;dan talep etme hakkını haizdir. ALICI tarafından randevunun iptal edilmesi halinde ALICI&rsquo;nın nakit ile yaptığı &ouml;demelerde, &uuml;r&uuml;n tutarı 14 g&uuml;n i&ccedil;inde kendisine nakden ve defaten &ouml;denir. ALICI&rsquo;nın kredi kartı ile yaptığı &ouml;demelerde ise, &uuml;r&uuml;n tutarı, siparişin ALICI tarafından iptal edilmesinden sonra 14 g&uuml;n i&ccedil;erisinde ilgili bankaya iade edilir. ALICI, SATICI tarafından kredi kartına iade edilen tutarın banka tarafından ALICI hesabına yansıtılmasına ilişkin ortalama s&uuml;recin 2 ile 3 haftayı bulabileceğini, bu tutarın bankaya iadesinden sonra ALICI&rsquo;nın hesaplarına yansıması halinin tamamen banka işlem s&uuml;reci ile ilgili olduğundan, ALICI, olası gecikmeler i&ccedil;in SATICI&rsquo;yı sorumlu tutamayacağını kabul, beyan ve taahh&uuml;t eder.</span><br /><span>9.9. SATICININ, ALICI tarafından siteye kayıt formunda belirtilen veya daha sonra kendisi tarafından g&uuml;ncellenen adresi, e-posta adresi, sabit ve mobil telefon hatları ve diğer iletişim bilgileri &uuml;zerinden mektup, e-posta, SMS, telefon g&ouml;r&uuml;şmesi ve diğer yollarla iletişim, pazarlama, bildirim ve diğer ama&ccedil;larla ALICI&rsquo;ya ulaşma hakkı bulunmaktadır. ALICI, işbu s&ouml;zleşmeyi kabul etmekle SATICI&rsquo;nın kendisine y&ouml;nelik yukarıda belirtilen iletişim faaliyetlerinde bulunabileceğini kabul ve beyan etmektedir.</span><br /><span>9.10. ALICI ile sipariş esnasında kullanılan kredi kartı hamilinin aynı kişi olmaması veya hizmetin ALICI&rsquo;ya tesliminden evvel, siparişte kullanılan kredi kartına ilişkin g&uuml;venlik a&ccedil;ığı tespit edilmesi halinde, SATICI, kredi kartı hamiline ilişkin kimlik ve iletişim bilgilerini, siparişte kullanılan kredi kartının bir &ouml;nceki aya ait ekstresini yahut kart hamilinin bankasından kredi kartının kendisine ait olduğuna ilişkin yazıyı ibraz etmesini ALICI&rsquo;dan talep edebilir. ALICI&rsquo;nın talebe konu bilgi/belgeleri temin etmesine kadar ge&ccedil;ecek s&uuml;rede sipariş/randevu dondurulacak olup, mezkur taleplerin 24 saat i&ccedil;erisinde karşılanmaması halinde ise SATICI, siparişi iptal etme hakkını haizdir.</span><br /><span>9.11. ALICI, SATICI&rsquo;ya ait internet sitesine &uuml;ye olurken verdiği kişisel ve diğer sair bilgilerin ger&ccedil;eğe uygun olduğunu, SATICI&rsquo;nın bu bilgilerin ger&ccedil;eğe aykırılığı nedeniyle uğrayacağı t&uuml;m zararları, SATICI&rsquo;nın ilk bildirimi &uuml;zerine derhal, nakden ve defaten tazmin edeceğini beyan ve taahh&uuml;t eder.</span><br /><span>9.12. ALICI, SATICI&rsquo;ya ait internet sitesini kullanırken yasal mevzuat h&uuml;k&uuml;mlerine riayet etmeyi ve bunları ihlal etmemeyi baştan kabul ve taahh&uuml;t eder. Aksi takdirde, doğacak t&uuml;m hukuki ve cezai y&uuml;k&uuml;ml&uuml;l&uuml;kler tamamen ve m&uuml;nhasıran ALICI&rsquo;yı bağlayacaktır.</span><br /><span>9.13. ALICI, SATICI&rsquo;ya ait internet sitesini hi&ccedil;bir şekilde kamu d&uuml;zenini bozucu, genel ahlaka aykırı, başkalarını rahatsız ve taciz edici şekilde, yasalara aykırı bir ama&ccedil; i&ccedil;in, başkalarının maddi ve manevi haklarına tecav&uuml;z edecek şekilde kullanamaz. Ayrıca, &uuml;ye başkalarının hizmetleri kullanmasını &ouml;nleyici veya zorlaştırıcı faaliyet (spam, virus, truva atı, pishing vb.) işlemlerde bulunamaz.</span><br /><span>9.14. SATICI&rsquo;ya ait internet sitesinin &uuml;zerinden, SATICI&rsquo;nın kendi kontrol&uuml;nde olmayan ve/veya başkaca &uuml;&ccedil;&uuml;nc&uuml; kişilerin sahip olduğu ve/veya işlettiği başka web sitelerine ve/veya başka i&ccedil;eriklere link verilebilir. Bu linkler ALICI&rsquo;ya y&ouml;nlenme kolaylığı sağlamak amacıyla konmuş olup herhangi bir web sitesini veya o siteyi işleten kişiyi desteklememekte ve Link verilen web sitesinin i&ccedil;erdiği bilgilere y&ouml;nelik herhangi bir garanti niteliği taşımamaktadır.</span><br /><span>9.15. İşbu s&ouml;zleşme i&ccedil;erisinde sayılan maddelerden bir ya da birka&ccedil;ını ihlal eden &uuml;ye işbu ihlal nedeniyle cezai ve hukuki olarak şahsen sorumlu olup, SATICI&rsquo;yı bu ihlallerin hukuki ve cezai sonu&ccedil;larından ari tutacaktır. Ayrıca; işbu ihlal nedeniyle, olayın hukuk alanına intikal ettirilmesi halinde, SATICI&rsquo;nın &uuml;yeye karşı &uuml;yelik s&ouml;zleşmesine uyulmamasından dolayı tazminat talebinde bulunma hakkı saklıdır.</span><br /><br /><span>10. CAYMA HAKKI</span><br /><span>10.1. ALICI; mesafeli s&ouml;zleşmenin mal satışına ilişkin olması durumunda, &uuml;r&uuml;n&uuml;n kendisine veya g&ouml;sterdiği adresteki kişi/kuruluşa teslim tarihinden itibaren 14 (on d&ouml;rt) g&uuml;n i&ccedil;erisinde, SATICI&rsquo;ya bildirmek şartıyla hi&ccedil;bir hukuki ve cezai sorumluluk &uuml;stlenmeksizin ve hi&ccedil;bir gerek&ccedil;e g&ouml;stermeksizin malı reddederek s&ouml;zleşmeden cayma hakkını kullanabilir. Hizmet sunumuna ilişkin mesafeli s&ouml;zleşmelerde ise, bu s&uuml;re s&ouml;zleşmenin imzalandığı tarihten itibaren başlar. Cayma hakkı s&uuml;resi sona ermeden &ouml;nce, t&uuml;keticinin onayı ile hizmetin ifasına başlanan hizmet s&ouml;zleşmelerinde cayma hakkı kullanılamaz. Cayma hakkının kullanımından kaynaklanan masraflar SATICI&rsquo; ya aittir. ALICI, iş bu s&ouml;zleşmeyi kabul etmekle, cayma hakkı konusunda bilgilendirildiğini peşinen kabul eder.</span><br /><span>d) SATICI, cayma bildiriminin kendisine ulaşmasından itibaren en ge&ccedil; 10 g&uuml;nl&uuml;k s&uuml;re i&ccedil;erisinde toplam bedeli ve ALICI&rsquo;yı bor&ccedil; altına sokan belgeleri ALICI&rsquo; ya iade etmek ve satın alınan hizmeti iade almakla y&uuml;k&uuml;ml&uuml;d&uuml;r.</span><br /><span>f) Cayma hakkının kullanılması nedeniyle SATICI tarafından d&uuml;zenlenen kampanya limit tutarının altına d&uuml;ş&uuml;lmesi halinde kampanya kapsamında faydalanılan indirim miktarı iptal edilir.</span><br /><br /><span>12. TEMERR&Uuml;T HALİ VE HUKUKİ SONU&Ccedil;LARI</span><br /><span>ALICI, &ouml;deme işlemlerini kredi kartı ile yaptığı durumda temerr&uuml;de d&uuml;şt&uuml;ğ&uuml; takdirde, kart sahibi banka ile arasındaki kredi kartı s&ouml;zleşmesi &ccedil;er&ccedil;evesinde faiz &ouml;deyeceğini ve bankaya karşı sorumlu olacağını kabul, beyan ve taahh&uuml;t eder. Bu durumda ilgili banka hukuki yollara başvurabilir; doğacak masrafları ve vek&acirc;let &uuml;cretini ALICI&rsquo;dan talep edebilir ve her koşulda ALICI&rsquo;nın borcundan dolayı temerr&uuml;de d&uuml;şmesi halinde, ALICI, borcun gecikmeli ifasından dolayı SATICI&rsquo;nın uğradığı zarar ve ziyanını &ouml;deyeceğini kabul, beyan ve taahh&uuml;t eder</span><br /><br /><span>13. YETKİLİ MAHKEME</span><br /><span>İşbu s&ouml;zleşmeden doğan uyuşmazlıklarda şikayet ve itirazlar, aşağıdaki kanunda belirtilen parasal sınırlar d&acirc;hilinde t&uuml;keticinin yerleşim yerinin bulunduğu veya t&uuml;ketici işleminin yapıldığı yerdeki t&uuml;ketici sorunları hakem heyetine veya t&uuml;ketici mahkemesine yapılacaktır. Parasal sınıra ilişkin bilgiler aşağıdadır:</span><br /><span>01/01/2017 tarihinden itibaren ge&ccedil;erli olmak &uuml;zere, 2017 yılı i&ccedil;in t&uuml;ketici hakem heyetlerine yapılacak başvurularda değeri:</span><br /><span>a) 2.400 (iki bin d&ouml;rt y&uuml;z) T&uuml;rk Lirasının altında bulunan uyuşmazlıklarda il&ccedil;e t&uuml;ketici hakem heyetleri,</span><br /><span>b) B&uuml;y&uuml;kşehir stat&uuml;s&uuml;nde olan illerde 2.400 (iki bin d&ouml;rt y&uuml;z) T&uuml;rk Lirası ile 3.610 (&uuml;&ccedil; bin altı y&uuml;z on) T&uuml;rk Lirası arasındaki uyuşmazlıklarda il t&uuml;ketici hakem heyetleri,</span><br /><span>c) B&uuml;y&uuml;kşehir stat&uuml;s&uuml;nde olmayan illerin merkezlerinde 3.610 (&uuml;&ccedil; bin altı y&uuml;z on) T&uuml;rk Lirasının altında bulunan uyuşmazlıklarda il t&uuml;ketici hakem heyetleri,</span><br /><span>&ccedil;) B&uuml;y&uuml;kşehir stat&uuml;s&uuml;nde olmayan illere bağlı il&ccedil;elerde 2.400 (iki bin d&ouml;rt y&uuml;z) T&uuml;rk Lirası ile 3.610 (&uuml;&ccedil; bin altı y&uuml;z on) T&uuml;rk Lirası arasındaki uyuşmazlıklarda il t&uuml;ketici hakem heyetleri g&ouml;revli kılınmışlardır.</span><br /><span>İşbu S&ouml;zleşme ticari ama&ccedil;larla yapılmaktadır.</span><br /><br /><span>14. Y&Uuml;R&Uuml;RL&Uuml;K</span><br /><span>ALICI, Site &uuml;zerinden verdiği siparişe ait &ouml;demeyi ger&ccedil;ekleştirdiğinde işbu s&ouml;zleşmenin t&uuml;m şartlarını kabul etmiş sayılır. SATICI, online terapi seansının ger&ccedil;ekleşmesi &ouml;ncesinde işbu s&ouml;zleşmenin sitede ALICI tarafından okunup kabul edildiğine dair onay alacak şekilde gerekli yazılımsal d&uuml;zenlemeleri yapmakla y&uuml;k&uuml;ml&uuml;d&uuml;r.</span><br /><br /></p>
+                <h5>ALICI:</h5>
+                <p><span>Hizmeti satın alan kişi:</span><br /><span>Hizmeti satın alan Kişi T.C.K.N:</span><br /><span>Hizmeti satın alan kişi adresi:</span><br /><span>Telefon:5345150229</span><br /><span>Eposta/Kullanıcı adı:</span><br /><br /></p>
+                <h5>SATICI:</h5>
+                <p><span>&Uuml;nvanı: Online Psikolog Merkezi</span><br /><span>Adresi: </span><br /><span>Cumhuriyet, 26, Mithatpaşa Cd., no:16 Çankaya/Ankara</span><br /><span>Telefon: +90 555 148 71 16</span><br /><span>Fax: </span><br /><span>Eposta:&nbsp;</span><span>info@onlinepsikologmerkezi.com</span><br /><span>TARİH:@DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss") </span></p>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Anladım</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section Scripts
+    {
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            //$('form').submit(function (e) {
+            //    var isChecked = $('input[type="checkbox"]').is(':checked');
+            //    if (!isChecked) {
+            //        e.preventDefault();
+            //        $('#errorText').show();
+            //    }
+            //});
+
+
+            $('#myButton').prop('disabled', true);
+
+            $('input[type="checkbox"]').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#errorText').css('display', 'none');
+                    $('#myButton').prop('disabled', false);
+                } else {
+                    $('#errorText').css('display', 'block');
+                    $('#myButton').prop('disabled', true);
+                }
+            });
+
+
+        });
+
+
+
+        function formatExpirationDate(event) {
+            let input = event.target;
+            let value = input.value;
+
+
+            value = value.replace(/\D/g, '');
+
+
+            if (value.length > 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2);
+            }
+
+
+            value = value.substring(0, 5);
+
+
+            input.value = value;
+        }
+
+
+
+    </script>
+
+}
+
+
+@section CustomCss{
+
+    <style>
+
+
+        .h8 {
+            font-size: 30px;
+            font-weight: 800;
+            text-align: center;
+        }
+
+        .btn.btn-primary {
+            width: 100%;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            background-image: linear-gradient(to right, #77A1D3 0%, #79CBCA 51%, #77A1D3 100%);
+            border: none;
+            transition: 0.5s;
+            background-size: 200% auto;
+        }
+
+
+        .btn.btn.btn-primary:hover {
+            background-position: right center;
+            color: #fff;
+            text-decoration: none;
+        }
+
+
+
+        .btn.btn-primary:hover .fas.fa-arrow-right {
+            transform: translate(15px);
+            transition: transform 0.2s ease-in;
+        }
+
+        .form-control {
+            color: white;
+            background-color: #223C60;
+            border: 2px solid transparent;
+            height: 60px;
+            padding-left: 20px;
+            vertical-align: middle;
+        }
+
+            .form-control:focus {
+                color: white;
+                background-color: #0C4160;
+                border: 2px solid #2d4dda;
+                box-shadow: none;
+            }
+
+        .text {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        ::placeholder {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+    </style>
+
+}

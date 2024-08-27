@@ -1,0 +1,73 @@
+/*--------------------------------------------------------------
+20. Event
+----------------------------------------------------------------*/
+.cs-event.cs-style1 {
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 50px rgba(247, 210, 211, 0.5);
+  transition: all 0.4s ease;
+
+  &:hover {
+    transform: translateY(-7px)
+  }
+
+  .cs-event__in {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cs-event__date {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    left: -20px;
+    top: -20px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 24px;
+    flex-direction: column;
+    line-height: 25px;
+    padding-left: 20px;
+    padding-top: 20px;
+
+    span {
+      display: block;
+      font-size: 14px;
+    }
+  }
+
+  .cs-event__img {
+    height: 260px;
+    margin-bottom: 30px;
+  }
+
+  .cs-event__title {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 24px;
+  }
+
+  .cs-event__text {
+    font-size: 14px;
+    font-weight: 500;
+    color: $primary;
+    margin-bottom: 5px;
+  }
+}
+@media screen and (max-width: 991px) and (min-width: 575px) {
+  .cs-event.cs-style1 .cs-event__img {
+    height: 300px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .cs-event.cs-style1 .cs-event__title {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+}

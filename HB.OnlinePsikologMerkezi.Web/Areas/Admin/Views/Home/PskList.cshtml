@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "PskList";
+    Layout = "_Layout";
+}
+@model List<PsychologistListDto>
+
+<h1>Psikolog Listesi</h1>
+
+<div class="row">
+
+    <div class="col-md-10 mx-auto">
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>psk id</th>
+                    <th>adı</th>
+                    <th>soyadı</th>
+                    <th>danışma ücret</th>
+                    <th>site sıralama</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    
+                    <tr>
+                        <td>@item.SecondKey</td>
+                        <td>@item.AppUser.Name</td>
+                        <td>@item.AppUser.LastName</td>
+                        <td>@item.ConsulationPrice</td>
+                        <td>@item.Rank</td>
+                        <td> <a asp-action="PskDeatils" asp-controller="home" asp-area="admin" asp-route-id="@item.Psychologist_ID" class="btn btn-primary">profile git  </a> </td>
+
+
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+
+
+    </div>
+
+</div>

@@ -1,0 +1,35 @@
+/*--------------------------------------------------------------
+35. Video Block
+----------------------------------------------------------------*/
+.cs-video__block.cs-style1 {
+  position: relative;
+  display: block;
+  padding: 0 15px;
+
+  i {
+    color: #fff;
+    font-size: 60px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+  }
+
+  &:hover {
+    i {
+      opacity: 0.8;
+    }
+  }
+
+  &.cs-size1 {
+    max-width: 400px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .cs-video__block.cs-style1 {
+    max-width: 480px;
+    margin: auto;
+  }
+}

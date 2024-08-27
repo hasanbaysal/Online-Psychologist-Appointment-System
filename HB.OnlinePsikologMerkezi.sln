@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HB.OnlinePsikologMerkezi.Entities", "HB.OnlinePsikologMerkezi.Entities\HB.OnlinePsikologMerkezi.Entities.csproj", "{93CA2796-6744-4B76-80A2-75D4BE5BFBFB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HB.OnlinePsikologMerkezi.Data", "HB.OnlinePsikologMerkezi.Data\HB.OnlinePsikologMerkezi.Data.csproj", "{920313A8-1C23-4A89-A975-83C53C068C2A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HB.OnlinePsikologMerkezi.Dto", "HB.OnlinePsikologMerkezi.Dto\HB.OnlinePsikologMerkezi.Dto.csproj", "{44574C44-60C5-4EC0-8225-3E9A12E38DC9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HB.OnlinePsikologMerkezi.Business", "HB.OnlinePsikologMerkezi.Business\HB.OnlinePsikologMerkezi.Business.csproj", "{C53A79F1-E0A0-4C77-9265-F762EBD62DDD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HB.OnlinePsikologMerkezi.Common", "HB.OnlinePsikologMerkezi.Common\HB.OnlinePsikologMerkezi.Common.csproj", "{EED378D8-BC15-42BB-8580-EDFE4DCFC4DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HB.OnlinePsikologMerkezi.Web", "HB.OnlinePsikologMerkezi.Web\HB.OnlinePsikologMerkezi.Web.csproj", "{8918CA33-E790-4844-81D9-373EA546B521}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93CA2796-6744-4B76-80A2-75D4BE5BFBFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93CA2796-6744-4B76-80A2-75D4BE5BFBFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93CA2796-6744-4B76-80A2-75D4BE5BFBFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93CA2796-6744-4B76-80A2-75D4BE5BFBFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{920313A8-1C23-4A89-A975-83C53C068C2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{920313A8-1C23-4A89-A975-83C53C068C2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{920313A8-1C23-4A89-A975-83C53C068C2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{920313A8-1C23-4A89-A975-83C53C068C2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44574C44-60C5-4EC0-8225-3E9A12E38DC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44574C44-60C5-4EC0-8225-3E9A12E38DC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44574C44-60C5-4EC0-8225-3E9A12E38DC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44574C44-60C5-4EC0-8225-3E9A12E38DC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C53A79F1-E0A0-4C77-9265-F762EBD62DDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C53A79F1-E0A0-4C77-9265-F762EBD62DDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C53A79F1-E0A0-4C77-9265-F762EBD62DDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C53A79F1-E0A0-4C77-9265-F762EBD62DDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EED378D8-BC15-42BB-8580-EDFE4DCFC4DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EED378D8-BC15-42BB-8580-EDFE4DCFC4DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EED378D8-BC15-42BB-8580-EDFE4DCFC4DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EED378D8-BC15-42BB-8580-EDFE4DCFC4DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8918CA33-E790-4844-81D9-373EA546B521}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8918CA33-E790-4844-81D9-373EA546B521}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8918CA33-E790-4844-81D9-373EA546B521}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8918CA33-E790-4844-81D9-373EA546B521}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BBB32A49-BC04-4060-8C11-48612ADAFE82}
+	EndGlobalSection
+EndGlobal

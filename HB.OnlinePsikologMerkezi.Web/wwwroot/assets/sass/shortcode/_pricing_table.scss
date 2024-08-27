@@ -1,0 +1,96 @@
+/*--------------------------------------------------------------
+30. Pricing Table
+----------------------------------------------------------------*/
+.cs-pricing__table.cs-style1 {
+  text-align: center;
+  box-shadow: 0px 0px 50px 0px rgba(247, 210, 211, 0.5);
+  padding: 34px 30px 1px;
+  margin-bottom: 25px;
+  border-radius: 5px;
+
+  .cs-pricing__table__title {
+    font-size: 24px;
+    font-weight: bold;
+    color: $accent;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+  }
+
+  .cs-pricing {
+    font-size: 60px;
+    font-weight: 800;
+    line-height: 1em;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+
+    span {
+      font-size: 40px;
+      position: relative;
+      top: -19px;
+      margin-right: 13px;
+    }
+  }
+
+  .cs-pricing__table_seperator {
+    height: 1px;
+    max-width: 230px;
+    width: 100%;
+    background-color: rgba($primary, 0.1);
+    margin: auto;
+    transition: all 0.3s ease;
+  }
+
+  .cs-pricing__table__feature {
+    color: $primary;
+    margin-top: 32px;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+
+    &:not(:last-child) {
+      li {
+        margin-bottom: 18px;
+      }
+    }
+  }
+
+  .cs-pricing__table__btn {
+    margin-bottom: -25px;
+  }
+
+  .cs-btn {
+    width: 100%;
+  }
+
+  &:hover {
+    background-color: $primary;
+
+    .cs-pricing__table__title,
+    .cs-pricing__table__feature {
+      color: $white;
+    }
+
+    .cs-pricing {
+      color: #fcf2f2;
+    }
+
+    .cs-pricing__table_seperator {
+      background-color: rgba($white, 0.1);
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cs-pricing__table.cs-style1 .cs-pricing__table__title {
+    font-size: 22px;
+  }
+
+  .cs-pricing__table.cs-style1 .cs-pricing {
+    font-size: 50px;
+  }
+
+  .cs-pricing__table.cs-style1 .cs-pricing span {
+    font-size: 30px;
+    top: -18px;
+    margin-right: 8px;
+  }
+}

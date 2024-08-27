@@ -1,0 +1,36 @@
+/*--------------------------------------------------------------
+18. Demo Box
+----------------------------------------------------------------*/
+.cs-demo__box.cs-style1 {
+  display: block;
+  max-width: 360px;
+  margin: auto;
+
+  .cs-demo__box__img {
+    border-radius: 2px;
+    background-position: top center;
+    background-size: cover;
+    height: 450px;
+    box-shadow: 0px 0px 13.5px 1.5px rgba(3, 49, 147, 0.3);
+  }
+
+  .cs-demo__box__title {
+    margin-bottom: 0;
+    font-size: 20px;
+    font-weight: 800;
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  &.cs-type1 {
+    .cs-demo__box__img {
+      height: 290px;
+    }
+  }
+}
+
+a.cs-demo__box.cs-style1 {
+  &:hover {
+    transform: translateY(-5px);
+  }
+}

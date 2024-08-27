@@ -1,0 +1,268 @@
+/*--------------------------------------------------------------
+17. CTA
+----------------------------------------------------------------*/
+.cs-cta.cs-style1 {
+  background-color: $accent;
+
+  .cs-cta-in {
+    padding: 35px 0;
+    min-height: 120px;
+  }
+
+  .cs-cta__title {
+    font-size: 30px;
+    font-weight: 800;
+    color: $white;
+    margin-bottom: 0;
+  }
+
+  .cs-cta__in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &.cs-color1 {
+    background: linear-gradient(90deg, rgb(92, 190, 45) 0%, rgb(94, 44, 237) 100%);
+  }
+
+  &.cs-color2 {
+    background: #263a5d;
+  }
+}
+
+.cs-cta.cs-style2 {
+  .cs-cta__title {
+    color: #fff;
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 70px;
+  }
+}
+
+.cs-cta.cs-style3 {
+  display: flex;
+  align-items: center;
+  margin-top: 65px;
+
+  .cs-cta__img {
+    width: 350px;
+    margin-top: -65px;
+    margin-right: 100px;
+    flex: none;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .cs-cta__title {
+    font-size: 40px;
+    font-weight: 800;
+    position: relative;
+    padding-bottom: 28px;
+    margin-bottom: 28px;
+
+    &:after {
+      content: '';
+      height: 2px;
+      width: 180px;
+      background-color: #17287c;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  .cs-cta__subtitle {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.4em;
+    color: $primary;
+  }
+
+  .cs-cta__text {
+    padding: 70px 0;
+  }
+
+  &.cs-color1 {
+    .cs-cta__title {
+      color: #fff;
+
+      &:after {
+        background-color: $green;
+      }
+    }
+
+    .cs-cta__subtitle {
+      color: #fff;
+    }
+  }
+}
+
+.cs-cta.cs-style4 {
+  border-radius: 5px;
+  box-shadow: 0px 0px 24px 6px rgba(38, 58, 93, 0.18);
+
+  .cs-cta__in {
+    padding: 70px 0;
+    border-radius: inherit;
+  }
+
+  .cs-cta__title {
+    font-size: 40px;
+    font-weight: 800;
+    position: relative;
+    padding-bottom: 27px;
+    margin-bottom: 26px;
+
+    &:after {
+      content: '';
+      position: absolute;
+      height: 2px;
+      width: 170px;
+      background-color: #263a5d;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .cs-cta__subtitle {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.5em;
+  }
+
+  &.cs-color1 {
+    background: linear-gradient(90deg, rgb(92, 190, 45) 0%, rgb(38, 58, 93) 100%);
+
+    .cs-cta__title,
+    .cs-cta__subtitle {
+      color: #fff;
+    }
+  }
+}
+
+.cs-cta.cs-style5 {
+  border-radius: 5px;
+  background: linear-gradient(90deg, rgb(26, 8, 40) 0%, rgb(58, 18, 90) 100%);
+  box-shadow: 0px 0px 24px 6px rgba(38, 58, 93, 0.18);
+  position: relative;
+
+  .cs-cta__title {
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 40px;
+  }
+
+  .cs-cta-in {
+    padding: 70px 0 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cs-btn.cs-style1 {
+    min-width: 230px;
+  }
+
+  .cs-shape__position1 {
+    left: 50%;
+    top: 14%;
+  }
+
+  .cs-shape__position2 {
+    left: 18%;
+    top: 60%;
+  }
+
+  .cs-shape__position9 {
+    left: 74%;
+    top: 71%;
+    animation: rotate-anim 10s infinite linear;
+  }
+
+  &.cs-color1 {
+    background: linear-gradient(90deg, rgb(38, 58, 93) 0%, rgb(244, 134, 81) 100%);
+
+    .cs-cta__title {
+      color: #fff;
+    }
+  }
+}
+
+@media screen and (max-width: 1199px) {
+  .cs-cta.cs-style3 .cs-cta__img {
+    margin-right: 40px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .cs-cta.cs-style1 .cs-cta__in {
+    flex-direction: column;
+  }
+
+  .cs-cta.cs-style1 .cs-cta__title {
+    margin-bottom: 20px;
+  }
+
+  .cs-cta.cs-style3 {
+    flex-direction: column;
+  }
+
+  .cs-cta.cs-style3 .cs-cta__text {
+    padding: 40px 0 70px;
+  }
+
+  .cs-cta.cs-style3 .cs-cta__img {
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cs-cta.cs-style2 .cs-cta__title {
+    font-size: 32px;
+    margin-bottom: 32px;
+
+    br {
+      display: none;
+    }
+  }
+
+  .cs-cta.cs-style1 .cs-cta__title {
+    font-size: 28px;
+  }
+
+  .cs-cta.cs-style3 .cs-cta__title {
+    font-size: 32px;
+  }
+
+  .cs-cta.cs-style3 .cs-cta__subtitle {
+    font-size: 22px;
+  }
+
+  .cs-cta.cs-style4 .cs-cta__title {
+    font-size: 32px;
+    padding-bottom: 26px;
+    margin-bottom: 22px;
+  }
+
+  .cs-cta.cs-style4 .cs-cta__subtitle {
+    font-size: 22px;
+  }
+
+  .cs-cta.cs-style5 .cs-cta__title {
+    font-size: 32px;
+
+    br {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .cs-cta.cs-style3 .cs-cta__img {
+    width: 100%;
+  }
+}

@@ -1,0 +1,25 @@
+/*--------------------------------------------------------------
+31. Progressbar
+----------------------------------------------------------------*/
+.cs-progressbar.cs-style1 {
+  .cs-progressbar__head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    line-height: 26px;
+    color: $primary;
+    font-weight: 500;
+    margin-top: 12px;
+  }
+
+  .cs-progress {
+    height: 10px;
+    border-radius: 2px;
+    background-color: #f7d2d3;
+
+    .cs-progress__in {
+      height: 100%;
+      border-radius: inherit;
+    }
+  }
+}

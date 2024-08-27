@@ -1,0 +1,723 @@
+﻿@{
+    Layout = "_Layout2";
+}
+@model List<PsychologistListDto>
+@using  System.Text;
+
+
+
+@*body start*@
+<div class="cs-preloader">
+    <div class="cs-preloader__in">
+        <img src="~/assets/img/main-logo-large.png" alt="preloader">
+    </div>
+</div>
+
+
+
+
+<div id="wp-support" style="position:fixed; bottom:20px; left:10px; z-index:999;">
+    <a href="https://wa.me/905551487116" target="_blank" style="position:relative; display:inline-block;">
+    <img class="mb-0" width="50px" height="50px" src="~/assets/img/wp.png" alt="canlı-destek" />
+    <p style="font-size:11px; color:black;"  class="mt-0 mb-0 fw-bold">Canlı Destek</p>
+    </a>
+    <a id="wp-support-close" title="Kapat" class="btn" style="position: absolute; top:-12px; right: 10px; background-color:rgba(0,0,0,0); color:#5E2CED; font-size:15px;  width:16px; height:16px; display:flex; align-items:center; justify-content:center; font-weight:bold;">x</a>
+</div>
+
+
+<header class="cs-site__header cs-style1">
+    <div class="cs-main__header">
+        <div class="container">
+            <div class="cs-main__header__in">
+                <div class="cs-main__header__left">
+                    <a class="cs-site__branding" asp-action="index" asp-controller="home"> <img style="max-height:150px;" src="~/assets/img/main-logo-large.png" alt="main-logo-large"> </a>
+                </div>
+                <div class="cs-main__header__right">
+                    <div class="cs-nav">
+                        <ul class="cs-nav__list">
+
+
+
+                           
+
+
+
+                            <li>
+                                <a href="#portfolio">Psikologlarımız</a>
+
+                            </li>
+
+                         
+                                <li>
+                                    <a asp-action="OurServices" asp-controller="Home">Hizmetlerimiz</a>
+
+                                </li>
+
+
+                            <li>
+                                <a asp-action="Index" asp-controller="Blog">Blog</a>
+                            </li>
+                            <li><a asp-controller="Home" asp-action="Contact" >İletişim</a></li>
+                            <li>
+                                <a asp-action="FAQ" asp-controller="Home"> S.S.S </a>
+                            </li>
+
+                            @if (!User!.Identity!.IsAuthenticated)
+                            {
+                                <li><a asp-action="login" asp-controller="account"> <strong class="text-decoration-underline">Giriş Yap</strong> </a></li>
+                            }
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+
+                                <li class="menu-item-has-children">
+                                    <a href="#">@User.Identity.Name</a>
+                                    <ul>
+
+                                        @if (User.IsInRole("admin"))
+                                        {
+                                            <li><a asp-action="Index" asp-controller="Home" asp-area="Admin">Admin Panel</a></li>
+                                        }
+                                        @if (User.IsInRole("psk"))
+                                        {
+
+                                            <li><a asp-controller="Psychologist" asp-action="AddAppointment">Randevu Oluştur</a></li>
+                                            <li><a asp-controller="Psychologist" asp-action="PsychologistDashBoard">Psikolog Paneli</a></li>
+                                        }
+
+                                        <li><a asp-controller="Profile" asp-action="MyProfile">Bilgilerim</a></li>
+                                        <li><a asp-controller="Profile" asp-action="myappointments">Randevularım</a></li>
+                                        <li><a asp-action="Logout" asp-controller="Account">Çıkış</a></li>
+
+                                    </ul>
+                                </li>
+                            }
+
+
+                        </ul>
+                    </div><!-- .cs-nav -->
+                </div><!-- .cs-main__header__right -->
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="cs-hero cs-style1 cs-center">
+    <div class="container">
+        <div class="cs-hero__text wow fadeInRight" data-wow-duration="0.8s" data-wow-delay="0.3s">
+            <h1 class="cs-hero__title">Online Psikolog Merkezi <br> <span style="font-size:40px;">Anında Terapiye Başla!</span> </h1>
+            <div style="color:black;" class="cs-hero__subtitle">
+
+
+@*
+                <div id="web-div">
+
+                
+                <strong> Online Psikolog Merkezi Nedir?  </strong><br />
+                <br />  Alanında uzman psikolog kadrosuyla, 
+                <br />  danışanların sorunlarına çözüm odaklı yaklaşan bir platformdur. 
+
+                </div>*@
+
+                  <div id="mobile-div">
+
+
+                    <p><strong> Online Psikolog Merkezi Nedir?  </strong> </p> 
+                    <br />  Alanında uzman psikolog kadrosuyla, 
+                <br />  danışanların sorunlarına çözüm odaklı yaklaşan bir platformdur. 
+
+                </div>
+
+
+
+
+            </div>
+            <div class="cs-btns cs-style1">
+
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Account" asp-action="SignUp" class="cs-btn cs-style1 cs-color1 cs-primary__font">
+                        <span class="cs-btn__text">Üye Ol</span>
+                    </a>
+                }
+
+                <a href="#portfolio" class="cs-btn cs-style1 cs-color2 cs-primary__font cs-smooth__move">
+                    <span class="cs-btn__text">Randevu Al</span>
+                </a>
+
+            </div>
+        </div>
+    </div>
+    <div class="cs-hero__img cs-parallax">
+        <div class="cs-to__right"><img src="~/assets/img/agency/hero-img.svg" alt="Hero Image"></div>
+    </div>
+    <div class="cs-partical__shape_wrap">
+        <div class="cs-partical__shape cs-shape__position1">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30px" height="30px">
+                <path fill-rule="evenodd" fill="rgb(189, 210, 249)" d="M15.000,-0.000 C23.284,-0.000 30.000,6.715 30.000,15.000 C30.000,23.284 23.284,30.000 15.000,30.000 C6.716,30.000 -0.000,23.284 -0.000,15.000 C-0.000,6.715 6.716,-0.000 15.000,-0.000 Z" />
+            </svg>
+        </div>
+        <div class="cs-partical__shape cs-shape__position2">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                <path fill-rule="evenodd" fill="rgb(238, 118, 115)" d="M7.500,-0.000 C11.642,-0.000 15.000,3.358 15.000,7.500 C15.000,11.642 11.642,15.000 7.500,15.000 C3.358,15.000 -0.000,11.642 -0.000,7.500 C-0.000,3.358 3.358,-0.000 7.500,-0.000 Z" />
+            </svg>
+        </div>
+        <div class="cs-partical__shape cs-shape__position3">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                <path fill-rule="evenodd" fill="rgb(54, 97, 193)" d="M7.500,-0.000 C11.642,-0.000 15.000,3.358 15.000,7.500 C15.000,11.642 11.642,15.000 7.500,15.000 C3.358,15.000 -0.000,11.642 -0.000,7.500 C-0.000,3.358 3.358,-0.000 7.500,-0.000 Z" />
+            </svg>
+        </div>
+        <div class="cs-partical__shape cs-shape__position4">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px">
+                <path fill-rule="evenodd" fill="rgb(146, 179, 244)" d="M5.000,-0.000 C7.761,-0.000 10.000,2.238 10.000,5.000 C10.000,7.761 7.761,10.000 5.000,10.000 C2.239,10.000 -0.000,7.761 -0.000,5.000 C-0.000,2.238 2.239,-0.000 5.000,-0.000 Z" />
+            </svg>
+        </div>
+        <div class="cs-partical__shape cs-shape__position5">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20px" height="20px">
+                <path fill-rule="evenodd" fill="rgb(108, 136, 207)" d="M10.000,-0.000 C15.523,-0.000 20.000,4.477 20.000,10.000 C20.000,15.523 15.523,20.000 10.000,20.000 C4.477,20.000 -0.000,15.523 -0.000,10.000 C-0.000,4.477 4.477,-0.000 10.000,-0.000 Z" />
+            </svg>
+        </div>
+        <div class="cs-partical__shape cs-shape__position6">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+                <path fill-rule="evenodd" fill="rgb(221, 232, 252)" d="M7.500,-0.000 C11.642,-0.000 15.000,3.357 15.000,7.500 C15.000,11.642 11.642,15.000 7.500,15.000 C3.358,15.000 -0.000,11.642 -0.000,7.500 C-0.000,3.357 3.358,-0.000 7.500,-0.000 Z" />
+            </svg>
+        </div>
+        <div class="cs-partical__shape cs-shape__position7">
+            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width="20"><path fill='none' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='60' d='M368 368L144 144M368 144L144 368' /></svg>
+        </div>
+        <div class="cs-partical__shape cs-shape__position8">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="243px" height="243px">
+                <path fill-rule="evenodd" fill="rgb(221, 232, 252)" d="M121.500,0.000 C188.603,0.000 243.000,54.397 243.000,121.500 C243.000,188.602 188.603,243.000 121.500,243.000 C54.397,243.000 -0.000,188.602 -0.000,121.500 C-0.000,54.397 54.397,0.000 121.500,0.000 Z" />
+            </svg>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="cs-height__120 cs-height__lg__70"></div>
+    <div class="container">
+        <div class="cs-section__heading cs-style1 text-center">
+            <h2 class="cs-section__title wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.2s">Terapiye Başlamak Artık Çok Kolay!</h2>
+            <div class="cs-height__25 cs-height__lg__15"></div>
+            <div style="color:black;" class="cs-section__subtitle"> Dünyanın her yerinden online psikolojik desteğe ulaşabilirsin.<br>
+                                                Adımları takip et ve anında terapiye başla!</div>
+        </div>
+        <div class="cs-height__70 cs-height__lg__50"></div>
+        <div class="row">
+            <div class="col-xl-3 col-sm-6">
+                <a asp-action="SignUp" asp-controller="Account" class="cs-icon__box cs-style1 text-center cs-hobble">
+                    <div class="cs-icon__box__in cs-hover__layer4">
+                        <div class="cs-hover__layer3">
+                            <div class="cs-icon__box__icon cs-center cs-hover__layer3">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" width="512" height="512" fill="#5E2CED">
+                                <path d="M139.327,118.114L96.901,75.688c-5.857-5.858-15.355-5.858-21.213,0c-5.858,5.858-5.858,15.355,0,21.213l42.426,42.426    c5.857,5.858,15.356,5.858,21.213,0C145.185,133.469,145.185,123.972,139.327,118.114z" data-original="#000000" class="active-path" data-old_color="#000000" fill="inherit" />
+                                <path d="M76,241H15c-8.284,0-15,6.716-15,15s6.716,15,15,15h61c8.284,0,15-6.716,15-15S84.284,241,76,241z" data-original="#000000" class="active-path" data-old_color="#000000" fill="inherit" />
+                                <path d="M497,241h-61c-8.284,0-15,6.716-15,15s6.716,15,15,15h61c8.284,0,15-6.716,15-15S505.284,241,497,241z" data-original="#000000" class="active-path" data-old_color="#000000" fill="inherit" />
+                                <path d="M436.312,75.688c-5.857-5.858-15.355-5.858-21.213,0l-42.426,42.426c-5.858,5.858-5.858,15.355,0,21.213    c5.857,5.858,15.356,5.858,21.213,0l42.426-42.426C442.17,91.043,442.17,81.546,436.312,75.688z" data-original="#000000" class="active-path" data-old_color="#000000" fill="inherit" />
+                                <path d="M256,0c-8.284,0-15,6.716-15,15v61c0,8.284,6.716,15,15,15s15-6.716,15-15V15C271,6.716,264.284,0,256,0z" data-original="#000000" class="active-path" data-old_color="#000000" fill="inherit" />
+                                <path d="M339.867,150.205c-32.508-25.801-74.844-35.074-116.148-25.445c-48.028,11.198-86.69,49.285-98.495,97.031    c-11.843,47.898,1.711,96.721,36.258,130.601C173.886,364.556,181,382.921,181,402.777V406c0,13.296,5.801,25.26,15,33.505V467    c0,24.813,20.187,45,45,45h30c24.813,0,45-20.187,45-45v-27.495c9.199-8.245,15-20.208,15-33.505v-3.282    c0-19.545,7.495-38.266,20.563-51.361C376.994,325.87,391,292.005,391,256C391,214.557,372.363,175.996,339.867,150.205z M286,467    c0,8.271-6.729,15-15,15h-30c-8.271,0-15-6.729-15-15v-16h60V467z M330.326,330.166C311.689,348.843,301,375.288,301,402.718V406    c0,8.271-6.729,15-15,15h-15v-91.898c25.849-6.678,45-30.195,45-58.102c0-8.284-6.716-15-15-15s-15,6.716-15,15    c0,16.542-13.458,30-30,30s-30-13.458-30-30c0-8.284-6.716-15-15-15s-15,6.716-15,15c0,27.906,19.151,51.424,45,58.102V421h-15    c-8.271,0-15-6.729-15-15v-3.223c0-27.863-10.393-54.035-28.513-71.805c-26.889-26.371-37.409-64.494-28.14-101.981    c9.125-36.908,39.029-66.353,76.184-75.015c8.414-1.962,16.874-2.926,25.235-2.926c23.774,0,46.738,7.801,65.451,22.653    C346.5,193.77,361,223.766,361,256C361,284.004,350.106,310.343,330.326,330.166z" data-original="#000000" class="active-path" data-old_color="#000000" fill="inherit" />
+                  </svg>
+                            </div>
+                            <h2 class="cs-icon__box__title">Üye Ol</h2>
+                            <div style="height:100px; color:black;" class="cs-icon__box__subtitle">Hemen bir üyelik oluşturup bize katılabilirsin.</div>
+                            <span class="cs-icon__box__btn__icon"><i class="fas fa-long-arrow-alt-right"></i></span>
+                        </div>
+                    </div>
+                </a>
+                <div class="cs-height__30 cs-height__lg__30"></div>
+            </div><!-- .col -->
+            <div class="col-xl-3 col-sm-6">
+                <a asp-controller="Psychologist" asp-action="Index" class="cs-icon__box cs-style1 text-center cs-hobble">
+                    <div class="cs-icon__box__in cs-hover__layer4">
+                        <div class="cs-hover__layer3">
+                            <div class="cs-icon__box__icon cs-center cs-hover__layer3">
+                              
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     version="1.1" x="0px" y="0px" viewBox="0 0 512 512" xml:space="preserve" width="512" height="512" class="">
+                                <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z" />
+                                 </svg>
+
+                            </div>
+                            <h2 class="cs-icon__box__title">Psikoloğunu Seç</h2>
+                            <div style="height:100px; color:black;" class="cs-icon__box__subtitle">Sana uygun psikoloğunu seç.</div>
+                            <span class="cs-icon__box__btn__icon"><i class="fas fa-long-arrow-alt-right"></i></span>
+                        </div>
+                    </div>
+                </a>
+                <div class="cs-height__30 cs-height__lg__30"></div>
+            </div><!-- .col -->
+            <div class="col-xl-3 col-sm-6">
+                <a href="#portfolio" class="cs-icon__box cs-style1 text-center cs-hobble">
+                    <div class="cs-icon__box__in cs-hover__layer4">
+                        <div class="cs-hover__layer3">
+                            <div class="cs-icon__box__icon cs-center cs-hover__layer3">
+                                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 64 64" height="512" viewBox="0 0 64 64" width="512">
+                                    <path d="m23 50-21-11 3 7-3 4 3 4-3 7z" data-original="#000000" class="active-path" fill="inherit" data-old_color="#000000" />
+                                    <path d="m47 8c5.52283 0 10 4.47711 10 10 0 5.52283-4.47717 10-10 10-5.18524 0-9.44763-3.94678-9.94952-9h-5c.51684 7.8158 7.0028 14 14.94952 14 8.2843 0 15-6.71576 15-15 0-8.2843-6.7157-15-15-15-7.94672 0-14.43268 6.18414-14.94952 14h5c.50189-5.05328 4.76428-9 9.94952-9z" data-original="#000000" class="active-path" fill="inherit" data-old_color="#000000" />
+                                    <path d="m44.29297 15.70703 1.41406-1.41406 3.70703 3.70703-3.70703 3.70703-1.41406-1.41406 1.29297-1.29297h-3.48517c.46338 2.28217 2.48035 4 4.89923 4 2.76141 0 5-2.23859 5-5s-2.23859-5-5-5c-2.41888 0-4.43585 1.71783-4.89923 4h3.48517z" data-original="#000000" class="active-path" fill="inherit" data-old_color="#000000" />
+                                    <path d="m42 18c0-.34253.03516-.67682.10077-1h-5.05029c-.03266.32898-.05048.66241-.05048 1s.01782.67102.05048 1h5.05029c-.06561-.32318-.10077-.65747-.10077-1z" data-original="#000000" class="active-path" fill="inherit" data-old_color="#000000" />
+                                    <path d="m24.29297 21.70703 2.70703-2.70703h5.05048c-.02198-.33203-.05048-.66241-.05048-1s.0285-.66797.05048-1h-5.05048l-2.70703-2.70703-1.41406 1.41406 1.29297 1.29297h-4.08594c-5.79004 0-10.5 4.71045-10.5 10.5s4.70996 10.5 10.5 10.5h11.08594l2.70703 2.70703 1.41406-1.41406-1.29297-1.29297h20.5c3.03223 0 5.5 2.46729 5.5 5.5s-2.46777 5.5-5.5 5.5h-10.5l-2.70703-2.70703-1.41406 1.41406 1.29297 1.29297h-16.17188v2h16.17188l-1.29297 1.29297 1.41406 1.41406 2.70703-2.70703h10.5c4.13574 0 7.5-3.36426 7.5-7.5s-3.36426-7.5-7.5-7.5h-20.5l1.29297-1.29297-1.41406-1.41406-2.70703 2.70703h-11.08594c-4.68652 0-8.5-3.81299-8.5-8.5s3.81348-8.5 8.5-8.5h4.08594l-1.29297 1.29297z" data-original="#000000" class="active-path" fill="inherit" data-old_color="#000000" />
+                                </svg>
+                            </div>
+                            <h2 class="cs-icon__box__title">Randevunu Al</h2>
+                            <div style="height:100px; color:black;" class="cs-icon__box__subtitle">Randevunu al ve güvenli bir şekilde ödemeni yap.</div>
+                            <span class="cs-icon__box__btn__icon"><i class="fas fa-long-arrow-alt-right"></i></span>
+                        </div>
+                    </div>
+                </a>
+                <div class="cs-height__30 cs-height__lg__30"></div>
+            </div><!-- .col -->
+            <div class="col-xl-3 col-sm-6">
+                <a href="#portfolio" class="cs-icon__box cs-style1 text-center cs-hobble">
+                    <div class="cs-icon__box__in cs-hover__layer4">
+                        <div class="cs-hover__layer3">
+                            <div class="cs-icon__box__icon cs-center cs-hover__layer3">
+                            
+
+                                <svg xmlns="http://www.w3.org/2000/svg" height="0.625em" viewBox="0 0 640 512"><path d="M160 64c0-35.3 28.7-64 64-64H576c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H336.8c-11.8-25.5-29.9-47.5-52.4-64H384V320c0-17.7 14.3-32 32-32h64c17.7 0 32 14.3 32 32v32h64V64L224 64v49.1C205.2 102.2 183.3 96 160 96V64zm0 64a96 96 0 1 1 0 192 96 96 0 1 1 0-192zM133.3 352h53.3C260.3 352 320 411.7 320 485.3c0 14.7-11.9 26.7-26.7 26.7H26.7C11.9 512 0 500.1 0 485.3C0 411.7 59.7 352 133.3 352z" /></svg>
+
+                            </div>
+                            <h2 class="cs-icon__box__title">Görüşmeye Başla</h2>
+                            <div style="height:100px; color:black;" class="cs-icon__box__subtitle">Sitemiz üzerinden hemen görüşmeye başla!</div>
+                            <span class="cs-icon__box__btn__icon"><i class="fas fa-long-arrow-alt-right"></i></span>
+                        </div>
+                    </div>
+                </a>
+                <div class="cs-height__30 cs-height__lg__30"></div>
+            </div><!-- .col -->
+        </div>
+    </div>
+   @* <div class="cs-height__100 cs-height__lg__50"></div>*@
+</div>
+
+@*<div class="cs-height__130 cs-height__lg__70"></div>*@
+
+
+<div id="portfolio">
+
+    <div id="portfolio">
+        <div class="container">
+            <div class="cs-height__120 cs-height__lg__70"></div>
+            <div class="cs-section__heading cs-style1 text-center">
+                <h2 class="cs-section__title wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.2s">Online Psikolog Kadromuz</h2>
+                <div class="cs-height__25 cs-height__lg__15"></div>
+                <div style="color:black;" class="cs-section__subtitle">Alanında uzman psikologlarımızdan sana uygun olanı seç ve görüşmeye başla</div>
+            </div>
+
+
+            <div class="cs-height__70 cs-height__lg__50"></div>
+
+
+            @*değişecek*@
+            @*database'den kategorlari çek*@
+            <div class="row">
+
+                <div style="border-left:none;" class="text-center filter-buttons col-lg-12 col-sm-12 my-auto mx-auto  mb-2 p-0 ">
+                    <button class="btn btn-outline-primary" data-filter="*">Tümü</button>
+
+                    @foreach (var item in (ViewBag.categories as List<CategoryListDto>)!)
+                    {
+                        <button class="btn btn-outline-primary"
+                            @{
+                            string cate ="";
+                            if(item.Name.Contains(" "))
+                            {
+                            cate = item.Name.Replace(" ","-");
+                            }
+                            else{
+                            cate = item.Name;
+                            }
+                            var last = "."+cate;
+                            }
+                            data-filter="@last">
+                            @item.Name
+                        </button>
+                    }
+                </div>
+
+            </div>
+            @*psikolgoları çek kategorilerine göre classları doldur bilgilerini yazdır sonra kendi sayfalarına yöneldir*@
+            <div class="row mgrid">
+
+                @{
+                    string tempCategoryList = "";
+
+                   
+                }
+                @{
+                    string EditClassName(string name){
+
+                        if (name.Contains(" "))
+                        {
+                            return name.Replace(" ","-");
+                        }
+
+                        return name;
+
+
+                    }
+
+                    string ConvertTurkishToEnglish(string turkishText)
+                    {
+                        StringBuilder englishText = new StringBuilder();
+
+                        turkishText = turkishText.Replace(" ", "-").ToLower();
+
+                        foreach (char c in turkishText)
+                        {
+                            switch (c)
+                            {
+                                case 'ı':
+                                    englishText.Append('i');
+                                    break;
+                                
+                                case 'ş':
+                                    englishText.Append('s');
+                                    break;
+                                case 'ğ':
+                                    englishText.Append('g');
+                                    break;
+                                case 'ç':
+                                    englishText.Append('c');
+                                    break;
+                                case 'ö':
+                                    englishText.Append('o');
+                                    break;
+                                case 'ü':
+                                    englishText.Append('u');
+                                    break;
+                                default:
+                                    englishText.Append(c);
+                                    break;
+                            }
+                        }
+
+                        return englishText.ToString();
+                    }
+
+
+
+
+                }
+                @foreach (var item in Model)
+                {
+                    @(tempCategoryList = " ")
+                    item.PsychologistCategories.ForEach(x => tempCategoryList += EditClassName(x.Category.Name) + " ");
+
+
+                    <div  class=" col-lg-12 col-sm-12 my-auto mx-auto custombox mb-3 p-0 xitem @(" "+tempCategoryList+" ")">
+
+                        <div  class="  hover-border card custom-card rounded-3 p-1">
+                            <div class="row g-0 mt-1">
+                                <div class="col-md-3 text-center">
+                                    <img src="~/assets/pksimage/@item.ProfilePhotoPath" alt="Image" style="width:200px; height:200px;  object-fit: cover;" class="rounded-circle img-fluid">
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><strong class="fw-bolder text-dark"> @(item.Title??" " + " ")  @(item.AppUser.Name??"" + " ")  @(item.AppUser.LastName??"")</strong></h5>
+                                        <p class="card-text" style="color:black;">@item.ShortDescription</p>
+                                        <div class="tags">
+
+                                            @foreach (var cate in item.PsychologistCategories)
+                                            {
+                                                <span class="badge rounded-pill custom-tag ">@cate.Category.Name</span>
+                                            }
+
+
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+
+
+                                            <a href="#"  class="pricebtn btn-sm text-white me-2">@(item.ConsulationPrice + " ₺")</a>
+                                            
+                                            @{
+                                                string pskName = item.AppUser.Name.Trim() + " " + item.AppUser.LastName.Trim();
+                                            }
+                                            
+                                            <a asp-route-name="@ConvertTurkishToEnglish(pskName)" asp-route-id="@item.SecondKey" asp-action="PsychologistInfo" asp-controller="Psychologist" class="mx-1 btn-sm cv-btn">Özgeçmiş</a>
+                                            <a asp-route-id="@item.SecondKey" asp-action="PsychologistProfile" asp-controller="Psychologist" class="mx-1 btn-sm randevu-btn">Randevu Al</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+
+
+
+            </div>
+
+
+
+            <div class="cs-height__30 cs-height__lg__30"></div>
+            <div class="text-center wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.3s">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="cs-height__130 cs-height__lg__70"></div>
+
+
+
+<div class="row">
+
+    @if (ViewBag.blogs !=null)
+    {
+
+        <div class="mb-4 cs-section__heading cs-style1 text-center">
+            <h2 class="cs-section__title wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.2s"> Blog </h2>
+            <div class="cs-height__25 cs-height__lg__15"></div>
+            @*<div class="cs-section__subtitle">Psikologlarımız tarafından kaleme alınmış haftalık yayınlanan blog yazılarımıza bakmak ister misin<br>Bazı güncel ruh sağlığı ile ilgili yazılarımız</div>*@
+
+        </div>
+
+
+        <div class="col-md-11 mt-1 mx-auto">
+
+
+
+
+            <div class="owl-carousel owl-theme">
+
+
+
+
+                @*ViewBag.blogs*@
+                @foreach (var item in ViewBag.blogs as List<Blog>)
+                {
+
+
+                    <div class="item blog-item rounded-3">
+                        <div style="border:none;" class="card p-1">
+                            @*p-1 kaldırıldı*@
+                            <a asp-route-myarticlekey="@item.ArticleUrl" asp-action="Article" asp-controller="Blog">
+                                <img style="height:190px;" src="~/assets/blogimage/@item.BlogImagePath" class="card-img-top" alt="blogImage">
+                            </a>
+
+                            <div class="card-body">
+                                <a asp-route-myarticlekey="@item.ArticleUrl" asp-action="Article" asp-controller="Blog">
+
+
+                                    <h6 style="color:#5E2CED;" class="card-title">
+
+                                        @item.Header
+
+                                    </h6>
+                                </a>
+
+                                <p class="card-text ">
+
+                                    @if (item.Description.Length > 40)
+                                    {
+
+                                        @(item.Description.Substring(0, 35) + " ...")
+
+                                    }
+                                    else
+                                    {
+                                        @item.Description
+                                    }
+
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+
+
+            </div>
+
+
+
+        </div>
+
+        
+    }
+  
+
+
+</div>
+
+
+
+
+
+
+
+<div class="cs-height__130 cs-height__lg__70"></div>
+
+
+<footer class="cs-footer cs-style1 cs-parallax">
+    <div class="cs-height__110 cs-height__lg__70"></div>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-4 col-sm-6">
+                <div class="cs-footer__item">
+                    <h2 class="cs-widget__title">Hakkımızda</h2>
+                    <div class="cs-footer__widget__text">
+                        Dünyanın her yerinden online psikolojik desteğe ulaşabilirsin.
+                        Adımları takip et ve anında terapiye başla!
+
+
+                        <img class="mt-2" src="~/assets/img/iyzico-footer-white.png" alt="iyzico" />
+                    </div>
+                    <div class="cs-height__15 cs-height__lg__15"></div>
+                    <div class="mt-2 cs-social__btns cs-style1">
+                        <a style="font-size:30px;" href="https://www.instagram.com/onlinepsikologmerkezi/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a style="font-size:30px;" href="#"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+            </div><!-- .col -->
+
+            <div class="col-lg-4 col-sm-6">
+                <div class="cs-footer__item widget_nav_menu">
+                    <h2 class="cs-widget__title">Destek ve Bilgilendirme</h2>
+                    <ul class="menu">
+                        <li><a asp-action="KVKK" asp-controller="Home">KVKK</a></li>
+                        <li><a asp-action="OnamFormu" asp-controller="Home">Onam Formu</a></li>
+                        <li><a asp-action="Gizlilik" asp-controller="Home">Gizlilik Sözleşmesi</a></li>
+                        <li><a asp-action="aboutus" asp-controller="Home">Hakkımızda</a></li>
+                        <li><a asp-action="Backorder" asp-controller="Home">İade Politikası</a></li>
+                        
+                    </ul>
+                </div>
+            </div><!-- .col -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="cs-footer__item widget_nav_menu">
+                    <h2 class="cs-widget__title">Hızlı Erişim</h2>
+                    <ul class="menu">
+                        <li><a asp-action="Index" asp-controller="Home">Ana sayfa</a></li>
+                        <li>  <a asp-action="Index" asp-controller="Psychologist">Psikologlarımız</a></li>
+                        <li>  <a asp-action="Index" asp-controller="Blog"> Blog </a></li>
+                        <li>   <a asp-controller="Home" asp-action="Contact">İletişim</a></li>
+                        <li>
+                            <a href="https://wa.me/905551487116" target="_blank">
+                                <img width="35px" height="35px" src="~/assets/img/wp.png" alt="wpIcon"/>
+                                <span class="small text-muted"><sub>Canlı Destek  </sub> </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div><!-- .col -->
+
+
+        </div>
+        <!-- <div class="cs-height__85 cs-height__lg__40"></div> -->
+    </div>
+    <div class="cs-copyright text-center">
+        <div class="container">© 2023 - Online Psikolog Merkezi. Tüm Hakları Saklıdır.</div>
+        <div class="container">
+
+        <p style="line-height:1em; font-size:12px" class="mt-2">
+                        UYARI: Online Terapi Hizmetleri, karşılaşılan tüm sorunlara yanıt veren bir hizmet değildir.
+Kendinize zarar verme, şiddet, intihar ve benzeri duygu ve düşünceleriniz söz konusu ise uygulamamızdaki online terapi hizmetleri sizin için doğru çözüm olmayabilir.
+Bu tür durumlarda size en yakın sağlık kuruluşuna başvurmanızı veya Sağlık Bakanlığı 112 Acil Servis birimine başvurmanızı öneririz.
+
+<br /> 
+Acil Yardım Hattı: 112 - Polis İmdat Hattı: 155 - Aile İçi Yardım Hattı: 183 - Uyuşturucu İle Mücadele Yardım Hattı: 191
+
+
+        </p>
+
+        </div>
+    </div>
+    <div class="cs-parallax__shape cs-position1">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13px" height="13px">
+            <path fill-rule="evenodd" fill="rgb(97, 192, 49)" d="M6.500,-0.000 C10.090,-0.000 13.000,2.910 13.000,6.500 C13.000,10.090 10.090,13.000 6.500,13.000 C2.910,13.000 -0.000,10.090 -0.000,6.500 C-0.000,2.910 2.910,-0.000 6.500,-0.000 Z" />
+        </svg>
+    </div>
+    <div class="cs-parallax__shape cs-position2 cs-to__up">
+        <img src="~/assets/img/agency/footer-image.png" alt="upbtn">
+    </div>
+    <div class="cs-parallax__shape cs-position3 cs-to__left__up">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="416px" height="403px">
+            <path fill-rule="evenodd" fill="rgb(51, 69, 100)" d="M210.500,62.000 C284.230,62.000 344.000,121.769 344.000,195.499 C344.000,269.229 284.230,328.999 210.500,328.999 C136.770,328.999 77.000,269.229 77.000,195.499 C77.000,121.769 136.770,62.000 210.500,62.000 Z" />
+            <path fill-rule="evenodd" stroke="rgb(29, 46, 75)" stroke-width="2px" stroke-linecap="butt" stroke-linejoin="miter" fill="none" d="M207.500,1.000 C321.547,1.000 414.000,90.543 414.000,201.000 C414.000,311.457 321.547,401.000 207.500,401.000 C93.453,401.000 1.000,311.457 1.000,201.000 C1.000,90.543 93.453,1.000 207.500,1.000 Z" />
+        </svg>
+    </div>
+    <div class="cs-parallax__shape cs-position4">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10px" height="10px">
+            <path fill-rule="evenodd" fill="rgb(62, 80, 110)" d="M5.000,-0.000 C7.761,-0.000 10.000,2.238 10.000,5.000 C10.000,7.761 7.761,10.000 5.000,10.000 C2.238,10.000 -0.000,7.761 -0.000,5.000 C-0.000,2.238 2.238,-0.000 5.000,-0.000 Z" />
+        </svg>
+    </div>
+    <div class="cs-parallax__shape cs-position5">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15px" height="15px">
+            <path fill-rule="evenodd" fill="rgb(112, 87, 248)" d="M7.500,-0.000 C11.642,-0.000 15.000,3.358 15.000,7.500 C15.000,11.642 11.642,15.000 7.500,15.000 C3.358,15.000 -0.000,11.642 -0.000,7.500 C-0.000,3.358 3.358,-0.000 7.500,-0.000 Z" />
+        </svg>
+    </div>
+</footer>
+
+
+<div id="cs-scrollup"><i class="fas fa-chevron-up"></i></div>
+
+<!-- Script -->
+<script src="~/assets/js/jquery-1.12.4.min.js"></script>
+<script src="~/assets/js/isotope.pkg.min.js"></script>
+<script src="~/assets/js/wow.min.js"></script>
+<script src="~/assets/js/jquery.slick.min.js"></script>
+<script src="~/assets/js/lightgallery.min.js"></script>
+<script src="~/assets/js/jquery.counter.min.js"></script>
+<script src="~/assets/js/select2.min.js"></script>
+<script src="~/assets/js/ripples.min.js"></script>
+<script src="~/assets/js/jquery-ui.min.js"></script>
+<script src="~/assets/js/animated-headline.js"></script>
+<script src="~/assets/js/main.js"></script>
+<script src="~/assets/js/owlcaro.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+
+        $('#wp-support-close').on('click',function(){
+
+            $('#wp-support').hide();
+
+        });
+
+        var $grid = $(".mgrid").isotope({
+            itemSelector: ".xitem",
+            layoutMode: "fitRows"
+        });
+
+        $("button").click(function () {
+            var filterValue = $(this).attr("data-filter");
+            $grid.isotope({ filter: filterValue });
+        });
+
+
+        var isMobile = /iPhone|iPad|iPod|Android|webOS|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+        var itemsToShow = isMobile ? 1 : 3;
+
+        var owl = $('.owl-carousel');
+        owl.owlCarousel({
+            items: itemsToShow,
+
+            loop: true,
+            margin: 20,
+            dots: true,
+            autoplay: true,
+            autoplayTimeout: 2000,
+            autoplayHoverPause: true
+        });
+
+
+
+
+
+    });
+
+</script>
+
+
+
+

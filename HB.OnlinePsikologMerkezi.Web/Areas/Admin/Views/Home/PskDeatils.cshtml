@@ -1,0 +1,271 @@
+﻿@{
+    ViewData["Title"] = "PskDeatils";
+    Layout = "_Layout";
+}
+@model PsychologistListDto
+
+
+<div class="row">
+
+
+    <h3 class="text-center"> <a asp-action="PsychologistUpdate" asp-controller="home" asp-area="admin" asp-route-id="@Model.Psychologist_ID" class="btn btn-primary">profili güncelle </a> </h3>
+
+
+
+    <div class="col-md-6 mx-auto">
+
+
+    <ul class="list-group text-center">
+        <li class="list-group-item">@(Model.AppUser.Name?? "belirtilmedi")</li>
+        <li class="list-group-item">@(Model.AppUser.LastName ?? "belirtilmedi")  </li>
+        <li class="list-group-item">@(Model.AppUser.PhoneNumber ?? "belirtilmedi")  </li>
+        <li class="list-group-item">@Model.AppUser.Email  </li>
+
+    </ul>
+
+
+    </div>
+
+
+</div>
+
+<hr />
+
+@*
+
+//bu zamana kadar toplam kaç randevu satıldı ne kadar getiri sağladı
+// appointment üzerinden satıldı statusunde olan appointmenların sayısı ve ücret tutarları
+//son bir haftada ne kadar satış yapmış appointment order DurchaseDate üzerinden hareketle bak
+
+*@
+@{
+    int sum = 0;
+    int count = 0;
+
+    foreach (var item in Model.Appointments)
+    {
+        if (item.Status == (int)AppointmentEnum.sold || item.Status ==(int)AppointmentEnum.Completed)
+        {
+            sum += item.Price;
+            ++count;
+        }
+    }
+
+
+    int last_seven_day_count = 0;
+    int last_seven_day_price = 0;
+
+    @foreach (var item in Model.Appointments)
+    {
+        if (item.Order != null && item.Order.DurchaseDate >= DateTime.Now.AddDays(-7))
+        {
+            ++last_seven_day_count;
+
+            last_seven_day_price += item.Price;
+
+        }
+    }
+
+}
+
+<div class="row mb-3 mt-3">
+
+    <div class="col-lg-5 mb-4">
+        <div class="card bg-primary text-white shadow">
+            <div class="card-body">
+                <h6>Toplam randevu satış sayısı  <strong class="text-dark"> @count </strong>   </h6>
+                <h6>Toplam site getirisi (iyzico kesintileri dahil değil) <strong class="text-dark"> @sum </strong>   </h6>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7 mb-4">
+        <div class="card bg-warning text-white shadow">
+            <div class="card-body">
+                <h6>Son bir hafta randevu satış sayısı  <strong class="text-dark">@last_seven_day_count</strong>   </h6>
+                <h6>Son bir hafta  (iyzico kesintileri dahil değil)  <strong class="text-dark">@last_seven_day_price</strong>   </h6>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+<h3 class="text-center"> Tamamlanmış Ödemesi Yapılmamış Görüşmeler </h3>
+<hr  class="mb-2" />
+
+@{
+    var ödemesi_yapımaya_randevular = Model.Appointments.Where(x=>x.Status == (int)AppointmentEnum.Completed && !x.Order.IsItPaid).ToList();
+
+
+
+}
+
+
+<div class="row mb-3">
+   
+    @if(ödemesi_yapımaya_randevular !=null && ödemesi_yapımaya_randevular.Count>0)
+    {
+
+        @foreach (var item in ödemesi_yapımaya_randevular)
+        {
+
+            <div class="col-lg-3 mb-4">
+                <div class="card bg-light text-black shadow">
+                    <div class="card-body">
+
+                        <p class="randevuid"> randevu id :  @item.Id</p>
+                        <p > tarih :  @item.AppointmentDate.ToString("MM/dd/yyyy H:mm")</p>
+                        <p> randevu ücret :  @item.Price</p>
+                        <div class="mb-1  p-1">
+                            <p class="result"></p>
+                           ödendi  <input class="zort" id="@item.Id" type="checkbox">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        }
+
+
+    }
+    
+
+
+</div>
+
+
+
+
+<h3 class="text-center"> Aktif olarak satışa olan görüşmeler ve  bekleyen görüşmeler </h3>
+<hr class="mb-2" />
+
+
+@{
+    var aktif_görüsmeler = Model.Appointments.Where(x =>( x.Status == (int)AppointmentEnum.new_appointment  ||  x.Status == (int)AppointmentEnum.sold )).OrderByDescending(x=>x.Status ).ToList();
+
+
+
+}
+
+<div class="row">
+
+    @if (aktif_görüsmeler != null && aktif_görüsmeler.Count > 0)
+    {
+
+        @foreach (var item in aktif_görüsmeler)
+        {
+
+            
+
+                if (item.AppointmentDate > DateTime.Now.AddMinutes(-10))
+                {
+
+
+                <div class="col-lg-3 mb-4">
+                    <div class="card bg-light text-black shadow">
+                        <div class="card-body">
+
+
+
+
+
+
+                            @{
+
+
+
+
+                                if (item.Status == (int)AppointmentEnum.sold)
+                                {
+                                    <p class="text-success">satıldı görüşme gerçekleşecek</p>
+                                    <h6 class="text-center">alıcı bilgiler</h6>
+                                    <hr />
+                                    <p>@item.Order.AppUser.Name</p>
+                                    <p>@item.Order.AppUser.LastName</p>
+                                    <p>@item.Order.AppUser.Email</p>
+                                    <p>@item.Order.AppUser.PhoneNumber</p>
+                                    <p>@item.Order.AppUser.UserName</p>
+                                }
+                                else
+                                {
+
+                                    <p class="text-danger">satışta bekliyor</p>
+
+
+
+                                }
+                            }
+
+                            <p> randevu id :  @item.Id</p>
+                            <p> tarih :  @item.AppointmentDate.ToString("MM/dd/yyyy H:mm")</p>
+                            <p> randevu ücret :  @item.Price</p>
+
+
+                        </div>
+                    </div>
+                </div>
+                
+                }
+
+            
+
+         
+
+        }
+
+
+    }
+
+
+
+</div>
+
+
+
+
+@section Scripts{
+
+
+ <script>
+
+        $(document).ready(function () {
+            $('.zort').on('change', function () {
+                var isChecked = $(this).prop('checked');
+                var checkboxId = $(this).attr('id');
+                var resultElement = $(this).siblings('.result');
+                $.ajax({
+                    url: '/admin/home/PaymentPskforAppointment',
+                    type: 'GET',
+                    data: { id: checkboxId },
+                    success: function (response) {
+
+                        if (isChecked) {
+                            resultElement.text('işlem başarılı sayfayı tekrar yenileyince ödendi olarak görünecek bu alandan çıkacak');
+                       }
+                       else{
+                            resultElement.text('ödenmedi olarak değiştirildi ');
+                       }
+
+                       
+                    },
+                    error: function (xhr, status, error) {
+
+                        resultElement.text('Başarısız sayfayı  yenileyin');
+
+                    }
+                });
+            });
+        });
+
+
+ </script>
+
+
+}

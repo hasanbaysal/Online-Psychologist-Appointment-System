@@ -1,0 +1,51 @@
+﻿@{
+    Layout  = "_Layout";
+}
+
+@model List<Blog>
+
+ <div class="row">
+
+     <div class="col-md-12">
+        <p class="text-center"><a asp-action="BlogAdd" asp-controller="Home" asp-area="admin" class="btn btn-success">Blog Ekle</a></p>
+     </div>
+     <div class="col-md-12">
+
+
+         <table class="table">
+
+             <thead>   
+                 <tr>
+
+                     <th>blog id</th>
+                     <th>blog url</th>
+                     <th>blog yayın tarih</th>
+                     <th>blog yazar</th>
+                     <th>blog başlık</th>
+                     <th>blog güncelle</th>
+                     <th>blog sil</th>
+                 </tr>
+
+             </thead>
+             <tbody>
+
+               @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.Id</td>
+                        <td>@item.ArticleUrl</td>
+                        <td>@item.PostWriteTime.Value.ToString("MM/dd/yyyy H:mm")</td>
+                        <td>@item.Author</td>
+                        <td>@item.Header</td>
+                        <td> <a asp-area="admin" asp-controller="Home" asp-action="BlogUpdate" asp-route-id="@item.Id" class="btn btn-warning">Güncelle</a>  </td>
+                        <td> <a asp-area="admin" asp-controller="Home" asp-action="BlogDelete" asp-route-id="@item.Id" class="btn btn-danger">sil</a>  </td>
+
+                    </tr>
+                }
+
+             </tbody>
+         </table>
+
+     </div>
+ </div>

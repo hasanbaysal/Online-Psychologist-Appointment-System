@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewData["Title"] = "PsychologistUpdate";
+    Layout = "_Layout";
+}
+
+<h1>psikolog bilgilerini güncelle</h1>
+
+
+
+@model PskUpdateViewModel
+<h1 class="text-center">Psikolog Ekle</h1>
+
+
+<div class="row">
+    <div class="col-md-10 mx-auto">
+   <form  asp-action="PsychologistUpdate" asp-area="Admin" asp-controller="Home" enctype="multipart/form-data" >
+
+    <input asp-for="Psychologist_ID"  type="hidden" value="@ViewBag.id"  />
+
+    <div class="mb-3">
+
+        <label  class="form-label" asp-for="ConsulationPrice">Görüşme Ücret</label>
+        <input class="form-control"  asp-for="ConsulationPrice" />
+        <span asp-validation-for="ConsulationPrice"></span>
+
+    </div>
+
+     <div>
+         <label  class="form-label" asp-for="Title">Ünvan</label>
+        <input class="form-control"  asp-for="Title" />
+        <span asp-validation-for="Title"></span>
+    </div>
+    <div class="mb-3">
+
+        <label class="form-label" asp-for="Rank">Site Liste Sıralaması</label>
+        <input class="form-control" asp-for="Rank" />
+         <span asp-validation-for="Rank"></span>
+    </div class="mb-3">
+
+    <div class="mb-3">
+        <label class="form-label" asp-for="IsWorking">Aktif mi (bu alan boş bırakılırsa psikolgo sitede görünmez)</label>
+        <input  asp-for="IsWorking" />
+
+    </div>
+
+    <div class="mb-3">
+         <label class="form-label" >Alan Ekleme(en az bir alana  sahip olmak zorunda )</label>
+        <select asp-items="@ViewBag.liste" class="form-select js-example-basic-multiple" name="cateValues" multiple="multiple">
+        </select>
+    </div>
+
+    <div class="mb-3">
+
+        
+        <label class="form-label" asp-for="ShortDescription">Kısa Açıklama Anasayfa için</label>
+      
+        <textarea class="form-control" asp-for="ShortDescription" rows="6" cols="70">
+
+        </textarea>   
+         <span asp-validation-for="ShortDescription"></span>
+
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Photo" class="form-label">Psikolog Resim (değiştirmek istemiyorsanız yeni resim yüklemeyin)</label>
+           <span asp-validation-for="Photo"></span>
+        <input class="form-control form-control-lg" asp-for="Photo" type="file">
+    </div>
+
+    <div class="mb-3">
+
+          <span asp-validation-for="Cv"></span>
+        <label asp-for="Cv" class="form-label"> CV </label>
+        <textarea asp-for="Cv" class="form-control">
+
+
+        </textarea>
+
+    </div>
+
+    <div class="mb-3">
+
+        <button type="submit" class="btn btn-primary"> güncelle</button>
+
+    </div>
+
+    </form>
+
+
+    </div>
+</div>
+
+
+ 
+
+@section Scripts{
+
+
+
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+@*<script src="~/assets/adminform/trumbowyg1.js"></script>*@
+
+
+<script src="~/assets/js/trumbowyg.min.js"></script>
+
+<script src="~/assets/adminform/trumtrlang2.js"></script>
+<script src="~/assets/adminform/trumcolor3.js"></script>
+<script src="~/assets/adminform/trumemoji4.js"></script>
+<script src="~/assets/adminform/trumfontfam5.js"></script>
+<script src="~/assets/adminform/trumfontsize6.js"></script>
+<script src="~/assets/adminform/pastembed.js"></script>
+
+@* <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/trumbowyg.min.js" integrity="sha512-YJgZG+6o3xSc0k5wv774GS+W1gx0vuSI/kr0E0UylL/Qg/noNspPtYwHPN9q6n59CTR/uhgXfjDXLTRI+uIryg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/langs/tr.min.js" integrity="sha512-4Lri9C2eYjnoar37EumYfA8RgOZoMBOXTzkpSgkdvbRH7ts8OP/vsXnoouBAXdrU2x5NxUkdQGe4fBxSjvFiGA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/colors/trumbowyg.colors.min.js" integrity="sha512-SHpxBJFbCaHlqGpH13FqtSA+QQkQfdgwtpmcWedAXFCDxAYMgrqj9wbVfwgp9+HgIT6TdozNh2UlyWaXRkiurw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/emoji/trumbowyg.emoji.min.js" integrity="sha512-DHqKLoY/BtGxNkGSK7yn3d2t+i+RdcLVvywAcsGnJJodqFEtPcLe/NxtpBPFpQG8KRf3Mkyc7PZjyJyeOIdbYQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/fontfamily/trumbowyg.fontfamily.min.js" integrity="sha512-oATdSCPRZu3qFFyxrZ66ma2QbQybLqpRqwLRp2IQEaIABnEHcs2qDf6UOVA/V5LhBvxFxKCNvyVb/yQfwDkFhQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/fontsize/trumbowyg.fontsize.min.js" integrity="sha512-eFYo+lmyjqGLpIB5b2puc/HeJieqGVD+b8rviIck2DLUVuBP1ltRVjo9ccmOkZ3GfJxWqEehmoKnyqgQwxCR+g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  *@
+ 
+ <script>
+
+        $(document).ready(function () {
+           
+             $('.js-example-basic-multiple').select2();
+           // $("#Cv").trumbowyg();
+
+
+            $("#Cv").trumbowyg({
+
+                 svgPath: '/assets/adminformcss/icons.svg',
+                btns:[
+
+                    ['viewHTML'],
+                    //['undo','redo'],
+                    ['formatting'],
+                    //['strong''em','del'],
+                    ['superscript','subscript'],
+                    ['link'],
+                    ['insertImage'],
+                    ['justifyLeft','justifyCenter','justifyRigth','justifyFull'],
+                    ['unorderedList','orderedList'],
+                    ['horizontalRule'],
+                    ['removeformat'],
+                   
+                    ['foreColor', 'backColor'],
+                    ['emoji'],
+                    ['fontfamily'],
+                     ['fontsize'],
+                      ['fullscreen']
+
+                ],
+
+                lang:"tr",
+
+
+
+            });
+
+
+
+
+
+        });
+
+
+    </script>
+
+}
+@section CustomCss{
+
+<link href="~/assets/css/trumbowyg.css" rel="stylesheet" />
+<link href="~/assets/admin/select2.css" rel="stylesheet" />
+<link href="~/assets/adminformcss/colormincss1.css" rel="stylesheet" />
+<link href="~/assets/adminformcss/colorcss2.css" rel="stylesheet" />
+<link href="~/assets/adminformcss/emojimin.css" rel="stylesheet" />
+<link href="~/assets/adminformcss/icontw.css" rel="stylesheet" />
+
+ @*   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/colors/ui/trumbowyg.colors.min.css" integrity="sha512-vw0LMar38zTSJghtmUo0uw000TBbzhsxLZkOgXZG+U4GYEQn+c+FmVf7glhSZUQydrim3pI+/m7sTxAsKhObFA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/colors/ui/trumbowyg.colors.css" integrity="sha512-RB7DaYgqsHuf++1oNMRVmFUraD9AYvp3oE/xxs9bv9UZoXDrdVY4zJn6a4B7Jm4h0r3u/B8aMuBVhXOT+TXqzw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ 
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/plugins/emoji/ui/trumbowyg.emoji.min.css" integrity="sha512-2RIZab3prIyPesUHpOb8YBlL441Q/sDqNK4v+3+LEjJyEg52kXRD/GGMuW+OXG5hCSBe9gTYNal51fdoQ0WiPA==" crossorigin="anonymous" referrerpolicy="no-referrer" />*@
+
+}

@@ -1,0 +1,156 @@
+﻿
+
+@model Blog
+@inject IUow uow;
+@using Microsoft.EntityFrameworkCore;
+@section  CustomCss{
+
+<meta name="robots" content="index, follow">
+
+    <meta name="description" content="@Model.Description">
+    <meta name="keywords" content="@Model.Key">
+    <meta property="og:description" content="@Model.Description">
+    <meta name="author" content="@Model.Author">
+    <meta property="og:type" content="article" />
+    
+
+    <style>
+
+        .cs-post__description a{
+            color: #0d6efd;
+            text-decoration:underline;
+
+        }
+
+    </style>
+}
+
+
+@{
+
+
+     string GetMonthName(int id)
+    {
+
+        string monthName = id switch
+        {
+            1 => "Ocak",
+            2 => "Şubat",
+            3 => "Mart",
+            4 => "Nisan",
+            5 => "Mayıs",
+            6 => "Haziran",
+            7 => "Temmuz",
+            8 => "Ağustos",
+            9 => "Eylül",
+            10 => "Ekim",
+            11 => "Kasım",
+            12 => "Aralık",
+            _ => "Geçersiz ay numarası"
+        };
+        return monthName;
+    }
+
+
+    //blog ismi title olarak buraya gelecek
+    ViewData["Title"] = Model.Title;
+}
+
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="cs-post cs-style1 cs-type1">
+
+            @*blog resim*@
+            @*1000*620  formatında bir resim gereç*@
+            <div class="cs-post__thumb">
+                <div class="cs-post__thumb__in cs-bg" style="object-fit:cover;" data-src="/assets/blogimage/@Model.BlogImagePath"></div>
+                @*<img style="display:block;  max-width:100%;  max-height:100%; width:auto; height:auto;" src="~/assets/img/others/post6.jpg" />*@
+                 
+
+            </div>
+
+            @*blog yazı tarih*@
+            <div class="cs-post__date"> @Model.PostWriteTime.Value.Day <span>@GetMonthName(Model.PostWriteTime.Value.Month) </span></div>
+
+            @*yazar*@
+            <div class="cs-post__info">
+                <div class="cs-post__meta cs-style1">
+                    <a href="#" class="cs-post__author"><i class="fas fa-user-alt"></i>@(Model.Author + "  -  "+Model.PostWriteTime.Value.ToString("MM/dd/yyyy"))</a>
+                </div>
+
+
+                @*yazı başlık*@
+                <h2 class="cs-post__title mb0">@Model.Header</h2>
+
+
+
+                <div class="cs-post__description">
+                  
+                    
+                    
+                    @*blog içerik*@
+                 
+
+                    @Html.Raw(Model.Content)
+                    
+                    <div class="cs-height__15 cs-height__lg__15"></div>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="cs-height__80 cs-height__lg__40"></div>
+      
+
+
+    </div><!-- .col -->
+
+
+    @{
+        List<Blog> blogs = new List<Blog>();
+
+         blogs = await uow.GetRepository<Blog>().GetQueryable().OrderByDescending(x => x.PostWriteTime).Take(5).ToListAsync();
+
+    }
+
+
+    @*son yayınlananlar*@
+    <div class="col-lg-4">
+        <div class="cs-sidebar cs-right__sidebar">
+         
+            <div class="cs-sidebar__item">
+                <h4 class="cs-sidebar__widget__title">Son Yayınlananlar  </h4>
+
+                <ul class="cs-recent__posts">
+
+                
+                  @foreach (var item in blogs)
+                    {
+
+                        <li>
+                            <div class="cs-recent__post">
+                                <a asp-route-myarticlekey="@item.ArticleUrl" asp-action="Article" asp-controller="Blog" class="cs-recent__post__thumb">
+                                    <div class="cs-recent__post__thumb__in cs-bg" data-src="/assets/blogimage/@item.BlogImagePath"></div>
+                                </a>
+                                <div class="cs-recent__post_info">
+                                    <h3 class="cs-recent__post__title"><a asp-route-myarticlekey="@item.ArticleUrl" asp-action="Article" asp-controller="Blog">@item.Header </a></h3>
+                                    <div class="cs-recent__post_date">@item.PostWriteTime.Value.ToString("MM/dd/yyyy")</div>
+                                </div>
+                            </div>
+                        </li>
+
+                    }
+
+                    <li class="text-center">
+                        <a asp-action="Index" asp-controller="Blog" class="btn btn-outline-primary"><i class="fas fa-long-arrow-alt-left"></i> Blog Listesine Git</a>
+                    </li>
+
+
+                </ul>
+            </div>
+          
+          
+        </div>
+    </div><!-- .col -->
+</div>
+

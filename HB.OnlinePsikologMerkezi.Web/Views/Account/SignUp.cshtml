@@ -1,0 +1,201 @@
+﻿
+@{
+    ViewData["Title"] = "Üye Ol";
+}
+
+@model UserSignUpDto
+
+
+
+<div class="container border-top  border-bottom shadow ">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-12 col-xl-12 ">
+                <div class="card text-black" style="border:none">
+                    <div class="card-body p-md-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 col-lg-9 col-xl-7 order-2 order-lg-1">
+
+                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Kayıt Ol</p>
+
+                            <form asp-action="SignUp" asp-controller="Account"  class="mx-1 mx-md-4" method="post">
+
+                                <div class="d-flex flex-row align-items-center mb-4">
+                                        <div asp-validation-summary="ModelOnly">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                        <label asp-for="UserName" class="form-label"></label>
+                                            <input asp-for="UserName"  class="form-control" />
+                                            
+                                            <span asp-validation-for="UserName"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+
+                                        <label asp-for="Email" class="form-label"></label>
+                                        <input asp-for="Email" class="form-control" />
+                                        <span asp-validation-for="Email"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                        <label asp-for="Password" class="form-label"></label>
+                                        <input asp-for="Password" class="form-control" />
+                                        <span asp-validation-for="Password"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-row align-items-center mb-4">
+                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                                        <div class="form-outline flex-fill mb-0">
+                                        <label asp-for="PasswordConfirm" class="form-label"></label>
+                                        <input asp-for="PasswordConfirm" class="form-control" />
+                                        <span asp-validation-for="PasswordConfirm"></span>
+                                        </div>
+                                    </div>
+
+                                    <div  class="form-check d-flex justify-content-center mb-1">
+                                        <input asp-for="TermOfService" class="form-check-input "  type="checkbox" />
+
+                                    <label asp-for="TermOfService" class="form-check-label">
+                                        Burada yazılı olan şartları kabul ediyorum <a href="exampleModal" class="text-danger text-decoration-underline" data-bs-toggle="modal" data-bs-target="#exampleModal">KVKK Metini</a>
+                                        <a href="exampleModal" class="text-danger text-decoration-underline" data-bs-toggle="modal" data-bs-target="#exampleModa2"> Hizmet Sözleşmesi</a>
+                                        <a asp-action="Gizlilik" asp-controller="Home" target="_blank" class="text-danger text-decoration-underline"> Gizlilik Sözleşmesi</a>
+                                        
+                                        
+                                    </label>
+                                        <br />
+                                   
+                                       
+                                    
+                                    
+                                    </div>
+
+                                <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                    <span id="errorText" style="display: none; color: red;">Lütfen kabul edin.</span>
+                                </div>
+                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                                        <button type="submit" class="btn btn-primary btn-lg">Kayıt OL</button>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                            <div class="col-md-10 col-lg-9 col-xl-5 d-flex align-items-center order-1 order-lg-2">
+
+                                <img src="~/assets/img/signup.webp"
+                                     class="img-fluid" alt="Sample image">
+                           
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">KVKK METNİ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              
+
+
+                <p>KVKK METNİ</p>
+                <p>KİŞİSEL VERİLERİN KORUNMASI KANUNU &Ccedil;ER&Ccedil;EVESİNDE BİLGİLENDİRME METNİ, Değerli M&uuml;şterilerimiz; Online Psikolog Merkezi olarak 6698 sayılı &ldquo;Kişisel Verilerin Korunması Kanunu&rdquo; kapsamında, uygulamalarımız ve haklarınız ile ilgili sizleri bilgilendirmek isteriz. 6698 sayılı Kişisel Verilerin Korunması Kanunu h&uuml;k&uuml;mleri ve ilgili d&uuml;zenlemeler gereği (&ldquo;KVKK D&uuml;zenlemeleri&rdquo;) kimliğinizi belirli veya belirlenebilir kılan her t&uuml;rl&uuml; bilginiz, &ouml;zel nitelikli kişisel verileriniz de dahil olmak &uuml;zere, Kişisel Veri olarak nitelendirilmekte ve Veri Sorumlusu sıfatıyla Online Psikolog Merkezi tarafından aşağıda a&ccedil;ıklandığı kapsamda ve mevzuat tarafından emredilen sınırlar &ccedil;er&ccedil;evesinde işlenmektedir. &ldquo;Kişisel Verilerinizin İşlenmesi&rdquo; bu verilerin elde edilmesi, kaydedilmesi, depolanması, muhafaza edilmesi, değiştirilmesi, yeniden d&uuml;zenlenmesi, a&ccedil;ıklanması, aktarılması, devralınması, elde edilebilir hale getirilmesi, sınıflandırılması ya da kullanılmasının engellenmesi gibi veriler &uuml;zerinde ger&ccedil;ekleştirilen her t&uuml;rl&uuml; işlemi ifade etmektedir. 1-Kişisel Verilerinizin İşlenme Amacı, İşlenen Kişisel Verileriniz Tarafınıza ait kişisel bilgiler, onay ve/veya imzanızla tanzim edilen t&uuml;m s&ouml;zleşmeler/bilgilendirme formları ve sair belgelerle, elektronik onay ve/veya imzanız ile yapacağınız bildirimlerle, Genel M&uuml;d&uuml;rl&uuml;ğ&uuml;m&uuml;z, fiziki ortamlar, &ccedil;ağrı merkezleri, internet siteleri, mobil uygulamalar, internet işlemleri, sosyal medya ve diğer kamuya a&ccedil;ık mecralar, kullanıcı g&ouml;r&uuml;şmeleri, adli kayıtların taranması, piyasa istihbaratı, Kimlik Paylaşım Sistemi, SMS kanalları, internet sitelerine yapılan dijital başvurular, t&uuml;m mobil uygulamalarımız, satış ekiplerine yapılan yazılı/dijital başvurular, &ccedil;ağrı merkezi hizmeti alınan şirketler gibi y&ouml;ntemler ile Sizinle iletişime ge&ccedil;ilen veya ileride iletişime ge&ccedil;ebilecek s&ouml;zl&uuml;, yazılı, g&ouml;r&uuml;nt&uuml;l&uuml;, ses kaydı veya elektronik kanallar yoluyla tamamen veya kısmen otomatik olan ya da herhangi bir veri kayıt sisteminin par&ccedil;ası olarak toplanmakta ve Kanunun belirtilen hukuka uygunluk sebepleri &ccedil;er&ccedil;evesinde, s&ouml;zleşmenin ifası ve yasal y&uuml;k&uuml;ml&uuml;l&uuml;klerin yerine getirilmesi amacıyla saklanmaktadır. Bu hukuki sebeple toplanan kişisel verileriniz 6698 sayılı Kişisel Verilerin Korunması Kanunu&rsquo;nun 5. ve 6. maddelerinde belirtilen kişisel veri işleme şartları ve ama&ccedil;ları kapsamında işlenebilmekte ve aktarılabilmektedir. 2-Kişisel Verilerin İşlenmesinde Hukuki Sebepler ve Rıza Şayet daha &ouml;nceden alınmış rıza ve izniniz mevcut değilse, yasal zorunluluk gereği izninizi talep edeceğimiz durumlarda, web sitemizde yer alan kişisel verileriniz ile ilgili izin alanında veya &uuml;yelik sayfasında web sitesinde izin kutucuklarının işaretlenmesi ve onaylanması suretiyle izin verebileceksiniz. Bu kapsamda, Online Psikolog Merkezi tarafından sizlere y&ouml;nelik sağlanacak &uuml;r&uuml;n ve hizmet avantajlarından yaralanma ve haberdar olma iradenizi ortaya koyarak Online Psikolog Merkezi ile paylaştığınız kişisel verilerinizin, sizlere &ccedil;eşitli avantajların sağlanıp sunulabilmesi ve &ouml;zel reklam, satış, pazarlama, anket ve benzer ama&ccedil;lı her t&uuml;rl&uuml; fiziksel ve elektronik iletişim yapılması ve diğer iletişim mesajlarının g&ouml;nderilmesi amacıyla; toplanmasına, saklanmasına, işlenmesine, kullanılmasına, aktarımına dair de izniniz talep edilmektedir. İzinlerinizi geri almak i&ccedil;in her zaman izin verdiğiniz y&ouml;ntemlerle Online Psikolog Merkezine başvurabilirsiniz. 3-Kişisel Verilerin Paylaşımı ve Aktarımı Online Psikolog Merkezi tarafından işlenen kişisel verileriniz, mevzuatta belirlenen g&uuml;venlik ve gizlilik esasları uyarınca yeterli ve etkili &ouml;nlemler alınmak kaydıyla, yasal olarak aktarılması gereken idari ve resmi makamlara, faaliyetlerimizi y&uuml;r&uuml;tmek &uuml;zere dışarıdan hizmet alınan &uuml;&ccedil;&uuml;nc&uuml; taraflara, işbirliği yaptığımız, program ortağı kurum, kuruluş, işbirliği yapılan yurti&ccedil;i/yurtdışı kuruluşlara, hizmet/destek/danışmanlık alınan ya da proje/program ortağı olunan yurti&ccedil;i/yurtdışı/uluslararası kuruluşlar, g&uuml;venlik, &ccedil;ağrı merkezi gibi alanlarda destek aldığımız &uuml;&ccedil;&uuml;nc&uuml; kişilerle, alt y&uuml;klenicilere, bağımsız denetim ve destek hizmeti alınan kuruluşlar gibi t&uuml;zel kişilere ve işbirliği i&ccedil;erisinde olan &uuml;&ccedil;&uuml;nc&uuml; tarafların hukuki ve ticari g&uuml;venliğinin teminen ve/veya elektronik ve fiziksel ortamların g&uuml;venliğinin sağlanması ile hukuki zorunluluklar nedeniyle ve yasal sınırlamalar &ccedil;er&ccedil;evesinde aktarılabilecektir. Tarafımızca, yurt dışına aktarılabilecek kişisel verileriniz aşağıdaki gibidir: Kimlik Verisi: Adı, Soyadı İletişim Verisi: Eposta, Telefonu, Adresi G&ouml;rsel ve İşitsel Veri: Ger&ccedil;ek kişiye ait fotoğraf Diğer: Erişim tarih ve saati, Cihaz kimliği, İşletim sistemi, Tarayıcı tipi ve IP adresi Online Psikolog Merkezi olarak kişisel verilerinizi, gerekli g&uuml;venlik &ouml;nlemlerini almak kaydıyla T&uuml;rkiye i&ccedil;inde veya başta AB &uuml;lkeleri, Amerika, İngiltere, OECD &uuml;lkeleri olmak &uuml;zere yurtdışında bulunan depolama, arşivleme, bilişim teknolojileri desteği alınan sunucular, hosting şirketleri, program, bulut bilişim vb diğer elektronik ortamlara aktarabilir işleyebilir ve saklayabiliriz. 4-Kanun Kapsamındaki Haklarınız Kişisel veri sahipleri olarak şirketin aşağıda bildirilen adresine şahsen başvuru ile ya da noter aracılığıyla veya hesap a&ccedil;ılışı sırasında bildirdiğiniz ve Online Psikolog Merkezi sisteminde kayıtlı bulunan elektronik posta adresinizi kullanmak suretiyle aşağıdaki bildirilen elektronik posta adresine iletebilirsiniz. Şirketimize ileteceğiniz başvurularınızın T&uuml;rk&ccedil;e olması esas olup, ilgili başvurularınızda ad, soyad, T.C. kimlik numarası, tebligata esas yerleşim yeriniz veya iş yeri adresiniz, bildirime esas elektronik posta adresiniz ile talep konunuzu bulunması zorunlu olup, talebinize ilişkin bilgi ve belgelerin de başvurunuza eklenmesi gerekmektedir. Başvurunuz yazılı ise imza atmanız da yasal bir zorunluluktur. Online Psikolog Merkezin talebin niteliğine g&ouml;re talebi en kısa s&uuml;rede ve en ge&ccedil; otuz g&uuml;n i&ccedil;inde &uuml;cretsiz olarak sonu&ccedil;landıracaktır. Ancak, işlemin ayrıca bir maliyeti gerektirmesi h&acirc;linde, Online Psikolog Merkezi tarafından Kişisel Verileri Koruma Kurulu&rsquo;nca belirlenen tarifedeki &uuml;cret alınacaktır. Kişisel veri işlenip işlenmediğini &ouml;ğrenme, Kişisel verileri işlenmişse buna ilişkin bilgi talep etme, Kişisel verilerin işlenme amacını ve bunların amacına uygun kullanılıp kullanılmadığını &ouml;ğrenme, Yurt i&ccedil;inde veya yurt dışında kişisel verilerin aktarıldığı &uuml;&ccedil;&uuml;nc&uuml; kişileri bilme, Kişisel verilerin eksik veya yanlış işlenmiş olması h&acirc;linde bunların d&uuml;zeltilmesini isteme ve bu kapsamda yapılan işlemin kişisel verilerin aktarıldığı &uuml;&ccedil;&uuml;nc&uuml; kişilere bildirilmesini isteme, 6698 sayılı Kanun ve ilgili diğer kanun h&uuml;k&uuml;mlerine uygun olarak işlenmiş olmasına rağmen, işlenmesini gerektiren sebeplerin ortadan kalkması h&acirc;linde kişisel verilerin silinmesini veya yok edilmesini isteme ve bu kapsamda yapılan işlemin kişisel verilerin aktarıldığı &uuml;&ccedil;&uuml;nc&uuml; kişilere bildirilmesini isteme, İşlenen verilerin m&uuml;nhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle kişinin kendisi aleyhine bir sonucun ortaya &ccedil;ıkmasına itiraz etme, Kişisel verilerin kanuna aykırı olarak işlenmesi sebebiyle zarara uğraması h&acirc;linde zararın giderilmesini talep etme haklarına sahiptir. Saygılarımızla,</p>
+                <p>Yazılı başvurularda: Online Psikolog Merkezi :Cumhuriyet, 26, Mithatpaşa Cd., no:16 &Ccedil;ankaya/Ankara, T&uuml;rkiye</p>
+                <p>Elektronik posta yoluyla başvurularda: info@onlinepsikologmerkezi.com</p>
+                <p><br />Kişisel verilerinizin Online Psikolog Merkezi tarafından işlenmesine onay vermek i&ccedil;in metnin yanında yer alan "Kare Kutucuk" alanına tıklamanızı rica ederiz.</p>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Anladım ve Kabul Ediyorum</button>
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModa2" tabindex="-1" aria-labelledby="exampleModalLabe2" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabe2">Hizmet Sözleşmesi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+
+                <p>Hizmet Sözleşmesi</p>
+                <p>KİŞİSEL VERİLERİN KORUNMASI KANUNU &Ccedil;ER&Ccedil;EVESİNDE BİLGİLENDİRME METNİ, Değerli M&uuml;şterilerimiz; Online Psikolog Merkezi olarak 6698 sayılı &ldquo;Kişisel Verilerin Korunması Kanunu&rdquo; kapsamında, uygulamalarımız ve haklarınız ile ilgili sizleri bilgilendirmek isteriz. 6698 sayılı Kişisel Verilerin Korunması Kanunu h&uuml;k&uuml;mleri ve ilgili d&uuml;zenlemeler gereği (&ldquo;KVKK D&uuml;zenlemeleri&rdquo;) kimliğinizi belirli veya belirlenebilir kılan her t&uuml;rl&uuml; bilginiz, &ouml;zel nitelikli kişisel verileriniz de dahil olmak &uuml;zere, Kişisel Veri olarak nitelendirilmekte ve Veri Sorumlusu sıfatıyla Online Psikolog Merkezi tarafından aşağıda a&ccedil;ıklandığı kapsamda ve mevzuat tarafından emredilen sınırlar &ccedil;er&ccedil;evesinde işlenmektedir. &ldquo;Kişisel Verilerinizin İşlenmesi&rdquo; bu verilerin elde edilmesi, kaydedilmesi, depolanması, muhafaza edilmesi, değiştirilmesi, yeniden d&uuml;zenlenmesi, a&ccedil;ıklanması, aktarılması, devralınması, elde edilebilir hale getirilmesi, sınıflandırılması ya da kullanılmasının engellenmesi gibi veriler &uuml;zerinde ger&ccedil;ekleştirilen her t&uuml;rl&uuml; işlemi ifade etmektedir. 1-Kişisel Verilerinizin İşlenme Amacı, İşlenen Kişisel Verileriniz Tarafınıza ait kişisel bilgiler, onay ve/veya imzanızla tanzim edilen t&uuml;m s&ouml;zleşmeler/bilgilendirme formları ve sair belgelerle, elektronik onay ve/veya imzanız ile yapacağınız bildirimlerle, Genel M&uuml;d&uuml;rl&uuml;ğ&uuml;m&uuml;z, fiziki ortamlar, &ccedil;ağrı merkezleri, internet siteleri, mobil uygulamalar, internet işlemleri, sosyal medya ve diğer kamuya a&ccedil;ık mecralar, kullanıcı g&ouml;r&uuml;şmeleri, adli kayıtların taranması, piyasa istihbaratı, Kimlik Paylaşım Sistemi, SMS kanalları, internet sitelerine yapılan dijital başvurular, t&uuml;m mobil uygulamalarımız, satış ekiplerine yapılan yazılı/dijital başvurular, &ccedil;ağrı merkezi hizmeti alınan şirketler gibi y&ouml;ntemler ile Sizinle iletişime ge&ccedil;ilen veya ileride iletişime ge&ccedil;ebilecek s&ouml;zl&uuml;, yazılı, g&ouml;r&uuml;nt&uuml;l&uuml;, ses kaydı veya elektronik kanallar yoluyla tamamen veya kısmen otomatik olan ya da herhangi bir veri kayıt sisteminin par&ccedil;ası olarak toplanmakta ve Kanunun belirtilen hukuka uygunluk sebepleri &ccedil;er&ccedil;evesinde, s&ouml;zleşmenin ifası ve yasal y&uuml;k&uuml;ml&uuml;l&uuml;klerin yerine getirilmesi amacıyla saklanmaktadır. Bu hukuki sebeple toplanan kişisel verileriniz 6698 sayılı Kişisel Verilerin Korunması Kanunu&rsquo;nun 5. ve 6. maddelerinde belirtilen kişisel veri işleme şartları ve ama&ccedil;ları kapsamında işlenebilmekte ve aktarılabilmektedir. 2-Kişisel Verilerin İşlenmesinde Hukuki Sebepler ve Rıza Şayet daha &ouml;nceden alınmış rıza ve izniniz mevcut değilse, yasal zorunluluk gereği izninizi talep edeceğimiz durumlarda, web sitemizde yer alan kişisel verileriniz ile ilgili izin alanında veya &uuml;yelik sayfasında web sitesinde izin kutucuklarının işaretlenmesi ve onaylanması suretiyle izin verebileceksiniz. Bu kapsamda, Online Psikolog Merkezi tarafından sizlere y&ouml;nelik sağlanacak &uuml;r&uuml;n ve hizmet avantajlarından yaralanma ve haberdar olma iradenizi ortaya koyarak Online Psikolog Merkezi ile paylaştığınız kişisel verilerinizin, sizlere &ccedil;eşitli avantajların sağlanıp sunulabilmesi ve &ouml;zel reklam, satış, pazarlama, anket ve benzer ama&ccedil;lı her t&uuml;rl&uuml; fiziksel ve elektronik iletişim yapılması ve diğer iletişim mesajlarının g&ouml;nderilmesi amacıyla; toplanmasına, saklanmasına, işlenmesine, kullanılmasına, aktarımına dair de izniniz talep edilmektedir. İzinlerinizi geri almak i&ccedil;in her zaman izin verdiğiniz y&ouml;ntemlerle Online Psikolog Merkezine başvurabilirsiniz. 3-Kişisel Verilerin Paylaşımı ve Aktarımı Online Psikolog Merkezi tarafından işlenen kişisel verileriniz, mevzuatta belirlenen g&uuml;venlik ve gizlilik esasları uyarınca yeterli ve etkili &ouml;nlemler alınmak kaydıyla, yasal olarak aktarılması gereken idari ve resmi makamlara, faaliyetlerimizi y&uuml;r&uuml;tmek &uuml;zere dışarıdan hizmet alınan &uuml;&ccedil;&uuml;nc&uuml; taraflara, işbirliği yaptığımız, program ortağı kurum, kuruluş, işbirliği yapılan yurti&ccedil;i/yurtdışı kuruluşlara, hizmet/destek/danışmanlık alınan ya da proje/program ortağı olunan yurti&ccedil;i/yurtdışı/uluslararası kuruluşlar, g&uuml;venlik, &ccedil;ağrı merkezi gibi alanlarda destek aldığımız &uuml;&ccedil;&uuml;nc&uuml; kişilerle, alt y&uuml;klenicilere, bağımsız denetim ve destek hizmeti alınan kuruluşlar gibi t&uuml;zel kişilere ve işbirliği i&ccedil;erisinde olan &uuml;&ccedil;&uuml;nc&uuml; tarafların hukuki ve ticari g&uuml;venliğinin teminen ve/veya elektronik ve fiziksel ortamların g&uuml;venliğinin sağlanması ile hukuki zorunluluklar nedeniyle ve yasal sınırlamalar &ccedil;er&ccedil;evesinde aktarılabilecektir. Tarafımızca, yurt dışına aktarılabilecek kişisel verileriniz aşağıdaki gibidir: Kimlik Verisi: Adı, Soyadı İletişim Verisi: Eposta, Telefonu, Adresi G&ouml;rsel ve İşitsel Veri: Ger&ccedil;ek kişiye ait fotoğraf Diğer: Erişim tarih ve saati, Cihaz kimliği, İşletim sistemi, Tarayıcı tipi ve IP adresi Online Psikolog Merkezi olarak kişisel verilerinizi, gerekli g&uuml;venlik &ouml;nlemlerini almak kaydıyla T&uuml;rkiye i&ccedil;inde veya başta AB &uuml;lkeleri, Amerika, İngiltere, OECD &uuml;lkeleri olmak &uuml;zere yurtdışında bulunan depolama, arşivleme, bilişim teknolojileri desteği alınan sunucular, hosting şirketleri, program, bulut bilişim vb diğer elektronik ortamlara aktarabilir işleyebilir ve saklayabiliriz. 4-Kanun Kapsamındaki Haklarınız Kişisel veri sahipleri olarak şirketin aşağıda bildirilen adresine şahsen başvuru ile ya da noter aracılığıyla veya hesap a&ccedil;ılışı sırasında bildirdiğiniz ve Online Psikolog Merkezi sisteminde kayıtlı bulunan elektronik posta adresinizi kullanmak suretiyle aşağıdaki bildirilen elektronik posta adresine iletebilirsiniz. Şirketimize ileteceğiniz başvurularınızın T&uuml;rk&ccedil;e olması esas olup, ilgili başvurularınızda ad, soyad, T.C. kimlik numarası, tebligata esas yerleşim yeriniz veya iş yeri adresiniz, bildirime esas elektronik posta adresiniz ile talep konunuzu bulunması zorunlu olup, talebinize ilişkin bilgi ve belgelerin de başvurunuza eklenmesi gerekmektedir. Başvurunuz yazılı ise imza atmanız da yasal bir zorunluluktur. Online Psikolog Merkezin talebin niteliğine g&ouml;re talebi en kısa s&uuml;rede ve en ge&ccedil; otuz g&uuml;n i&ccedil;inde &uuml;cretsiz olarak sonu&ccedil;landıracaktır. Ancak, işlemin ayrıca bir maliyeti gerektirmesi h&acirc;linde, Online Psikolog Merkezi tarafından Kişisel Verileri Koruma Kurulu&rsquo;nca belirlenen tarifedeki &uuml;cret alınacaktır. Kişisel veri işlenip işlenmediğini &ouml;ğrenme, Kişisel verileri işlenmişse buna ilişkin bilgi talep etme, Kişisel verilerin işlenme amacını ve bunların amacına uygun kullanılıp kullanılmadığını &ouml;ğrenme, Yurt i&ccedil;inde veya yurt dışında kişisel verilerin aktarıldığı &uuml;&ccedil;&uuml;nc&uuml; kişileri bilme, Kişisel verilerin eksik veya yanlış işlenmiş olması h&acirc;linde bunların d&uuml;zeltilmesini isteme ve bu kapsamda yapılan işlemin kişisel verilerin aktarıldığı &uuml;&ccedil;&uuml;nc&uuml; kişilere bildirilmesini isteme, 6698 sayılı Kanun ve ilgili diğer kanun h&uuml;k&uuml;mlerine uygun olarak işlenmiş olmasına rağmen, işlenmesini gerektiren sebeplerin ortadan kalkması h&acirc;linde kişisel verilerin silinmesini veya yok edilmesini isteme ve bu kapsamda yapılan işlemin kişisel verilerin aktarıldığı &uuml;&ccedil;&uuml;nc&uuml; kişilere bildirilmesini isteme, İşlenen verilerin m&uuml;nhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle kişinin kendisi aleyhine bir sonucun ortaya &ccedil;ıkmasına itiraz etme, Kişisel verilerin kanuna aykırı olarak işlenmesi sebebiyle zarara uğraması h&acirc;linde zararın giderilmesini talep etme haklarına sahiptir. Saygılarımızla,</p>
+                <p>Yazılı başvurularda: Online Psikolog Merkezi :Cumhuriyet, 26, Mithatpaşa Cd., no:16 &Ccedil;ankaya/Ankara, T&uuml;rkiye</p>
+                <p>Elektronik posta yoluyla başvurularda: info@onlinepsikologmerkezi.com</p>
+                <p><br />Kişisel verilerinizin Online Psikolog Merkezi tarafından işlenmesine onay vermek i&ccedil;in metnin yanında yer alan "Kare Kutucuk" alanına tıklamanızı rica ederiz.</p>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Anladım ve Kabul Ediyorum</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+@section Scripts
+    {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('form').submit(function (e) {
+                var isChecked = $('input[type="checkbox"]').is(':checked');
+                if (!isChecked) {
+                    e.preventDefault();
+                    $('#errorText').show(); 
+                }
+            });
+
+
+            $('input[type="checkbox"]').change(function () {
+                if ($(this).is(':checked')) {
+                        $('#errorText').css('display', 'none');
+                    } else {
+                        $('#errorText').css('display', 'block');
+                    }
+                });
+            
+
+
+
+        });
+    </script>
+
+}

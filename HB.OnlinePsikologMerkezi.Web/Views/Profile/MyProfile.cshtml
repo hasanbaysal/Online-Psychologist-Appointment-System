@@ -1,0 +1,221 @@
+﻿@{
+    ViewData["Title"] = "Bilgilerim";
+}
+
+
+@model UserUpdateDto
+<section style="background-color: #f5f5f5;">
+    <div class="container py-5">
+        <div class="row mb-1">
+            <h3 class="text-center">Bilgilerim</h3>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <img src="~/assets/img/default-user.jpg" alt="avatar"
+                             class="rounded-circle img-fluid" style="width: 150px;">
+                        <h5 class="my-3">
+                            @{
+
+                                if (Model.Name != null)
+                                {
+                                    <text>@Model.Name</text>
+                                }
+                                if (Model.LastName != null)
+                                {
+                                    
+                                    <text>@(" "+Model.LastName)</text>
+                                }
+
+
+                            }
+                        </h5>
+
+                      <h5 class="my-3">
+                          @Model.UserName
+                      </h5>
+                    </div>
+                </div>
+                <div class="card mb-4 mb-lg-0">
+                    @*mesaj alanı*@
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 fw-bold">Kullanıcı Adı</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@Model.UserName</p>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 fw-bold">Ad Soyad</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@(Model.Name ?? "-belirtilmedi-") <span>@(Model.LastName ?? "-belirtilmedi-")</span> </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 fw-bold">Email</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@Model.Email</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 fw-bold">Telefon Numarası</p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@(Model.PhoneNumber ?? "-belirtilmedi-")</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <p class="mb-0 fw-bold">Kullanıcı ID </p>
+                            </div>
+                            <div class="col-sm-9">
+                                <p class="text-muted mb-0">@(Model.Id)</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-md-12 mb-1">
+
+                        <div class="d-flex justify-content-center">
+                            <button class="my-auto btn btn-outline-primary" onclick="toggleDiv()">Bilgileri Güncelle</button>
+                        </div>
+                    </div>
+
+                    <div style="display:none;" id="updateDiv" class="col-md-12 mx-auto  card">
+
+                        @*update işlemleri olacak*@
+
+
+
+
+                        <form asp-action="MyProfile" class="card-body" method="post">
+
+
+                            <div class="xerror" asp-validation-summary="ModelOnly">
+                            </div>
+
+                            <input asp-for="Id" type="hidden" />
+
+                            <div class="mb-3">
+                                <label class="form-label">Kullanıcı Adı</label>
+                                <input class="form-control" asp-for="UserName" />
+                                <span asp-validation-for="UserName"></span>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label class="form-label">Ad</label>
+                                <input class="form-control" asp-for="Name" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Soyad</label>
+                                <input class="form-control" asp-for="LastName" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Telefon Numarası</label>
+                                <input class="form-control" asp-for="PhoneNumber" placeholder="05555555555" />
+                                <span asp-validation-for="PhoneNumber"></span>
+
+                            </div>
+
+                            <div class="mb-3">
+
+                                <button type="submit" class="btn btn-success"> Güncelle </button>
+
+                            </div>
+
+
+                        </form>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts{
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            if ($(".xerror li").length >= 1) {
+
+                var count = $(".xerror li:first").text();
+               if(count =="")
+               {
+
+               }
+               else{
+                    var div = document.getElementById("updateDiv");
+                    div.style.display = "block";
+               }
+            
+            }
+
+
+            //telefon numarası kontorlü
+
+
+
+
+
+        });
+
+
+        //document.addEventListener("DOMContentLoaded", function () {
+        //    var div = document.getElementsByClassName("xerror");
+        //    console.log(div.innerHTML.trim());
+        //    if (div.innerHTML.trim() !== "") {
+        //        var div = document.getElementById("updateDiv");
+        //         div.style.display = "block";
+        //    }
+        //});
+
+
+        function toggleDiv() {
+            var div = document.getElementById("updateDiv");
+            if (div.style.display === "none") {
+                div.style.display = "block";
+            } else {
+                div.style.display = "none";
+            }
+        }
+
+    </script>
+
+}

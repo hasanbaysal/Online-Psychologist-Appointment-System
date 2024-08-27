@@ -1,0 +1,122 @@
+/*--------------------------------------------------------------
+32. Section Heading
+----------------------------------------------------------------*/
+.cs-section__heading.cs-style1 {
+  .cs-section__subtitle {
+    margin-bottom: 0px;
+  }
+
+  .cs-section__title {
+    font-size: 40px;
+    margin: 0;
+    font-weight: 800;
+  }
+
+  &.cs-white {
+
+    .cs-section__subtitle,
+    .cs-section__title {
+      color: $white;
+    }
+  }
+
+  &.cs-top-bar {
+    .cs-section__title {
+      position: relative;
+      padding-top: 23px;
+
+      &:after {
+        content: '';
+        height: 4px;
+        width: 50px;
+        background-color: #5cbe2d;
+        position: absolute;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%);
+        border-radius: 3px;
+      }
+    }
+  }
+}
+
+.cs-section__heading.cs-style2 {
+  .cs-section__subtitle {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    margin-top: -5px;
+  }
+
+  .cs-section__title {
+    font-size: 48px;
+    font-weight: 800;
+    margin-bottom: 40px;
+  }
+}
+
+.cs-section__heading.cs-style3 {
+  .cs-section__title {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 0;
+    position: relative;
+    padding-bottom: 12px;
+
+    &:after {
+      content: '';
+      height: 5px;
+      width: 100px;
+      position: absolute;
+      bottom: 0px;
+      left: 0;
+      background-color: $yellow;
+    }
+  }
+}
+
+.cs-section__heading.cs-style4 {
+  .cs-section__subtitle {
+    font-size: 24px;
+    color: #f2f2f2;
+    line-height: 1.6em;
+    margin-bottom: 5px;
+  }
+
+  .cs-section__title {
+    margin: 0;
+    font-size: 40px;
+    margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .cs-section__heading.cs-style1 .cs-section__subtitle br {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 767px) {
+
+  .cs-section__heading.cs-style1 .cs-section__title {
+    font-size: 32px;
+  }
+
+  .cs-section__heading.cs-style2 .cs-section__subtitle {
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+
+  .cs-section__heading.cs-style2 .cs-section__title {
+    font-size: 32px;
+    margin-bottom: 32px;
+  }
+
+  .cs-section__heading.cs-style4 .cs-section__subtitle {
+    font-size: 22px;
+  }
+
+  .cs-section__heading.cs-style4 .cs-section__title {
+    font-size: 32px;
+  }
+}

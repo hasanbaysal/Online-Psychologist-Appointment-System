@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "CategoryList";
+    Layout = "_Layout";
+}
+
+<h1>Kategoriler</h1>
+
+@model List<Category>
+
+
+    @if (TempData["kod"] != null)
+    {
+    <div class="alert alert-danger">
+        <p> hatalı işlem ekleme başarısız</p>
+     </div>
+    }
+
+
+
+<div class="row mb-3">
+
+    <form asp-action="CategoryAdd" asp-controller="Home" asp-area="admin" method="post">
+        <h3 class="text-center">Kategori Ekleme Alanı</h3>
+        <div class="mb-3">
+            <label class="form-label">Kategori İsmi(boş bırakmayınız)</label>
+            <input name="Name" type="text" class="form-input" />
+            <button class="btn btn-primary">Ekle</button>
+
+        </div>
+
+         
+    </form>
+
+
+</div>
+
+<hr  class="mb-1"/>
+<div class="row">
+
+    <div class="col-md-10 mx-auto">
+      
+        <table class="table">
+            <thead >
+                <tr>
+                    <th>Kategori Adı</th>
+                    <th>Sil</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+                
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>@item.Name</td>
+                        <td><a class="btn btn-danger" asp-action="CategoryRemove" asp-route-id="@item.Id" asp-controller="Home" asp-area="admin"  
+                            onclick="return gitAlert()"> Sil </a>  </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    <script>
+        function gitAlert() {
+            var cevap = confirm("Emin misiniz?");
+
+            if (cevap == true) {
+                return true; // "Evet" dendiğinde linke gidilmesini sağlar
+            } else {
+                return false; // "Hayır" dendiğinde linke gitmeyi engeller
+            }
+        }
+    </script>
+
+}

@@ -1,0 +1,270 @@
+/*--------------------------------------------------------------
+14. Footer
+----------------------------------------------------------------*/
+.cs-footer__item {
+  margin-bottom: 35px;
+  position: relative;
+  z-index: 1;
+}
+
+.cs-social__btns.cs-style1 {
+  display: flex;
+  flex-wrap: wrap;
+
+  a {
+    display: inline-flex;
+    margin-right: 20px;
+    font-size: 18px;
+    color: $accent;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.cs-footer.cs-style1 {
+  position: relative;
+  background-color: $primary;
+  color: #7783a9;
+  overflow: hidden;
+
+  .cs-widget__title {
+    font-size: 20px;
+    font-weight: bold;
+    color: $white;
+    margin-bottom: 35px;
+  }
+
+  .menu,
+  .cs-address__widgert ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      &:not(:last-child) {
+        margin-bottom: 7px;
+      }
+    }
+  }
+
+  .cs-address__widgert ul {
+    li {
+      display: flex;
+      align-items: flex-start;
+
+      i {
+        margin-right: 15px;
+        position: relative;
+        top: 6px;
+      }
+    }
+  }
+
+  a {
+    &:hover {
+      color: $white;
+    }
+  }
+
+  .cs-copyright {
+    padding: 28px 0 42px;
+    color: #fff;
+  }
+
+  .cs-parallax__shape {
+    position: absolute;
+
+    &.cs-position1 {
+      left: 10%;
+      top: 28%;
+      animation: particalAnimation 15s alternate infinite linear;
+      animation-delay: 1s;
+    }
+
+    &.cs-position2 {
+      left: -5px;
+      bottom: -17%;
+      max-width: 135px;
+
+      &.cs-type1 {
+        left: -5%;
+        bottom: 7%;
+        max-width: 200px;
+        animation: rotateShape 40s alternate infinite linear;
+      }
+    }
+
+    &.cs-position3 {
+      bottom: -40%;
+      right: -10%;
+    }
+
+    &.cs-position4 {
+      right: 17%;
+      top: 10%;
+      animation: particalAnimation 20s alternate infinite linear;
+    }
+
+    &.cs-position5 {
+      right: 20%;
+      top: 45%;
+      animation: particalAnimation 25s alternate infinite linear;
+      animation-delay: 2s;
+    }
+  }
+
+  &.cs-color1 {
+    background-color: #fceff0;
+    color: $secondary;
+
+    .cs-widget__title {
+      color: $primary;
+    }
+
+    .cs-copyright {
+      color: #3e506e;
+    }
+
+    a {
+      &:hover {
+        color: $accent;
+      }
+    }
+
+    .cs-address__widgert ul li i {
+      color: $primary;
+    }
+  }
+
+  &.cs-color2 {
+    background-color: #263a5d;
+    color: #fdfaf5;
+
+    .cs-widget__title {
+      color: #fff;
+    }
+
+    .cs-copyright {
+      color: #f7ebd7;
+    }
+
+    a {
+      &:hover {
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+
+    .cs-social__btns.cs-style1 a {
+      color: $green;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    .cs-address__widgert ul li i {
+      color: #fff;
+    }
+  }
+}
+
+@keyframes rotateShape {
+  0% {
+    -webkit-transform: translate(0px, 0px) rotate(0deg);
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+
+  20% {
+    -webkit-transform: translate(73px, -1px) rotate(36deg);
+    transform: translate(73px, -1px) rotate(36deg);
+  }
+
+  40% {
+    -webkit-transform: translate(141px, 72px) rotate(72deg);
+    transform: translate(141px, 72px) rotate(72deg);
+  }
+
+  60% {
+    -webkit-transform: translate(83px, 122px) rotate(108deg);
+    transform: translate(83px, 122px) rotate(108deg);
+  }
+
+  80% {
+    -webkit-transform: translate(-40px, 72px) rotate(144deg);
+    transform: translate(-40px, 72px) rotate(144deg);
+  }
+
+  100% {
+    -webkit-transform: translate(0px, 0px) rotate(0deg);
+    transform: translate(0px, 0px) rotate(0deg);
+  }
+}
+
+.cs-footer.cs-style2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  height: 80px;
+
+  .cs-copyright {
+    text-align: right;
+  }
+
+  .cs-social__btns.cs-style1 a:not(:last-child) {
+    margin-right: 25px;
+  }
+
+  .cs-address__widgert {
+    margin-bottom: 0;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+
+      li {
+        display: flex;
+        align-items: center;
+
+        i {
+          margin-right: 10px;
+        }
+
+        &:not(:last-child) {
+          margin-right: 30px;
+        }
+      }
+    }
+  }
+
+  .cs-social__btns.cs-style1 {
+    margin: 6px 0;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .cs-footer.cs-style2 {
+    padding: 15px 15px;
+  }
+
+  .cs-footer.cs-style2 .cs-address__widgert ul li:not(:last-child) {
+    margin-right: 15px;
+  }
+
+  .cs-footer.cs-style2 .cs-address__widgert ul {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .cs-footer.cs-style2 {
+    flex-direction: column;
+    align-items: flex-start;
+    height: initial;
+  }
+}

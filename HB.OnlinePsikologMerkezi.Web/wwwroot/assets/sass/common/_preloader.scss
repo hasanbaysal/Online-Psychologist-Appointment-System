@@ -1,0 +1,48 @@
+.cs-preloader {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  background: #fff;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.cs-preloader__in {
+  width: 110px;
+  height: 110px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+
+  &:after {
+    content: '';
+    border: 3px solid $border;
+    border-top-color: $primary;
+    border-radius: 50%;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    animation: spin 1s ease-in-out infinite;
+    margin-left: -50%;
+    margin-top: -50%;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

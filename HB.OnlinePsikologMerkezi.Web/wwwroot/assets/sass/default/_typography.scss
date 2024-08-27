@@ -1,0 +1,141 @@
+/*--------------------------------------------------------------
+>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+1. Typography
+2. Spacing
+3. General
+4. Button
+5. Slider
+6. Isotope
+7. Video Popup
+8. Select2
+9. Sidebar
+10. Portfolio Details
+11. Post Details
+12. Scroll Up
+13. Header
+14. Footer
+15. Accordian
+16. Counter
+17. CTA
+18. Demo Box
+19. Donation
+20. Event
+21. Form
+22. Hero
+23. Horizontal Scroll
+24. Icon Box
+25. Logo Carousel
+26. Team Member
+27. News Letter
+28. Portfolio
+29. Post
+30. Pricing Table
+31. Progressbar
+32. Section Heading
+33. Testimonial
+34. Text Box
+35. Video Block
+
+--------------------------------------------------------------*/
+// Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Mulish:wght@400;500;600;700;800;900&display=swap');
+
+/*--------------------------------------------------------------
+1. Typography
+----------------------------------------------------------------*/
+
+body,
+html {
+  color: $secondary;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  line-height: 1.9em;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h3,
+h6 {
+  clear: both;
+  color: $primary;
+  font-family: 'Mulish', sans-serif;
+  padding: 0;
+  margin: 0 0 10px 0;
+  font-weight: 500;
+  line-height: 1.25em;
+}
+
+h1 {
+  font-size: 48px;
+}
+
+h2 {
+  font-size: 36px;
+}
+
+h3 {
+  font-size: 30px;
+}
+
+h4 {
+  font-size: 24px;
+}
+
+h5 {
+  font-size: 18px;
+}
+
+h6 {
+  font-size: 15px;
+}
+
+p {
+  margin-bottom: 12px;
+}
+
+ul {
+  margin: 0 0 15px 0;
+  padding-left: 15px;
+  list-style: square outside none;
+}
+
+ol {
+  padding-left: 15px;
+  margin-bottom: 15px;
+}
+
+dfn,
+cite,
+em,
+i {
+  font-style: italic;
+}
+
+blockquote {
+  margin: 0 15px;
+}
+
+address {
+  margin: 0 0 15px;
+}
+
+img {
+  border: 0;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}

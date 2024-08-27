@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = Model.AppUser.Name+" "+Model.AppUser.LastName;
+}
+@model PsychologistListDto
+<div class="row">
+    <div class="col-md-12 text-center mb-3">
+
+        <img src="~/assets/pksimage/@Model.ProfilePhotoPath" alt="Image" style="width:200px; height:200px;  object-fit: cover;" class="rounded-circle img-fluid">
+
+        <h5 class="text-center mt-3"><span class="border-bottom text-dark fw-bolder"> @(Model.Title + " " + Model.AppUser.Name + " " + Model.AppUser.LastName) </span></h5>
+        <a asp-route-id="@Model.SecondKey" asp-action="PsychologistProfile" asp-controller="Psychologist" class="btn btn-outline-primary mt-2 mb-1">Randevu Al</a>
+        <hr style="height:3px; color:black !important;" class="mb-1" />
+    </div>
+
+    <div class="col-md-12 rounded-3 shadow overflow-hidden">
+
+        @Html.Raw(@Model.Cv)
+
+    </div>
+</div>

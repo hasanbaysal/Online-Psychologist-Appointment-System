@@ -1,0 +1,62 @@
+/*--------------------------------------------------------------
+10. Portfolio Details
+----------------------------------------------------------------*/
+.cs-portfolio__details {
+  img {
+    margin-bottom: 70px;
+  }
+
+  h2 {
+    font-size: 40px;
+    font-weight: 800;
+    margin-bottom: 22px;
+  }
+
+  p {
+    margin-bottom: 22px;
+  }
+
+  ul {
+    margin: 0;
+    margin-top: 30px;
+    padding: 25px 30px;
+    list-style: none;
+    background-color: $gray;
+
+    strong {
+      font-weight: bold;
+      color: $primary;
+    }
+
+    li {
+      &:not(:last-child) {
+        margin-bottom: 22px;
+      }
+    }
+
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .cs-portfolio__details img {
+    margin-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cs-portfolio__details h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .cs-portfolio__details ul {
+    padding: 25px 15px;
+  }
+}

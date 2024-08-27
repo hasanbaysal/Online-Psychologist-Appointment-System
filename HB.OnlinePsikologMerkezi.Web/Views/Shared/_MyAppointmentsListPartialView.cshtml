@@ -1,0 +1,59 @@
+﻿
+
+@model List<AppointmentListDto>
+
+
+@{
+
+
+   
+    var data = Model.Where(x => x.Status == (int)AppointmentEnum.new_appointment || x.Status == (int)AppointmentEnum.sold)
+    .OrderByDescending(x=>x.Status).ThenBy(x=>x.AppointmentDate).ToList();
+}
+
+@if(data != null)
+{
+    @if(data.Count>0)
+    {
+        <div style="max-height: 300px; overflow-y: scroll;">
+            <table class="table">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Durum</th>
+                        <th>Tarih</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    @foreach (var item in data)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            @if (item.Status == (int)AppointmentEnum.new_appointment)
+                            {
+                                <td class="text-danger"> <a asp-action="DeleteAppointment" asp-controller="Psychologist" asp-route-id="@item.Id" class="btn btn-danger me-1">X</a>  satışta bekliyor </td>
+                            }
+                            else
+                            {
+                                <td class="text-success">satıldı görüşme yapılacak</td>
+                            }
+                            <td>@item.AppointmentDate.ToString("dddd, dd MMMM yyyy HH:mm:ss")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+       
+    }
+    else
+    {
+        <h5 class="text-center">veri yok</h5>
+    }
+}
+else{
+
+    <h5 class="text-center">veri yok</h5>
+
+}

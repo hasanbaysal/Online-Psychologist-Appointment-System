@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "_UserQueryResult";
+}
+
+@model AppUserListDto
+
+
+@if (Model != null)
+{
+    <h2>kullanıcı bulundu</h2>
+    <a class="btn btn-primary" asp-area="Admin" asp-action="GetUserById" asp-controller="Home" asp-route-id="@Model.Id"> Profile git  </a>
+}
+else
+{
+    <h2 class="text-center text-danger">kullanıcı bulunamadı</h2>
+}
+
+
+

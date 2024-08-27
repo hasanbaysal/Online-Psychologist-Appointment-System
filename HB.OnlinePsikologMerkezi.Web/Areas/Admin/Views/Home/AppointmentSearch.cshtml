@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewData["Title"] = "AppointmentSearch";
+    Layout = "_Layout";
+}
+
+@model Appointment
+
+<h1 class="text-center">Randevu Detayları</h1>
+
+
+<div class="row">
+
+    <div class="col-md-10 mx-auto">
+
+        @* @(Model.Status==2? "satıldı":"tamamlandı") *@
+        <ul class="list-group">
+            <li class="list-group-item">@("randevu id :"+Model.Id) </li>
+            <li class="list-group-item">@("randevu tarih :" + Model.AppointmentDate.ToString("dddd, dd MMMM yyyy HH:mm:ss")) </li>
+            <li class="list-group-item">@(" psk ad: " +Model.Psychologist.AppUser.Name ?? " ")  @(" psk soyad :"+Model.Psychologist.AppUser.Name ?? " ")</li>
+            <li class="list-group-item"> 
+                @if(Model.Status == 2)
+                {
+                    <text>Satıldı</text>
+                }
+                else if(Model.Status ==3)
+                {
+                    <text>Tamamlandı</text>
+                }
+                else if(Model.Status == 0)
+                {
+                    <text>Satışta Bekliyor</text>
+                }
+                else if(Model.Status == 5)
+                {
+                    <text>İptal Edildi </text>
+                }
+
+            </li>
+         
+
+            @if (Model.Order != null)
+            {
+                <li class="list-group-item">@("müşteri ad-soyad :" + Model.Order.AppUser.Name) @(" "+Model.Order.AppUser.LastName) </li>
+                <li class="list-group-item">@("iyzico id: "+Model.ThirdPartyPaymentId)</li>
+                <li class="list-group-item">@("satın alınma tarih: " + Model.Order.DurchaseDate.ToString("dddd, dd MMMM yyyy HH:mm:ss"))</li>
+                <li class="list-group-item">@("müşteri email: "+Model.Order.AppUser.Email)</li>
+                <li class="list-group-item">@("müşteri numara: "+Model.Order.AppUser.PhoneNumber ??" ")</li>
+                <li class="list-group-item">@("psk numara: "+Model.Psychologist.AppUser.PhoneNumber ??" ")</li>
+                <li class="list-group-item">@("psk email: "+Model.Psychologist.AppUser.Email ??" ")</li>
+                <li class="list-group-item"><a  onclick="confirmDialog(event)" class="btn btn-danger" asp-area="admin" asp-controller="home" asp-action="AppointmenntCancel" asp-route-id="@Model.Id" >RANDEVUYU İPTAL ET !!</a></li>
+
+               
+            }
+
+           
+        </ul>
+
+        <a  asp-action="AppointmentsControl" asp-controller="Home" asp-area="Admin" class="mt-3 btn btn-primary"> Randevulara Dön</a>
+
+    </div>
+
+</div>
+
+
+@section Scripts{
+
+ <script>
+
+        function confirmDialog(event) {
+            event.preventDefault(); // Sayfanın yeniden yüklenmesini engellemek için varsayılan olayı durduruyoruz
+
+            if (confirm("Randevu İptal Edilecek Emin Misiniz ?")) {
+                // Evet seçeneği seçildiyse, linkin hedefine gitmek için window.location.href'i kullanın
+                window.location.href = event.target.href;
+            }
+        }
+
+
+ </script>
+
+
+}

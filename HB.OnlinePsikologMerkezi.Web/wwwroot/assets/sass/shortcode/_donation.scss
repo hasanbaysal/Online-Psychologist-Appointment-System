@@ -1,0 +1,53 @@
+/*--------------------------------------------------------------
+19. Donation
+----------------------------------------------------------------*/
+.cs-donation__card.cs-style1 {
+  padding: 20px 20px 28px;
+  background-color: #fff;
+  transition: all 04s ease;
+  box-shadow: 0 0 50px rgba(247, 210, 211, 0.5);
+
+  .cs-donation__card__thumb {
+    margin-bottom: 30px;
+    overflow: hidden;
+  }
+
+  .cs-donation__card__thum__in {
+    height: 260px;
+    width: 100%;
+    transition: all 1s ease;
+  }
+
+  .cs-donation__card__title {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+
+  .cs-donation__card__subtitle {
+    margin-bottom: 25px;
+  }
+
+  &:hover {
+    .cs-donation__card__thum__in {
+      transform: scale(1.1);
+    }
+  }
+}
+
+@media screen and (max-width: 991px) and (min-width: 575px) {
+  .cs-donation__card.cs-style1 .cs-donation__card__thum__in {
+    height: 300px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cs-donation__card.cs-style1 .cs-donation__card__title {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .cs-donation__card.cs-style1 .cs-donation__card__subtitle {
+    margin-bottom: 20px;
+  }
+}

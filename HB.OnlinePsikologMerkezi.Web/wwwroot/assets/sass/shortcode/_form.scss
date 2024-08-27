@@ -1,0 +1,215 @@
+/*--------------------------------------------------------------
+21. Form
+----------------------------------------------------------------*/
+// UI 
+.ui-state-hover .ui-icon,
+.ui-state-focus .ui-icon,
+.ui-button:hover .ui-icon,
+.ui-button:focus .ui-icon,
+.ui-widget-header .ui-icon {
+  background-image: none;
+}
+
+.ui-datepicker-prev,
+.ui-datepicker-next {
+  cursor: pointer;
+  border: none !important;
+}
+
+.ui-datepicker-prev:after,
+.ui-datepicker-next:after {
+  content: '';
+  height: 8px;
+  width: 8px;
+  position: absolute;
+  border: 2px solid $primary;
+  transform: rotate(45deg);
+  top: 10px;
+}
+
+.ui-datepicker .ui-datepicker-prev-hover {
+  left: 2px;
+  top: 2px;
+  background-color: rgba($accent, 0.1);
+}
+
+.ui-datepicker .ui-datepicker-next-hover {
+  right: 2px;
+  top: 2px;
+  background-color: rgba($accent, 0.1);
+}
+
+.ui-datepicker-prev:after {
+  left: 10px;
+  border-top: none;
+  border-right: none;
+}
+
+.ui-datepicker-next:after {
+  left: 10px;
+  border-bottom: none;
+  border-left: none;
+}
+
+.ui-widget.ui-widget-content {
+  border-color: $border;
+}
+
+.ui-widget-header {
+  border-color: $border;
+  background: $border;
+  color: $primary;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-button {
+  border-color: $border;
+  background: $gray;
+  font-weight: normal;
+  color: $secondary;
+}
+
+.ui-datepicker td span,
+.ui-datepicker td a {
+  text-align: center;
+}
+
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+  border-color: rgba($accent, 0.1);
+  background: rgba($accent, 0.1);
+  color: $accent;
+}
+
+.ui-state-active,
+.ui-widget-content .ui-state-active {
+  border-color: $accent;
+  background: $accent;
+  color: #fff;
+}
+
+// End UI 
+.cs-form__field {
+  display: block;
+  background-color: #fff;
+  width: 100%;
+  padding: 9px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  border: 1px solid $border;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: $accent;
+  }
+}
+
+.cs-icon__form__field {
+  position: relative;
+
+  i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+    color: $ternary;
+    pointer-events: none;
+  }
+}
+
+.cs-form__wrap.cs-style1 {
+  display: flex;
+  align-items: center;
+  padding: 70px 50px;
+  background-color: #5e2ced;
+  position: relative;
+  z-index: 1;
+  border-radius: 5px;
+
+  .cs-form__title {
+    font-size: 40px;
+    font-weight: 800;
+    color: #fff;
+    margin: 0;
+  }
+
+  .cs-form__left,
+  .cs-form__right {
+    flex: 1;
+    padding: 0 20px;
+  }
+
+  &.cs-color1 {
+    background-color: #453b6f;
+  }
+}
+
+.cs-form.cs-style1 {
+  .row {
+    margin-right: -10px;
+    margin-left: -10px;
+
+    >div {
+      padding-right: 10px;
+      padding-left: 10px;
+    }
+  }
+
+  .cs-form__field {
+    border-color: $white;
+  }
+}
+
+.cs-form.cs-style2 {
+
+  .cs-form__field,
+  .select2-container--default .select2-selection--single {
+    box-shadow: 0 0 10px rgba($accent, 0.2);
+  }
+
+  textarea {
+    height: 120px;
+  }
+}
+
+.cs-form.cs-style3 {
+  .cs-text__box__title {
+    font-size: 40px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 70px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .cs-form__wrap.cs-style1 {
+    flex-direction: column;
+    padding: 60px 0px;
+  }
+
+  .cs-form__wrap.cs-style1 .cs-form__title {
+    margin-bottom: 30px;
+  }
+
+  .cs-form.cs-style3 .cs-text__box__title {
+    margin-bottom: 40px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cs-form__field {
+    padding: 5px 15px;
+  }
+
+  .cs-form__wrap.cs-style1 .cs-form__title {
+    font-size: 32px;
+  }
+
+  .cs-form.cs-style3 .cs-text__box__title {
+    font-size: 32px;
+  }
+}
