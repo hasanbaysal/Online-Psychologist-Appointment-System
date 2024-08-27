@@ -21,3 +21,6 @@ Some features of the project and technologies used:
 * in memory cache
 * custom mail services
 
+
+![ss](https://github.com/hasanbaysal/Online-Psikolog-Sistemi/blob/master/ss.png)
+
