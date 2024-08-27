@@ -12,6 +12,7 @@ Some features of the project and technologies used:
 * Fluent Validation
 * Asp.net Core Identity Framework
 * 3 party payment systems
+* 3d Secure
 * Sign in with Google
 * Registration with Google
 * SMS services
