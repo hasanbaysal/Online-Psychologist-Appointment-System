@@ -13,6 +13,7 @@
 - veritabanı olarak posgresql'ye geçiş
 - verimli loglama sistemleri kullanmak
 - uygulama yük trafik ve sağlık durumu için monitörleme
+- ihtiyaç olması durumunda video, ses  gibi büyük edebatlı dosyaları saklama işlemini minio  tarzı açık kaynak object storage'lar kullanarak çözebiliriz. docker, k8 üzerinde rahatça kurup yönetebiliriz
   
 <br/>
 Yani mimarisel büyük bir değişim düşünüyorum uygulama özelinde vakit buldukça değişime gideceğim. İşlevsel olarak uygulamaya ek birkaç özellik eklemek içinda genel işleyişi bozmayacağım
