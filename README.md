@@ -1,19 +1,23 @@
 
 # Online Psychologist Appointment System #
 
+<br/>
+<br/>
+<br/>
 
-## 13.02.2025 Tarihi itibariyle projeyi güncelleme kararı aldım  zaman içerisinde aşağıdaki özellikleri eklemeyi düşünüyorum
-- Mimarisel değşimler  Service-Based Architecture  + Event-Driven Scaling gibi bir mimari düşünüyorum, direkt micro yazmak gereksiz burada tek scale edilmesi gereken sistem video görüşmeleri içim media server olacak. Event based bir şekilde yüke göre scale edeceğim, diğer operasyonları kullanıcı yönetimi, ödeme, randevuları vs. monolith veya modüler bir serviste yönetebiliriz boşuna micro yazmaya gerek yok
-- Açık kaynak ürünler kullanarak kendi dahili video chat sistemi jitsi, bigbluebutton
+### 13.02.2025 Tarihi itibariyle projeyi güncelleme kararı aldım  zaman içerisinde aşağıdaki özellikleri eklemeyi düşünüyorum
+- Mimarisel değşimler  Service-Based Architecture  + Event-Driven Scaling gibi bir mimari düşünüyorum, direkt micro yazmak gereksiz burada tek scale edilmesi gereken sistem video görüşmeleri için media server olacak. Event based bir şekilde yüke göre scale edeceğim, diğer operasyonları kullanıcı yönetimi, ödeme, randevuları vs. monolith veya modüler bir serviste yönetebiliriz boşuna micro yazmaya gerek yok
+- Açık kaynak ürünler kullanarak kendi dahili video chat sistemizi yazacağız. ( jitsi, bigbluebutton vb)
 - UI tarafında mvc'den devam etmek yerine react. orada da signalr tarzı teknolojiler ile kullanıcı ve psikolog etkileşimlerini gerçek zamanlı hale getirebiliriz
-- mail operasyonlarını için vs Rabbit gibi queu araçları kullanmak
+- mail operasyonlarını için vs Rabbit gibi message queue araçları kullanmak
 - veritabanı olarak posgresql'ye geçiş
 - verimli loglama sistemleri kullanmak
 - uygulama yük trafik ve sağlık durumu için monitörleme
   
-
+<br/>
 Yani mimarisel büyük bir değişim düşünüyorum uygulama özelinde vakit buldukça değişime gideceğim. İşlevsel olarak uygulamaya ek birkaç özellik eklemek içinda genel işleyişi bozmayacağım
 
+<br/><br/><br/>
 
  
 
